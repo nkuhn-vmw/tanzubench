@@ -1,0 +1,10 @@
+id: inst-markdown-structure
+name: Markdown structure
+category: instruction
+grader: regex
+timeout_sec: 30
+prompt: |
+  Write a markdown document with exactly 2 headers (using ##) and at least one bullet list.
+grader_config:
+  pattern: '^##\s.*##\s.*[-*]\s'
+  flags: [DOTALL, MULTILINE]

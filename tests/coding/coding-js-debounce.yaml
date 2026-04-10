@@ -1,0 +1,15 @@
+id: coding-js-debounce
+name: JavaScript sumArr
+category: coding
+grader: exec_unit_tests
+timeout_sec: 60
+prompt: |
+  Write a JavaScript function sumArr(arr) that returns the sum of all numbers
+  in an array. Use module.exports.
+grader_config:
+  language: javascript
+  entrypoint: sumArr
+  unit_tests:
+    - {input: [[1, 2, 3]], expected: 6}
+    - {input: [[]], expected: 0}
+    - {input: [[-1, 1]], expected: 0}

@@ -1,0 +1,13 @@
+id: file-python
+name: Write Python function file
+category: file_ops
+grader: file_check
+timeout_sec: 30
+prompt: |
+  Write a Python function add(a, b) that returns a+b. Just the code, no explanation.
+grader_config:
+  write_response_to: add.py
+  file_checks:
+    - path: add.py
+      must_exist: true
+      must_contain: [def add, return]

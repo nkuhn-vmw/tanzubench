@@ -1,0 +1,13 @@
+id: coding-sql-topn
+name: SQL top-N recent users
+category: coding
+grader: exec_unit_tests
+timeout_sec: 60
+prompt: |
+  Write a SQL query against a table "users" with columns (id, name, signup_date)
+  that returns the 3 most recently signed-up users' names. Only the SQL.
+grader_config:
+  language: sql
+  schema: "CREATE TABLE users(id INT, name TEXT, signup_date TEXT); INSERT INTO users VALUES (1,'a','2024-01'), (2,'b','2026-01'), (3,'c','2025-01'), (4,'d','2026-02');"
+  unit_tests:
+    - {expected: [["d"], ["b"], ["c"]]}

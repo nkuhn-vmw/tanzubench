@@ -1,0 +1,16 @@
+id: writing-email-draft
+name: Writing — professional meeting reschedule email
+category: writing
+grader: llm_judge
+timeout_sec: 120
+prompt: |
+  Write a professional email of approximately 120 words notifying attendees that the quarterly planning meeting originally scheduled for Thursday, April 10 at 2:00 PM has been rescheduled to Monday, April 14 at 10:00 AM in Conference Room B. The meeting agenda remains unchanged. Apologize briefly for any inconvenience and ask attendees to confirm their availability by end of business Friday.
+grader_config:
+  judge_rubric: |
+    Grade on three axes, each 0.0-1.0:
+    - clarity: readable, well-formed
+    - accuracy: every claim is supported by the source
+    - follows_constraints: meets the stated format/length constraints (approximately 120 words, professional tone, includes the rescheduled date/time/room and confirmation request)
+    Return JSON: {"clarity": float, "accuracy": float, "follows_constraints": float, "rationale": string}
+  judge_aggregation: mean
+  judge_temperature: 0.0

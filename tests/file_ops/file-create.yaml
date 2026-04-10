@@ -1,0 +1,14 @@
+id: file-create
+name: Create haiku file
+category: file_ops
+grader: file_check
+timeout_sec: 30
+prompt: |
+  Write a haiku about autumn. The poem must include the word "autumn"
+  literally. Only the poem, 3 lines, no explanation, no title.
+grader_config:
+  write_response_to: haiku.txt
+  file_checks:
+    - path: haiku.txt
+      must_exist: true
+      must_contain: [autumn]

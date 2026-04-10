@@ -1,0 +1,9 @@
+id: inst-word-count
+name: Word count — 20 words
+category: instruction
+grader: regex
+timeout_sec: 30
+prompt: |
+  Write exactly 20 words about coffee. Count carefully.
+grader_config:
+  pattern: '^(\S+\s+){19}\S+$'

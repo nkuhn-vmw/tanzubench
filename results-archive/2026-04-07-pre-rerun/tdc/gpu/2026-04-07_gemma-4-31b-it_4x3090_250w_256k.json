@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "result_type": "speed",
+  "meta": {
+    "timestamp": "2026-04-07T02:50:00Z",
+    "foundation": "tdc",
+    "tile_version": null,
+    "tag": "4x3090-250w-256k-context",
+    "notes": "FULL 256K CONTEXT on 4x RTX 3090. Required --max-num-seqs 1 and --gpu-memory-utilization 0.97 to squeeze out enough VRAM. Max concurrency: 1.19x at 256K. fp8 KV cache not viable on Ampere SM 8.6 (fp8_e4m3 rejected as not supported, fp8_e5m2 rejected by vLLM assertion in TransformersMultiModalForCausalLM path). Throughput matches 64K config at ~36 tok/s \u2014 256K adds zero overhead when not actually used.",
+    "source_file": "results/tdc/gpu/2026-04-07_gemma-4-31b-it_4x3090_250w_256k.json"
+  },
+  "target": {
+    "name": "google/gemma-4-31B-it",
+    "display_name": null,
+    "family": "google/gemma-4-31B-it",
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": null,
+    "quant": "Q4_K_M",
+    "size_gb": null
+  },
+  "engine": {
+    "name": "vllm",
+    "version": "0.19.1rc1.dev60 (nightly)",
+    "config": null
+  },
+  "hardware": {
+    "vm_type": null,
+    "cpu": null,
+    "cpu_cores": 16,
+    "ram_gb": 96,
+    "gpu_count": 4,
+    "gpu_model": "NVIDIA GeForce RTX 3090",
+    "gpu_memory_gb": null,
+    "power_limit_watts": 250
+  },
+  "tests": [
+    {
+      "name": "simple_qa",
+      "elapsed_ms": 98,
+      "completion_tokens": 2
+    },
+    {
+      "name": "chat",
+      "elapsed_ms": 321,
+      "completion_tokens": 10,
+      "tok_per_sec": 31.2
+    },
+    {
+      "name": "tool_call_single",
+      "elapsed_ms": 558,
+      "completion_tokens": 15,
+      "tok_per_sec": 26.9,
+      "notes": "Tool call format emits raw tokens instead of JSON"
+    },
+    {
+      "name": "code_gen_500",
+      "elapsed_ms": 13674,
+      "completion_tokens": 500,
+      "tok_per_sec": 36.6
+    },
+    {
+      "name": "long_gen_1000",
+      "elapsed_ms": 27655,
+      "completion_tokens": 1000,
+      "tok_per_sec": 36.2
+    }
+  ],
+  "summary": {
+    "headline_metric": "tool_call_single_ms",
+    "headline_value": 558.0,
+    "headline_unit": "ms",
+    "accuracy_pct": null,
+    "total_tokens": 1527,
+    "total_time_ms": 42306
+  }
+}

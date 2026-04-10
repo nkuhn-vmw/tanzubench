@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "result_type": "accuracy",
+  "meta": {
+    "timestamp": "2026-04-06T20:34:00Z",
+    "foundation": "dev210",
+    "tile_version": "10.3.4",
+    "tag": "accuracy-thinking-suppression",
+    "notes": "Variant: no-think (SYSTEM override)",
+    "source_file": "results/dev210/cpu/2026-04-06_gemma4-accuracy-thinking-suppression.json"
+  },
+  "target": {
+    "name": "gemma4-nothink:e2b",
+    "display_name": null,
+    "family": "gemma4-nothink",
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": null,
+    "quant": "Q4_K_M",
+    "size_gb": null
+  },
+  "engine": {
+    "name": "ollama",
+    "version": "0.20.2",
+    "config": null
+  },
+  "hardware": {
+    "vm_type": null,
+    "cpu": "Intel Xeon Gold",
+    "cpu_cores": 16,
+    "ram_gb": "32 (e2b/e4b) or 64 (26b/31b)",
+    "gpu_count": 0,
+    "gpu_model": null,
+    "gpu_memory_gb": null,
+    "power_limit_watts": null
+  },
+  "tests": [
+    {
+      "name": "accuracy_factual",
+      "elapsed_ms": 9000.0,
+      "completion_tokens": 20,
+      "notes": "Category score: 5/5"
+    },
+    {
+      "name": "accuracy_tool_single",
+      "elapsed_ms": 49700.0,
+      "completion_tokens": 678,
+      "notes": "Category score: 2/3"
+    },
+    {
+      "name": "accuracy_tool_dual",
+      "elapsed_ms": 24500.0,
+      "completion_tokens": 325,
+      "notes": "Category score: 1/1"
+    },
+    {
+      "name": "accuracy_tool_restraint",
+      "elapsed_ms": 17900.0,
+      "completion_tokens": 218,
+      "notes": "Category score: 1/1"
+    }
+  ],
+  "summary": {
+    "headline_metric": "accuracy_pct",
+    "headline_value": 90.0,
+    "headline_unit": "%",
+    "accuracy_pct": 90.0,
+    "total_tokens": 1241,
+    "total_time_ms": 101100
+  }
+}

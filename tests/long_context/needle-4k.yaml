@@ -1,0 +1,12 @@
+id: needle-4k
+name: Needle-in-haystack 4K
+category: long_context
+grader: needle
+timeout_sec: 120
+prompt_template: "unused; the needle grader builds its own prompt"
+grader_config:
+  haystack_asset: haystack-4k.txt
+  needle: "The secret code for room 4K is ALPHA-SEVEN-NINE-TWO."
+  depth: 0.5
+  question: "What is the secret code for room 4K?"
+  expected_answer: "ALPHA-SEVEN-NINE-TWO"

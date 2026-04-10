@@ -1,0 +1,19 @@
+id: mt-context-names
+name: Context carryover — job recall after topic shift
+category: multi_turn
+grader: multi_turn
+timeout_sec: 60
+grader_config:
+  turns:
+    - user_message: |
+        Alice works as a software engineer.
+      checks:
+        - { contains: "Alice" }
+    - user_message: |
+        Bob enjoys painting on weekends.
+      checks:
+        - { contains: "Bob" }
+    - user_message: |
+        What does she do for a living?
+      checks:
+        - { any_contains: ["software", "engineer", "programming", "developer"] }

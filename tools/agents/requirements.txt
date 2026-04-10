@@ -1,0 +1,2 @@
+aider-chat==0.69.1
+# opencode is not distributed on PyPI; install separately per docs/agentic-harness.md

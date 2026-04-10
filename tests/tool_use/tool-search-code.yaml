@@ -1,0 +1,45 @@
+id: tool-search-code
+name: Search code
+category: tool_use
+grader: tool_call
+timeout_sec: 20
+prompt: |
+  Search for the word 'login' in the codebase
+grader_config:
+  mode: single
+  expected_tool: search_code
+  expected_param_key: pattern
+  expected_param_contains: login
+  tools:
+    - type: function
+      function:
+        name: get_weather
+        description: Get weather for a location
+        parameters:
+          type: object
+          properties: {location: {type: string}}
+          required: [location]
+    - type: function
+      function:
+        name: get_time
+        description: Get current time in a timezone
+        parameters:
+          type: object
+          properties: {timezone: {type: string}}
+          required: [timezone]
+    - type: function
+      function:
+        name: read_file
+        description: Read file contents
+        parameters:
+          type: object
+          properties: {path: {type: string}}
+          required: [path]
+    - type: function
+      function:
+        name: search_code
+        description: Search for code patterns
+        parameters:
+          type: object
+          properties: {pattern: {type: string}, path: {type: string}}
+          required: [pattern]

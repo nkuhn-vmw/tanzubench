@@ -1,0 +1,45 @@
+id: tool-weather-single
+name: Weather single-call
+category: tool_use
+grader: tool_call
+timeout_sec: 20
+prompt: |
+  What is the weather in Paris?
+grader_config:
+  mode: single
+  expected_tool: get_weather
+  expected_param_key: location
+  expected_param_contains: Paris
+  tools:
+    - type: function
+      function:
+        name: get_weather
+        description: Get weather for a location
+        parameters:
+          type: object
+          properties: {location: {type: string}}
+          required: [location]
+    - type: function
+      function:
+        name: get_time
+        description: Get current time in a timezone
+        parameters:
+          type: object
+          properties: {timezone: {type: string}}
+          required: [timezone]
+    - type: function
+      function:
+        name: read_file
+        description: Read file contents
+        parameters:
+          type: object
+          properties: {path: {type: string}}
+          required: [path]
+    - type: function
+      function:
+        name: search_code
+        description: Search for code patterns
+        parameters:
+          type: object
+          properties: {pattern: {type: string}, path: {type: string}}
+          required: [pattern]

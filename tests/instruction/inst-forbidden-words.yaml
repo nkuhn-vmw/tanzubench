@@ -1,0 +1,10 @@
+id: inst-forbidden-words
+name: Forbidden words — sunset
+category: instruction
+grader: contains
+timeout_sec: 30
+prompt: |
+  Describe a sunset in 2-3 sentences, without using the words "red",
+  "orange", or "pink".
+grader_config:
+  must_not_contain: [red, orange, pink]

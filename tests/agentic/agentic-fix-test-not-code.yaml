@@ -1,0 +1,24 @@
+id: agentic-fix-test-not-code
+name: Fix the broken test, not the correct implementation
+category: agentic
+grader: agentic
+timeout_sec: 600
+fixture: fix-test-not-code
+task_prompt: |
+  The test suite fails, but the implementation in calculator.py is correct.
+  The bug is in the test file: one assertion has a wrong expected value.
+
+  Fix the test so it passes without modifying calculator.py. When done, all
+  tests in tests/ must pass.
+frameworks: [opencode, aider, custom]
+grader_config:
+  setup_commands:
+    - "python3 -m pip install -q pytest"
+  success_check:
+    command: "python3 -m pytest tests/ -q"
+    max_diff_lines: 50
+  partial_credit:
+    - {check: "grep -qE '3\\.33|round|approx|float' tests/test_calculator.py", points: 0.3}
+    - {check: "! git diff --name-only | grep -q calculator.py", points: 0.3}
+    - {check: "python3 -m pytest tests/ -q", points: 0.4}
+  cleanup: always

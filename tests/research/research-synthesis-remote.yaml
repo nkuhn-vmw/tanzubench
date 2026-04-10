@@ -1,0 +1,28 @@
+id: research-synthesis-remote
+name: Synthesis with citations — remote work productivity
+category: research
+grader: llm_judge
+timeout_sec: 180
+prompt_template: |
+  Based on the three sources below, write a 150-word synthesis answering:
+  "What does the evidence suggest about the productivity impact of remote
+  work?" Cite sources as [A], [B], [C]. Do not add claims not in the
+  sources.
+
+  SOURCE A:
+  {{ asset:research-source-a.md }}
+
+  SOURCE B:
+  {{ asset:research-source-b.md }}
+
+  SOURCE C:
+  {{ asset:research-source-c.md }}
+grader_config:
+  judge_rubric: |
+    Grade 0.0-1.0 on:
+    - faithful: no claims outside the sources
+    - cited: uses [A] [B] [C] markers at least once each
+    - non_contradictory: does not make mutually exclusive claims
+    Return JSON: {"faithful": float, "cited": float, "non_contradictory": float, "rationale": string}
+  judge_aggregation: mean
+  judge_temperature: 0.0

@@ -1,0 +1,25 @@
+id: struct-cf-manifest
+name: Cloud Foundry App Manifest JSON
+category: structured_output
+grader: json_schema
+timeout_sec: 30
+prompt: |
+  Generate a Cloud Foundry application manifest as JSON with name 'my-app', memory '256M', instances 2, and buildpacks array containing 'staticfile_buildpack'. Return only JSON, no explanation.
+grader_config:
+  schema:
+    type: object
+    required: [name, memory, instances, buildpacks]
+    properties:
+      name:
+        type: string
+      memory:
+        type: string
+      instances:
+        type: integer
+      buildpacks:
+        type: array
+        items:
+          type: string
+  expected_values:
+    name: my-app
+    instances: 2

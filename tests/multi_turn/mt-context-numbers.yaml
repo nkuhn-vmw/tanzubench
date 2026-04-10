@@ -1,0 +1,19 @@
+id: mt-context-numbers
+name: Context carryover — number recall after distraction
+category: multi_turn
+grader: multi_turn
+timeout_sec: 60
+grader_config:
+  turns:
+    - user_message: |
+        Remember these numbers: 7, 13, 25.
+      checks:
+        - { any_contains: ["7", "13", "25"] }
+    - user_message: |
+        Tell me a fun fact about penguins.
+      checks:
+        - { contains: "penguin" }
+    - user_message: |
+        What is the sum of the three numbers I gave you?
+      checks:
+        - { contains: "45" }

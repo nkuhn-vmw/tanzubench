@@ -1,0 +1,17 @@
+id: coding-py-fizzbuzz
+name: Python fizzbuzz
+category: coding
+grader: exec_unit_tests
+timeout_sec: 60
+prompt: |
+  Write a Python function fizzbuzz(n) that returns the classic FizzBuzz
+  sequence as a list of strings, for inputs 1 through n inclusive. Reply
+  with only the function definition in a code block.
+grader_config:
+  language: python
+  entrypoint: fizzbuzz
+  unit_tests:
+    - {input: [5], expected: ["1", "2", "Fizz", "4", "Buzz"]}
+    - {input: [15], expected_length: 15}
+    - {input: [0], expected: []}
+    - {input: [3], expected: ["1", "2", "Fizz"]}

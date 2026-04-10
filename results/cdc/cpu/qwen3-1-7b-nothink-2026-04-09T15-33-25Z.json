@@ -1,0 +1,1458 @@
+{
+  "schema_version": "2.0.0",
+  "result_type": "suite",
+  "meta": {
+    "timestamp": "2026-04-09T16:26:42Z",
+    "foundation": "cdc",
+    "tile_version": null,
+    "tag": "cdc-qwen3-1-7b-followups",
+    "notes": null,
+    "source_file": null
+  },
+  "target": {
+    "name": "qwen3:1.7b-nothink",
+    "display_name": null,
+    "family": null,
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": null,
+    "quant": null,
+    "size_gb": null
+  },
+  "engine": {
+    "name": "ollama",
+    "version": null,
+    "config": {
+      "_source": "ollama:/api/tags",
+      "models": [
+        {
+          "name": "qwen3:1.7b",
+          "model": "qwen3:1.7b",
+          "modified_at": "2026-03-20T18:07:29.695062861Z",
+          "size": 1359293591,
+          "digest": "1f4c30ed75beb95b4943942a1307e0bea596a473374a474464050d98c213523a",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen3",
+            "families": [
+              "qwen3"
+            ],
+            "parameter_size": "2.0B",
+            "quantization_level": "Q4_K_M"
+          }
+        },
+        {
+          "name": "qwen3:1.7b-nothink",
+          "model": "qwen3:1.7b-nothink",
+          "modified_at": "2026-03-20T18:07:24.675093818Z",
+          "size": 1359293591,
+          "digest": "1f4c30ed75beb95b4943942a1307e0bea596a473374a474464050d98c213523a",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen3",
+            "families": [
+              "qwen3"
+            ],
+            "parameter_size": "2.0B",
+            "quantization_level": "Q4_K_M"
+          }
+        }
+      ]
+    }
+  },
+  "hardware": {
+    "vm_type": null,
+    "cpu": null,
+    "cpu_cores": null,
+    "ram_gb": null,
+    "gpu_count": 0,
+    "gpu_model": null,
+    "gpu_memory_gb": null,
+    "power_limit_watts": null
+  },
+  "grading": {
+    "judge_configured": true,
+    "judge_model": "google/gemma-4-31B-it",
+    "judge_endpoint": "http://127.0.0.1:4000",
+    "judge_fingerprint": "sha256:52791ec32ba4e0ef",
+    "judge_run_date": "2026-04-09T16:26:42Z",
+    "skipped_categories": [
+      "long_context"
+    ]
+  },
+  "tests": [
+    {
+      "id": "basic-boiling-point",
+      "name": "Boiling point of water",
+      "category": "basic",
+      "grader": "exact_match",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 50,
+      "completion_tokens": 167,
+      "elapsed_ms": 5555,
+      "tok_per_sec": 30.06,
+      "details": {
+        "expected": "100",
+        "got": "100",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "100",
+      "notes": null
+    },
+    {
+      "id": "basic-fact-capital",
+      "name": "Capital of France",
+      "category": "basic",
+      "grader": "exact_match",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 47,
+      "completion_tokens": 86,
+      "elapsed_ms": 2956,
+      "tok_per_sec": 29.09,
+      "details": {
+        "expected": "Paris",
+        "got": "Paris",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Paris",
+      "notes": null
+    },
+    {
+      "id": "basic-math-multiply",
+      "name": "15 times 23",
+      "category": "basic",
+      "grader": "exact_match",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 52,
+      "completion_tokens": 196,
+      "elapsed_ms": 6766,
+      "tok_per_sec": 28.97,
+      "details": {
+        "expected": "345",
+        "got": "345",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "345",
+      "notes": null
+    },
+    {
+      "id": "tool-dual-call",
+      "name": "Dual tool call",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 280,
+      "completion_tokens": 148,
+      "elapsed_ms": 6707,
+      "tok_per_sec": 22.07,
+      "details": {
+        "mode": "dual",
+        "tool_calls": [
+          "get_weather",
+          "get_time"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Okay, the user is asking for the weather in San Francisco and the time in Tokyo. Let me check the tools available. There's a function called get_weather that takes a location parameter. I need to call that for San Francisco. Then, there's get_time which requires a timezone. The user mentioned Tokyo, so I should use Tokyo as the timezone. I'll make two separate function calls one for each query. Let me make sure the parameters are correctly formatted as JSON objects within the tool_call tags.\n",
+      "notes": null
+    },
+    {
+      "id": "tool-nested-schema",
+      "name": "Nested args",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 276,
+      "completion_tokens": 129,
+      "elapsed_ms": 6561,
+      "tok_per_sec": 19.66,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "search_code"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Okay, the user wants to search for 'auth' in the src/ directory. Let me check the available tools. There's a function called search_code that takes a pattern and a path. The pattern should be 'auth' and the path is 'src/'. I need to make sure the arguments are correctly formatted as JSON. So the tool call should have the name as search_code, arguments with path \"src/\" and pattern \"auth\". I'll put that in the tool_call tags.\n",
+      "notes": null
+    },
+    {
+      "id": "tool-read-file",
+      "name": "Read file",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 273,
+      "completion_tokens": 113,
+      "elapsed_ms": 5626,
+      "tok_per_sec": 20.09,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "read_file"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Okay, the user wants to read the file at src/main.py. Let me check the available tools. There's a function called read_file that takes a path argument. The path should be a string. So I need to call read_file with the path set to \"src/main.py\". I'll make sure the arguments are in the correct format. No other parameters are needed here. Just the path. Alright, that's all.\n",
+      "notes": null
+    },
+    {
+      "id": "tool-restraint",
+      "name": "Restraint \u2014 no tool",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 272,
+      "completion_tokens": 243,
+      "elapsed_ms": 11572,
+      "tok_per_sec": 21.0,
+      "details": {
+        "mode": "restraint",
+        "tool_calls": [],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "2 + 2 equals 4.",
+      "notes": null
+    },
+    {
+      "id": "tool-search-code",
+      "name": "Search code",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 277,
+      "completion_tokens": 123,
+      "elapsed_ms": 6024,
+      "tok_per_sec": 20.42,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "search_code"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Okay, the user wants to search for the word 'login' in the codebase. Let me check the available tools. There's a function called search_code that takes a pattern parameter. The pattern should be the word they want to find. So the arguments would be {\"pattern\": \"login\"}. I need to make sure the function is called with the correct parameters. The path is not specified, but the function might handle it without it. Alright, I'll generate the tool call.\n",
+      "notes": null
+    },
+    {
+      "id": "tool-weather-single",
+      "name": "Weather single-call",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 272,
+      "completion_tokens": 95,
+      "elapsed_ms": 4513,
+      "tok_per_sec": 21.05,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "get_weather"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Okay, the user is asking for the weather in Paris. Let me check which tool to use. The available tools include get_weather, which requires a location. The location should be a string, like \"Paris\". So I need to call get_weather with the location set to Paris. No other parameters are needed. I'll structure the tool call accordingly.\n",
+      "notes": null
+    },
+    {
+      "id": "inst-forbidden-words",
+      "name": "Forbidden words \u2014 sunset",
+      "category": "instruction",
+      "grader": "contains",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 60,
+      "completion_tokens": 238,
+      "elapsed_ms": 10294,
+      "tok_per_sec": 23.12,
+      "details": {
+        "missing": [],
+        "forbidden": []
+      },
+      "judge": null,
+      "raw_response": "The sky unfolds in a tapestry of shifting hues, from soft lavender to deep indigo, as the sun dips below the horizon. The atmosphere breathes life into the landscape, casting long shadows and illuminating the world in a gentle, radiant glow. Moments later, the sky fades into a peaceful, molten amber, wrapping the scene in a warm, lingering embrace.",
+      "notes": null
+    },
+    {
+      "id": "inst-json-only",
+      "name": "JSON-only output",
+      "category": "instruction",
+      "grader": "regex",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 75,
+      "completion_tokens": 154,
+      "elapsed_ms": 6923,
+      "tok_per_sec": 22.24,
+      "details": {
+        "pattern": "\\{[^{}]*\"name\"\\s*:\\s*\"alice\"[^{}]*\"age\"\\s*:\\s*30[^{}]*\\}",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "{\"name\":\"alice\",\"age\":30}",
+      "notes": null
+    },
+    {
+      "id": "inst-markdown-structure",
+      "name": "Markdown structure",
+      "category": "instruction",
+      "grader": "regex",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 56,
+      "completion_tokens": 486,
+      "elapsed_ms": 21239,
+      "tok_per_sec": 22.88,
+      "details": {
+        "pattern": "^##\\s.*##\\s.*[-*]\\s",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "## Introduction  \nThis is the first heading.\n\n## Conclusion  \n- This is a bullet point.  \n- Another bullet point.  \n- Yet another bullet point.",
+      "notes": null
+    },
+    {
+      "id": "inst-word-count",
+      "name": "Word count \u2014 20 words",
+      "category": "instruction",
+      "grader": "regex",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 48,
+      "completion_tokens": 209,
+      "elapsed_ms": 8711,
+      "tok_per_sec": 23.99,
+      "details": {
+        "pattern": "^(\\S+\\s+){19}\\S+$",
+        "matched": false
+      },
+      "judge": null,
+      "raw_response": "Coffee is a beloved beverage. It comes from roasted beans. The process involves grinding and brewing. Rich in flavor, it's a global staple.",
+      "notes": null
+    },
+    {
+      "id": "file-create",
+      "name": "Create haiku file",
+      "category": "file_ops",
+      "grader": "file_check",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 70,
+      "completion_tokens": 269,
+      "elapsed_ms": 10964,
+      "tok_per_sec": 24.53,
+      "details": {
+        "checks": [
+          {
+            "path": "haiku.txt",
+            "passed": false,
+            "reasons": [
+              "missing: 'autumn'"
+            ]
+          }
+        ],
+        "passed": 0,
+        "total": 1
+      },
+      "judge": null,
+      "raw_response": "Autumn's breath  \nCrimson leaves gild the trees  \nAutumn's touch",
+      "notes": null
+    },
+    {
+      "id": "file-python",
+      "name": "Write Python function file",
+      "category": "file_ops",
+      "grader": "file_check",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 57,
+      "completion_tokens": 130,
+      "elapsed_ms": 5358,
+      "tok_per_sec": 24.26,
+      "details": {
+        "checks": [
+          {
+            "path": "add.py",
+            "passed": true,
+            "reasons": []
+          }
+        ],
+        "passed": 1,
+        "total": 1
+      },
+      "judge": null,
+      "raw_response": "def add(a, b): return a + b",
+      "notes": null
+    },
+    {
+      "id": "file-structured",
+      "name": "Write CSV file",
+      "category": "file_ops",
+      "grader": "file_check",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 55,
+      "completion_tokens": 305,
+      "elapsed_ms": 12283,
+      "tok_per_sec": 24.83,
+      "details": {
+        "checks": [
+          {
+            "path": "data.csv",
+            "passed": true,
+            "reasons": []
+          }
+        ],
+        "passed": 1,
+        "total": 1
+      },
+      "judge": null,
+      "raw_response": "name,age,city  \nAlice,30,New York  \nBob,25, London",
+      "notes": null
+    },
+    {
+      "id": "coding-bash-wc",
+      "name": "Bash line count",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 127,
+      "completion_tokens": 900,
+      "elapsed_ms": 38558,
+      "tok_per_sec": 23.34,
+      "details": {
+        "language": "bash",
+        "passed": 0,
+        "total": 1,
+        "per_test": [
+          {
+            "input": [
+              "/etc/hostname"
+            ],
+            "ok": false,
+            "got": ""
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```bash\nawk '{++cnt} END {print cnt}' \"$1\"\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-js-debounce",
+      "name": "JavaScript sumArr",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 60,
+      "completion_tokens": 425,
+      "elapsed_ms": 16492,
+      "tok_per_sec": 25.77,
+      "details": {
+        "language": "javascript",
+        "passed": 3,
+        "total": 3,
+        "per_test": [
+          {
+            "input": [
+              [
+                1,
+                2,
+                3
+              ]
+            ],
+            "ok": true,
+            "got": "6"
+          },
+          {
+            "input": [
+              []
+            ],
+            "ok": true,
+            "got": "0"
+          },
+          {
+            "input": [
+              [
+                -1,
+                1
+              ]
+            ],
+            "ok": true,
+            "got": "0"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```javascript\nmodule.exports = function sumArr(arr) {\n  let total = 0;\n  for (let num of arr) {\n    total += num;\n  }\n  return total;\n};\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-py-fizzbuzz",
+      "name": "Python fizzbuzz",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 79,
+      "completion_tokens": 749,
+      "elapsed_ms": 29337,
+      "tok_per_sec": 25.53,
+      "details": {
+        "language": "python",
+        "passed": 4,
+        "total": 4,
+        "per_test": [
+          {
+            "input": [
+              5
+            ],
+            "ok": true,
+            "got": "['1', '2', 'Fizz', '4', 'Buzz']"
+          },
+          {
+            "input": [
+              15
+            ],
+            "ok": true,
+            "got": "['1', '2', 'Fizz', '4', 'Buzz', 'Fizz', '7', '8', 'Fizz', 'Buzz', '11', 'Fizz', '13', '14', 'Fizz']"
+          },
+          {
+            "input": [
+              0
+            ],
+            "ok": true,
+            "got": "[]"
+          },
+          {
+            "input": [
+              3
+            ],
+            "ok": true,
+            "got": "['1', '2', 'Fizz']"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```python\ndef fizzbuzz(n):\n    result = []\n    for i in range(1, n + 1):\n        if i % 3 == 0:\n            result.append(\"Fizz\")\n        elif i % 5 == 0:\n            result.append(\"Buzz\")\n        else:\n            result.append(str(i))\n    return result\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-py-palindrome",
+      "name": "Python palindrome",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 67,
+      "completion_tokens": 548,
+      "elapsed_ms": 19921,
+      "tok_per_sec": 27.51,
+      "details": {
+        "language": "python",
+        "passed": 3,
+        "total": 3,
+        "per_test": [
+          {
+            "input": [
+              "racecar"
+            ],
+            "ok": true,
+            "got": "True"
+          },
+          {
+            "input": [
+              "hello"
+            ],
+            "ok": true,
+            "got": "False"
+          },
+          {
+            "input": [
+              "A man a plan a canal Panama"
+            ],
+            "ok": true,
+            "got": "True"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```python\ndef is_palindrome(s):\n    processed = s.replace(' ', '').lower()\n    return processed == processed[::-1]\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-sql-topn",
+      "name": "SQL top-N recent users",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 73,
+      "completion_tokens": 199,
+      "elapsed_ms": 7572,
+      "tok_per_sec": 26.28,
+      "details": {
+        "language": "sql",
+        "passed": 1,
+        "total": 1,
+        "per_test": [
+          {
+            "ok": true,
+            "got": [
+              [
+                "d"
+              ],
+              [
+                "b"
+              ],
+              [
+                "c"
+              ]
+            ]
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "SELECT name FROM users ORDER BY signup_date DESC LIMIT 3;",
+      "notes": null
+    },
+    {
+      "id": "reasoning-cause-effect",
+      "name": "Causal reasoning \u2014 root cause of extended shutdown",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 509,
+      "completion_tokens": 275,
+      "elapsed_ms": 15194,
+      "tok_per_sec": 18.1,
+      "details": {
+        "judge": {
+          "model_response": "The root cause of the 14-day shutdown was the failure to reconcile entity name discrepancies before the policy renewal deadline, leading to an insurance lapse. This caused the facility to operate without active coverage for four days, extending the shutdown.",
+          "rubric_scores": {
+            "factual_correctness": 1.0,
+            "completeness": 1.0
+          },
+          "rationale": "The candidate response accurately identifies the root cause specified in Chain 3 of the document and correctly links the entity name discrepancy to the insurance lapse that extended the shutdown.",
+          "judge_raw": "{\"factual_correctness\": 1.0, \"completeness\": 1.0, \"rationale\": \"The candidate response accurately identifies the root cause specified in Chain 3 of the document and correctly links the entity name discrepancy to the insurance lapse that extended the shutdown.\"}"
+        }
+      },
+      "judge": {
+        "model_response": "The root cause of the 14-day shutdown was the failure to reconcile entity name discrepancies before the policy renewal deadline, leading to an insurance lapse. This caused the facility to operate without active coverage for four days, extending the shutdown.",
+        "rubric_scores": {
+          "factual_correctness": 1.0,
+          "completeness": 1.0
+        },
+        "rationale": "The candidate response accurately identifies the root cause specified in Chain 3 of the document and correctly links the entity name discrepancy to the insurance lapse that extended the shutdown.",
+        "judge_raw": "{\"factual_correctness\": 1.0, \"completeness\": 1.0, \"rationale\": \"The candidate response accurately identifies the root cause specified in Chain 3 of the document and correctly links the entity name discrepancy to the insurance lapse that extended the shutdown.\"}"
+      },
+      "raw_response": "The root cause of the 14-day shutdown was the failure to reconcile entity name discrepancies before the policy renewal deadline, leading to an insurance lapse. This caused the facility to operate without active coverage for four days, extending the shutdown.",
+      "notes": null
+    },
+    {
+      "id": "reasoning-multihop-1",
+      "name": "Multi-hop reasoning \u2014 biography dates and places",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 0.5,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 584,
+      "completion_tokens": 122,
+      "elapsed_ms": 8977,
+      "tok_per_sec": 13.59,
+      "details": {
+        "judge": {
+          "model_response": "2001; Research scientist at Meridian Applied Science.",
+          "rubric_scores": {
+            "factual_correctness": 0.0,
+            "completeness": 1.0
+          },
+          "rationale": "The candidate provided the wrong year. The document states she moved to Boston in June 1997, not 2001 (which is when she moved to Cornell). The job title and company were correct.",
+          "judge_raw": "{\"factual_correctness\": 0.0, \"completeness\": 1.0, \"rationale\": \"The candidate provided the wrong year. The document states she moved to Boston in June 1997, not 2001 (which is when she moved to Cornell). The job title and company were correct.\"}"
+        }
+      },
+      "judge": {
+        "model_response": "2001; Research scientist at Meridian Applied Science.",
+        "rubric_scores": {
+          "factual_correctness": 0.0,
+          "completeness": 1.0
+        },
+        "rationale": "The candidate provided the wrong year. The document states she moved to Boston in June 1997, not 2001 (which is when she moved to Cornell). The job title and company were correct.",
+        "judge_raw": "{\"factual_correctness\": 0.0, \"completeness\": 1.0, \"rationale\": \"The candidate provided the wrong year. The document states she moved to Boston in June 1997, not 2001 (which is when she moved to Cornell). The job title and company were correct.\"}"
+      },
+      "raw_response": "2001; Research scientist at Meridian Applied Science.",
+      "notes": null
+    },
+    {
+      "id": "reasoning-multihop-2",
+      "name": "Multi-hop reasoning \u2014 org chart before and after reorganization",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 0.665,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 640,
+      "completion_tokens": 303,
+      "elapsed_ms": 17359,
+      "tok_per_sec": 17.45,
+      "details": {
+        "judge": {
+          "model_response": "Obasi reported to the CTO before the 2024 reorganization. His team was divided into two groups: 20 engineers joined Webb's Platform group, and 14 moved to Nakamura's Data Science group. Obasi himself was offered a principal engineer role within Webb's organization.",
+          "rubric_scores": {
+            "factual_correctness": 1.0,
+            "completeness": 0.33
+          },
+          "rationale": "The candidate correctly identifies Obasi and the fate of his team. However, the question asks 'Who reported to the CTO', and the document explicitly states that three VPs (Webb, Nakamura, and Obasi) reported to the CTO (Shirazi) before the 2024 reorganization. By only mentioning Obasi, the candidate failed to identify the other two reports, making the answer incomplete.",
+          "judge_raw": "{\n  \"factual_correctness\": 1.0,\n  \"completeness\": 0.33,\n  \"rationale\": \"The candidate correctly identifies Obasi and the fate of his team. However, the question asks 'Who reported to the CTO', and the document explicitly states that three VPs (Webb, Nakamura, and Obasi) reported to the CTO (Shirazi) before the 2024 reorganization. By only mentioning Obasi, the candidate failed to identify the other two reports, making the answer incomplete.\"\n}"
+        }
+      },
+      "judge": {
+        "model_response": "Obasi reported to the CTO before the 2024 reorganization. His team was divided into two groups: 20 engineers joined Webb's Platform group, and 14 moved to Nakamura's Data Science group. Obasi himself was offered a principal engineer role within Webb's organization.",
+        "rubric_scores": {
+          "factual_correctness": 1.0,
+          "completeness": 0.33
+        },
+        "rationale": "The candidate correctly identifies Obasi and the fate of his team. However, the question asks 'Who reported to the CTO', and the document explicitly states that three VPs (Webb, Nakamura, and Obasi) reported to the CTO (Shirazi) before the 2024 reorganization. By only mentioning Obasi, the candidate failed to identify the other two reports, making the answer incomplete.",
+        "judge_raw": "{\n  \"factual_correctness\": 1.0,\n  \"completeness\": 0.33,\n  \"rationale\": \"The candidate correctly identifies Obasi and the fate of his team. However, the question asks 'Who reported to the CTO', and the document explicitly states that three VPs (Webb, Nakamura, and Obasi) reported to the CTO (Shirazi) before the 2024 reorganization. By only mentioning Obasi, the candidate failed to identify the other two reports, making the answer incomplete.\"\n}"
+      },
+      "raw_response": "Obasi reported to the CTO before the 2024 reorganization. His team was divided into two groups: 20 engineers joined Webb's Platform group, and 14 moved to Nakamura's Data Science group. Obasi himself was offered a principal engineer role within Webb's organization.",
+      "notes": null
+    },
+    {
+      "id": "reasoning-timeline",
+      "name": "Timeline ordering \u2014 Project Helios events",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 430,
+      "completion_tokens": 323,
+      "elapsed_ms": 16291,
+      "tok_per_sec": 19.83,
+      "details": {
+        "judge": {
+          "model_response": "The events in chronological order are: (B) first engineering prototype demonstrated, (A) security vulnerability discovered, (C) Helios v1.0 released.  \n**Order: B \u2192 A \u2192 C**",
+          "rubric_scores": {
+            "factual_correctness": 1.0,
+            "completeness": 1.0
+          },
+          "rationale": "The candidate correctly identified the dates for the events: (B) 2019-07-22, (A) 2021-08-03, and (C) 2022-04-28. The chronological order B -> A -> C is accurate based on the provided document.",
+          "judge_raw": "{\"factual_correctness\": 1.0, \"completeness\": 1.0, \"rationale\": \"The candidate correctly identified the dates for the events: (B) 2019-07-22, (A) 2021-08-03, and (C) 2022-04-28. The chronological order B -> A -> C is accurate based on the provided document.\"}"
+        }
+      },
+      "judge": {
+        "model_response": "The events in chronological order are: (B) first engineering prototype demonstrated, (A) security vulnerability discovered, (C) Helios v1.0 released.  \n**Order: B \u2192 A \u2192 C**",
+        "rubric_scores": {
+          "factual_correctness": 1.0,
+          "completeness": 1.0
+        },
+        "rationale": "The candidate correctly identified the dates for the events: (B) 2019-07-22, (A) 2021-08-03, and (C) 2022-04-28. The chronological order B -> A -> C is accurate based on the provided document.",
+        "judge_raw": "{\"factual_correctness\": 1.0, \"completeness\": 1.0, \"rationale\": \"The candidate correctly identified the dates for the events: (B) 2019-07-22, (A) 2021-08-03, and (C) 2022-04-28. The chronological order B -> A -> C is accurate based on the provided document.\"}"
+      },
+      "raw_response": "The events in chronological order are: (B) first engineering prototype demonstrated, (A) security vulnerability discovered, (C) Helios v1.0 released.  \n**Order: B \u2192 A \u2192 C**",
+      "notes": null
+    },
+    {
+      "id": "writing-email-draft",
+      "name": "Writing \u2014 professional meeting reschedule email",
+      "category": "writing",
+      "grader": "llm_judge",
+      "score": 0.8667,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 120,
+      "completion_tokens": 475,
+      "elapsed_ms": 18974,
+      "tok_per_sec": 25.03,
+      "details": {
+        "judge": {
+          "model_response": "**Subject:** Update: Quarterly Planning Meeting Rescheduled  \n\nDear Attendees,  \n\nWe apologize for any inconvenience caused. The quarterly planning meeting, originally scheduled for Thursday, April 10 at 2:00 PM, has been rescheduled to Monday, April 14 at 10:00 AM in Conference Room B. The agenda remains unchanged. Please confirm your availability by the end of business Friday.  \n\nKindly RSVP to [your email] by [date] to ensure proper attendance. Thank you for your cooperation.  \n\nBest regards,",
+          "rubric_scores": {
+            "clarity": 1.0,
+            "accuracy": 1.0,
+            "follows_constraints": 0.6
+          },
+          "rationale": "The response is clear and accurate. However, it fails significantly on the length constraint. The candidate claims a word count of 120, but the actual body text is approximately 75 words. This is not 'approximately 120 words'.",
+          "judge_raw": "{\"clarity\": 1.0, \"accuracy\": 1.0, \"follows_constraints\": 0.6, \"rationale\": \"The response is clear and accurate. However, it fails significantly on the length constraint. The candidate claims a word count of 120, but the actual body text is approximately 75 words. This is not 'approximately 120 words'.\"}"
+        }
+      },
+      "judge": {
+        "model_response": "**Subject:** Update: Quarterly Planning Meeting Rescheduled  \n\nDear Attendees,  \n\nWe apologize for any inconvenience caused. The quarterly planning meeting, originally scheduled for Thursday, April 10 at 2:00 PM, has been rescheduled to Monday, April 14 at 10:00 AM in Conference Room B. The agenda remains unchanged. Please confirm your availability by the end of business Friday.  \n\nKindly RSVP to [your email] by [date] to ensure proper attendance. Thank you for your cooperation.  \n\nBest regards,",
+        "rubric_scores": {
+          "clarity": 1.0,
+          "accuracy": 1.0,
+          "follows_constraints": 0.6
+        },
+        "rationale": "The response is clear and accurate. However, it fails significantly on the length constraint. The candidate claims a word count of 120, but the actual body text is approximately 75 words. This is not 'approximately 120 words'.",
+        "judge_raw": "{\"clarity\": 1.0, \"accuracy\": 1.0, \"follows_constraints\": 0.6, \"rationale\": \"The response is clear and accurate. However, it fails significantly on the length constraint. The candidate claims a word count of 120, but the actual body text is approximately 75 words. This is not 'approximately 120 words'.\"}"
+      },
+      "raw_response": "**Subject:** Update: Quarterly Planning Meeting Rescheduled  \n\nDear Attendees,  \n\nWe apologize for any inconvenience caused. The quarterly planning meeting, originally scheduled for Thursday, April 10 at 2:00 PM, has been rescheduled to Monday, April 14 at 10:00 AM in Conference Room B. The agenda remains unchanged. Please confirm your availability by the end of business Friday.  \n\nKindly RSVP to [your email] by [date] to ensure proper attendance. Thank you for your cooperation.  \n\nBest regards,  \n[Your Name]  \n[Your Position]  \n[Organization]  \n\n**Word count:** 120",
+      "notes": null
+    },
+    {
+      "id": "writing-summary-news",
+      "name": "Writing \u2014 summarize news article in 3 sentences",
+      "category": "writing",
+      "grader": "llm_judge",
+      "score": 0.9,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 717,
+      "completion_tokens": 407,
+      "elapsed_ms": 22111,
+      "tok_per_sec": 18.41,
+      "details": {
+        "judge": {
+          "model_response": "The Riverdale City Council approved mixed-use zoning for a 1.4-acre parcel along Harbor Boulevard, allowing a 200-unit residential tower and 18,000 square feet of retail. Developers agreed to 40 affordable units, a park renovation fund contribution, and discounted ground-floor space for local businesses. Opponents raised concerns about traffic impacts, waterfront views, and gentrification, while the city's traffic engineer noted the traffic study relied on pre-pandemic data, which may underestim",
+          "rubric_scores": {
+            "clarity": 1.0,
+            "accuracy": 0.7,
+            "follows_constraints": 1.0
+          },
+          "rationale": "The response follows the length constraint. However, it contains a factual error regarding the traffic study: it attributes the claim that the study relied on pre-pandemic data to the city's traffic engineer, whereas the source states the engineer defended the analysis and it was Councilmember Dunmore who raised the objection about the pre-pandemic data.",
+          "judge_raw": "{\"clarity\": 1.0, \"accuracy\": 0.7, \"follows_constraints\": 1.0, \"rationale\": \"The response follows the length constraint. However, it contains a factual error regarding the traffic study: it attributes the claim that the study relied on pre-pandemic data to the city's traffic engineer, whereas the source states the engineer defended the analysis and it was Councilmember Dunmore who raised the objection about the pre-pandemic data.\"}"
+        }
+      },
+      "judge": {
+        "model_response": "The Riverdale City Council approved mixed-use zoning for a 1.4-acre parcel along Harbor Boulevard, allowing a 200-unit residential tower and 18,000 square feet of retail. Developers agreed to 40 affordable units, a park renovation fund contribution, and discounted ground-floor space for local businesses. Opponents raised concerns about traffic impacts, waterfront views, and gentrification, while the city's traffic engineer noted the traffic study relied on pre-pandemic data, which may underestim",
+        "rubric_scores": {
+          "clarity": 1.0,
+          "accuracy": 0.7,
+          "follows_constraints": 1.0
+        },
+        "rationale": "The response follows the length constraint. However, it contains a factual error regarding the traffic study: it attributes the claim that the study relied on pre-pandemic data to the city's traffic engineer, whereas the source states the engineer defended the analysis and it was Councilmember Dunmore who raised the objection about the pre-pandemic data.",
+        "judge_raw": "{\"clarity\": 1.0, \"accuracy\": 0.7, \"follows_constraints\": 1.0, \"rationale\": \"The response follows the length constraint. However, it contains a factual error regarding the traffic study: it attributes the claim that the study relied on pre-pandemic data to the city's traffic engineer, whereas the source states the engineer defended the analysis and it was Councilmember Dunmore who raised the objection about the pre-pandemic data.\"}"
+      },
+      "raw_response": "The Riverdale City Council approved mixed-use zoning for a 1.4-acre parcel along Harbor Boulevard, allowing a 200-unit residential tower and 18,000 square feet of retail. Developers agreed to 40 affordable units, a park renovation fund contribution, and discounted ground-floor space for local businesses. Opponents raised concerns about traffic impacts, waterfront views, and gentrification, while the city's traffic engineer noted the traffic study relied on pre-pandemic data, which may underestimate current congestion levels.",
+      "notes": null
+    },
+    {
+      "id": "writing-tech-explainer",
+      "name": "Writing \u2014 explain HTTP caching for non-technical readers",
+      "category": "writing",
+      "grader": "llm_judge",
+      "score": 0.9333,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 76,
+      "completion_tokens": 670,
+      "elapsed_ms": 25496,
+      "tok_per_sec": 26.28,
+      "details": {
+        "judge": {
+          "model_response": "HTTP caching is like a friendly helper that remembers your favorite movies or songs. When you visit a website, the server might store a copy of the page in a \"cache\" (like a library shelf). If you come back later, the helper can quickly pull the cached copy instead of downloading the whole page again. This saves time and reduces the internet's workload. Imagine a coffee shop where you order a latte. The barista makes a copy for you. When you return, the barista serves the same latte without maki",
+          "rubric_scores": {
+            "clarity": 1.0,
+            "accuracy": 0.8,
+            "follows_constraints": 1.0
+          },
+          "rationale": "The response is very clear and accessible for a non-technical reader. It follows all length and formatting constraints and includes an analogy. However, the accuracy is slightly penalized because the analogy suggests the server stores the copy for the user (server-side caching), whereas HTTP caching primarily refers to the browser storing the copy locally (client-side caching) to avoid requesting it from the server again.",
+          "judge_raw": "{\"clarity\": 1.0, \"accuracy\": 0.8, \"follows_constraints\": 1.0, \"rationale\": \"The response is very clear and accessible for a non-technical reader. It follows all length and formatting constraints and includes an analogy. However, the accuracy is slightly penalized because the analogy suggests the server stores the copy for the user (server-side caching), whereas HTTP caching primarily refers to the browser storing the copy locally (client-side caching) to avoid requesting it from the server again"
+        }
+      },
+      "judge": {
+        "model_response": "HTTP caching is like a friendly helper that remembers your favorite movies or songs. When you visit a website, the server might store a copy of the page in a \"cache\" (like a library shelf). If you come back later, the helper can quickly pull the cached copy instead of downloading the whole page again. This saves time and reduces the internet's workload. Imagine a coffee shop where you order a latte. The barista makes a copy for you. When you return, the barista serves the same latte without maki",
+        "rubric_scores": {
+          "clarity": 1.0,
+          "accuracy": 0.8,
+          "follows_constraints": 1.0
+        },
+        "rationale": "The response is very clear and accessible for a non-technical reader. It follows all length and formatting constraints and includes an analogy. However, the accuracy is slightly penalized because the analogy suggests the server stores the copy for the user (server-side caching), whereas HTTP caching primarily refers to the browser storing the copy locally (client-side caching) to avoid requesting it from the server again.",
+        "judge_raw": "{\"clarity\": 1.0, \"accuracy\": 0.8, \"follows_constraints\": 1.0, \"rationale\": \"The response is very clear and accessible for a non-technical reader. It follows all length and formatting constraints and includes an analogy. However, the accuracy is slightly penalized because the analogy suggests the server stores the copy for the user (server-side caching), whereas HTTP caching primarily refers to the browser storing the copy locally (client-side caching) to avoid requesting it from the server again"
+      },
+      "raw_response": "HTTP caching is like a friendly helper that remembers your favorite movies or songs. When you visit a website, the server might store a copy of the page in a \"cache\" (like a library shelf). If you come back later, the helper can quickly pull the cached copy instead of downloading the whole page again. This saves time and reduces the internet's workload. Imagine a coffee shop where you order a latte. The barista makes a copy for you. When you return, the barista serves the same latte without making a new one. HTTP caching works the same way: the server saves a copy of a page so you don\u2019t have to download it every time. It\u2019s a smart way to speed up your browsing experience and keep servers from getting overloaded. By remembering your preferences, it makes the internet faster and more efficient.",
+      "notes": null
+    },
+    {
+      "id": "research-cited-answer",
+      "name": "Cited answer \u2014 source trust for policy decision",
+      "category": "research",
+      "grader": "llm_judge",
+      "score": 0.7767,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 1352,
+      "completion_tokens": 490,
+      "elapsed_ms": 35837,
+      "tok_per_sec": 13.67,
+      "details": {
+        "judge": {
+          "model_response": "The most directly applicable evidence for a remote-first or hybrid work policy comes from **Source A**. It presents research showing remote workers produced 5% more output per hour and experienced fewer sick days, with mid-career workers reporting reduced commute fatigue as a key driver of productivity gains. This directly supports the case for remote work as a productivity-enhancing arrangement. **Source C** also provides relevant evidence, highlighting hybrid models that balance remote output ",
+          "rubric_scores": {
+            "faithful": 1.0,
+            "cited": 0.33,
+            "non_contradictory": 1.0
+          },
+          "rationale": "The response is faithful to the sources and contains no contradictions. However, it fails the citation requirement significantly; it only uses [A] and [C], completely omitting [B].",
+          "judge_raw": "{\"faithful\": 1.0, \"cited\": 0.33, \"non_contradictory\": 1.0, \"rationale\": \"The response is faithful to the sources and contains no contradictions. However, it fails the citation requirement significantly; it only uses [A] and [C], completely omitting [B].\"}"
+        }
+      },
+      "judge": {
+        "model_response": "The most directly applicable evidence for a remote-first or hybrid work policy comes from **Source A**. It presents research showing remote workers produced 5% more output per hour and experienced fewer sick days, with mid-career workers reporting reduced commute fatigue as a key driver of productivity gains. This directly supports the case for remote work as a productivity-enhancing arrangement. **Source C** also provides relevant evidence, highlighting hybrid models that balance remote output ",
+        "rubric_scores": {
+          "faithful": 1.0,
+          "cited": 0.33,
+          "non_contradictory": 1.0
+        },
+        "rationale": "The response is faithful to the sources and contains no contradictions. However, it fails the citation requirement significantly; it only uses [A] and [C], completely omitting [B].",
+        "judge_raw": "{\"faithful\": 1.0, \"cited\": 0.33, \"non_contradictory\": 1.0, \"rationale\": \"The response is faithful to the sources and contains no contradictions. However, it fails the citation requirement significantly; it only uses [A] and [C], completely omitting [B].\"}"
+      },
+      "raw_response": "The most directly applicable evidence for a remote-first or hybrid work policy comes from **Source A**. It presents research showing remote workers produced 5% more output per hour and experienced fewer sick days, with mid-career workers reporting reduced commute fatigue as a key driver of productivity gains. This directly supports the case for remote work as a productivity-enhancing arrangement. **Source C** also provides relevant evidence, highlighting hybrid models that balance remote output advantages with improved collaboration and retention. However, **Source A** offers the most direct and measurable evidence for productivity gains, making it the strongest source for advising a remote-first policy. \n\n[A] Research shows remote workers produced 5% more output per hour and experienced fewer sick days. [C] Hybrid models capture remote productivity gains while improving collaboration and retention.",
+      "notes": null
+    },
+    {
+      "id": "research-synthesis-remote",
+      "name": "Synthesis with citations \u2014 remote work productivity",
+      "category": "research",
+      "grader": "llm_judge",
+      "score": 0.6667,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 1324,
+      "completion_tokens": 551,
+      "elapsed_ms": 35746,
+      "tok_per_sec": 15.41,
+      "details": {
+        "judge": {
+          "model_response": "The evidence suggests remote work can enhance productivity for many knowledge workers, particularly those in mid-career roles. Source A highlights that remote workers produce 5% more output per hour and benefit from reduced commute fatigue, while Source C\u2019s hybrid model shows comparable productivity to remote work with improved collaboration and satisfaction. However, Source B warns that remote metrics often overlook collective value, such as spontaneous collaboration and mentorship, and emphasi",
+          "rubric_scores": {
+            "faithful": 1.0,
+            "cited": 0.0,
+            "non_contradictory": 1.0
+          },
+          "rationale": "The response is faithful to the sources and contains no contradictions. However, it fails the citation requirement completely; it uses phrases like 'Source A' and 'Source C' instead of the mandated [A], [B], [C] markers.",
+          "judge_raw": "{\"faithful\": 1.0, \"cited\": 0.0, \"non_contradictory\": 1.0, \"rationale\": \"The response is faithful to the sources and contains no contradictions. However, it fails the citation requirement completely; it uses phrases like 'Source A' and 'Source C' instead of the mandated [A], [B], [C] markers.\"}"
+        }
+      },
+      "judge": {
+        "model_response": "The evidence suggests remote work can enhance productivity for many knowledge workers, particularly those in mid-career roles. Source A highlights that remote workers produce 5% more output per hour and benefit from reduced commute fatigue, while Source C\u2019s hybrid model shows comparable productivity to remote work with improved collaboration and satisfaction. However, Source B warns that remote metrics often overlook collective value, such as spontaneous collaboration and mentorship, and emphasi",
+        "rubric_scores": {
+          "faithful": 1.0,
+          "cited": 0.0,
+          "non_contradictory": 1.0
+        },
+        "rationale": "The response is faithful to the sources and contains no contradictions. However, it fails the citation requirement completely; it uses phrases like 'Source A' and 'Source C' instead of the mandated [A], [B], [C] markers.",
+        "judge_raw": "{\"faithful\": 1.0, \"cited\": 0.0, \"non_contradictory\": 1.0, \"rationale\": \"The response is faithful to the sources and contains no contradictions. However, it fails the citation requirement completely; it uses phrases like 'Source A' and 'Source C' instead of the mandated [A], [B], [C] markers.\"}"
+      },
+      "raw_response": "The evidence suggests remote work can enhance productivity for many knowledge workers, particularly those in mid-career roles. Source A highlights that remote workers produce 5% more output per hour and benefit from reduced commute fatigue, while Source C\u2019s hybrid model shows comparable productivity to remote work with improved collaboration and satisfaction. However, Source B warns that remote metrics often overlook collective value, such as spontaneous collaboration and mentorship, and emphasizes the importance of in-person interaction for innovation and cultural cohesion. Hybrid models, as shown in Source C, balance remote and in-office benefits, preserving teamwork while mitigating productivity gaps. While remote work offers advantages, its effectiveness depends on task type, team size, and policy design, with hybrid arrangements potentially optimizing productivity and collaboration.",
+      "notes": null
+    },
+    {
+      "id": "agentic-add-failing-test.opencode",
+      "name": "Add failing test then fix",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.3,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 599938,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "timeout",
+        "elapsed_sec": 599.9385480880737,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "cted schema.\",\"time\":{\"start\":1775749845127,\"end\":1775749845129}}}}\n{\"type\":\"step_finish\",\"timestamp\":1775749845476,\"sessionID\":\"ses_28d18d0d0ffeM5JmR3arPBY02k\",\"part\":{\"id\":\"prt_d72f051ca001WxRUNexUPFENoN\",\"sessionID\":\"ses_28d18d0d0ffeM5JmR3arPBY02k\",\"messageID\":\"msg_d72eec3e70011snfA1Ge8A7Hop\",\"type\":\"step-finish\",\"reason\":\"tool-calls\",\"snapshot\":\"854635068aa6049cd114da596f8349b973580ca5\",\"cost\":0,\"tokens\":{\"total\":12248,\"input\":11670,\"output\":578,\"reasoning\":0,\"cache\":{\"read\":0,\"write\":0}}}}\n",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.3
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-add-failing-test.aider",
+      "name": "Add failing test then fix",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 74114,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 74.1144950389862,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "tput limit!\nTotal tokens: ~1,305 of 0 -- possibly exhausted context window!\n\nTo reduce output tokens:\n- Ask for smaller changes in each request.\n- Break your code into smaller source files.\n- Use a stronger model that can return diffs.\n\nTo reduce input tokens:\n- Use /tokens to see token usage.\n- Use /drop to remove unneeded files from the chat session.\n- Use /clear to clear the chat history.\n- Break your code into smaller source files.\n\n\nhttps://aider.chat/docs/troubleshooting/token-limits.html\n",
+        "stderr_excerpt": "/home/user/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-add-failing-test.custom",
+      "name": "Add failing test then fix",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.6,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 35941,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 35.94127535820007,
+        "turns_completed": 1,
+        "last_tool_call": "done()",
+        "stdout_excerpt": "",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.6
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-cli-integration.opencode",
+      "name": "Write CLI passing integration tests",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.4,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 600005,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "timeout",
+        "elapsed_sec": 600.005429983139,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "\"step-finish\",\"reason\":\"tool-calls\",\"snapshot\":\"932648ced548ab89a3ab87bfa075b29d198b83f7\",\"cost\":0,\"tokens\":{\"total\":12079,\"input\":11431,\"output\":648,\"reasoning\":0,\"cache\":{\"read\":0,\"write\":0}}}}\n{\"type\":\"step_start\",\"timestamp\":1775750540913,\"sessionID\":\"ses_28d0deeeeffe4qav0r86ElHp26\",\"part\":{\"id\":\"prt_d72faee70001ko1bF5GCAcgAk6\",\"sessionID\":\"ses_28d0deeeeffe4qav0r86ElHp26\",\"messageID\":\"msg_d72fac931001GppmIZEE2IPbCw\",\"type\":\"step-start\",\"snapshot\":\"932648ced548ab89a3ab87bfa075b29d198b83f7\"}}\n",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.4
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-cli-integration.aider",
+      "name": "Write CLI passing integration tests",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 28744,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 28.744200944900513,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "_main__\":\n\n    main()\n\n```\n\n\nThe code implements a simple CLI that:\n\n1. Checks if there's at least one argument (the name to greet)\n\n2. If no argument is provided, exits with code 1 (non-zero)\n\n3. If an argument is provided, prints \"hello, [name]\" and exits with code 0\n\n4. The code is structured to pass both tests in the test_cli.py file\n\n\n\nThe file is self-contained and only contains the necessary code to pass the \nprovided tests.\n\nTokens: 955 sent, 528 received.\n\ncli.py\nApplied edit to cli.py\n",
+        "stderr_excerpt": "/home/user/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-cli-integration.custom",
+      "name": "Write CLI passing integration tests",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.4,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 40901,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 40.901735067367554,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "Okay, let's see. The user wants me to read the README.md and tests/test_cli.py files, then write a cli.py file so that the tests pass. They mentioned only to create the cli.py file and not modify the tests. \n\nFirst, I need to check if the required files are present. The user provided the path to read, so I should use the read_file function to get the contents of README.md and tests/test_cli.py. Wait, but the user says to read those files, so I need to call read_file for both paths. Then, I need ",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.4
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-null-deref.opencode",
+      "name": "Fix null deref bug",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.3,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 600005,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "timeout",
+        "elapsed_sec": 600.0051021575928,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "\"step-finish\",\"reason\":\"tool-calls\",\"snapshot\":\"855305dce79f6c9efc9d736a568902139a9a64fb\",\"cost\":0,\"tokens\":{\"total\":11765,\"input\":11246,\"output\":519,\"reasoning\":0,\"cache\":{\"read\":0,\"write\":0}}}}\n{\"type\":\"step_start\",\"timestamp\":1775751178522,\"sessionID\":\"ses_28d03aa4cffeqpuvp552ZPG4s0\",\"part\":{\"id\":\"prt_d7304a919001wzPgqoJPqA7j76\",\"sessionID\":\"ses_28d03aa4cffeqpuvp552ZPG4s0\",\"messageID\":\"msg_d73049861001HtWd6g3nIDPm3t\",\"type\":\"step-start\",\"snapshot\":\"855305dce79f6c9efc9d736a568902139a9a64fb\"}}\n",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.3
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-null-deref.aider",
+      "name": "Fix null deref bug",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 36807,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 36.80710697174072,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "f\n@@ -1,3 +1,5 @@\n def greet(request):\n-    # Bug: crashes if 'user' is missing from request.\n-    return f\"Hello, {request['user'].upper()}!\"\n+    if 'user' in request:\n+        return f\"Hello, {request['user'].upper()}!\"\n+    else:\n+        return \"Hello, guest!\"\n```\n\n\n\n---\n\n\n\nThis change ensures that the function is robust and passes all tests, including \n`test_missing_user`, which now expects a default value without crashing.\n\nTokens: 1.0k sent, 705 received.\nApplied edit to app/handlers.py\n",
+        "stderr_excerpt": "/home/user/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-null-deref.custom",
+      "name": "Fix null deref bug",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.3,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 58939,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 58.939192056655884,
+        "turns_completed": 2,
+        "last_tool_call": "done(status,message)",
+        "stdout_excerpt": "",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.3
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-rename-function.opencode",
+      "name": "Rename function everywhere",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 600052,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "timeout",
+        "elapsed_sec": 600.0524017810822,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": " \\\"expected\\\": \\\"string\\\",\\n    \\\"code\\\": \\\"invalid_type\\\",\\n    \\\"path\\\": [\\n      \\\"oldString\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid input: expected string, received undefined\\\"\\n  },\\n  {\\n    \\\"expected\\\": \\\"string\\\",\\n    \\\"code\\\": \\\"invalid_type\\\",\\n    \\\"path\\\": [\\n      \\\"newString\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid input: expected string, received undefined\\\"\\n  }\\n].\\nPlease rewrite the input so it satisfies the expected schema.\",\"time\":{\"start\":1775751930783,\"end\":1775751930785}}}}\n",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.0
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-rename-function.aider",
+      "name": "Rename function everywhere",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 28048,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 28.048670053482056,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "\nrename the existing functions accordingly.\n\n\n\n---\n\n\n\nHere are the updated files:\n\n\n\nsrc/utils.py\n\n```diff\n@@ -1,5 +1,5 @@\n-def do_thing(x):\n+def double(x):\n     return x * 2\n \n-def do_thing_plus_one(x):\n-    return do_thing(x) + 1\n+def double_plus_one(x):\n+    return double(x) + 1\n```\n\n\n\n---\n\n\n\nThese changes ensure that the tests will now correctly reference the renamed \nfunctions, without needing any modifications to the test code.\n\nTokens: 976 sent, 518 received.\nApplied edit to src/utils.py\n",
+        "stderr_excerpt": "/home/user/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-rename-function.custom",
+      "name": "Rename function everywhere",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 41088,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 41.08859634399414,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "Okay, I need to help rename functions in the source file so that the tests in test_utils.py can find them. The current functions are do_thing and do_thing_plus_one, but the tests expect double and double_plus_one. So I need to rename the functions in src/utils.py and any internal call sites.\n\nFirst, I should check the current functions in src/utils.py. Wait, the user mentioned that the source defines do_thing and do_thing_plus_one. So I need to rename those functions to double and double_plus_on",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.0
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    }
+  ],
+  "summary": {
+    "headline_metric": "composite_score",
+    "headline_value": 0.795,
+    "headline_unit": null,
+    "composite_score": 0.795,
+    "composite_max": 1.0,
+    "composite_over": 9,
+    "total_tokens": 9528,
+    "total_time_ms": 3184499,
+    "category_scores": [
+      {
+        "category": "basic",
+        "score": 1.0,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored"
+      },
+      {
+        "category": "tool_use",
+        "score": 1.0,
+        "max": 1.0,
+        "tasks": 6,
+        "status": "scored"
+      },
+      {
+        "category": "instruction",
+        "score": 0.75,
+        "max": 1.0,
+        "tasks": 4,
+        "status": "scored"
+      },
+      {
+        "category": "file_ops",
+        "score": 0.6667,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored"
+      },
+      {
+        "category": "coding",
+        "score": 0.8,
+        "max": 1.0,
+        "tasks": 5,
+        "status": "scored"
+      },
+      {
+        "category": "long_context",
+        "score": null,
+        "max": 1.0,
+        "tasks": 0,
+        "status": "skipped"
+      },
+      {
+        "category": "reasoning",
+        "score": 0.7913,
+        "max": 1.0,
+        "tasks": 4,
+        "status": "scored"
+      },
+      {
+        "category": "writing",
+        "score": 0.9,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored"
+      },
+      {
+        "category": "research",
+        "score": 0.7217,
+        "max": 1.0,
+        "tasks": 2,
+        "status": "scored"
+      },
+      {
+        "category": "agentic",
+        "score": 0.525,
+        "max": 1.0,
+        "tasks": 12,
+        "status": "scored"
+      }
+    ],
+    "agent_framework_scores": [
+      {
+        "framework": "opencode",
+        "score": 0.25,
+        "tasks": 4
+      },
+      {
+        "framework": "aider",
+        "score": 1.0,
+        "tasks": 4
+      },
+      {
+        "framework": "custom",
+        "score": 0.325,
+        "tasks": 4
+      }
+    ]
+  }
+}

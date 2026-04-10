@@ -1,0 +1,31 @@
+id: struct-csv-to-json
+name: Convert CSV to JSON Array
+category: structured_output
+grader: json_schema
+timeout_sec: 30
+prompt: |
+  Convert the following CSV data to a JSON array. Each row becomes an object with name (string), age (number, not string), and city (string). Return only the JSON array, no explanation.
+
+  name,age,city
+  Alice,30,Boston
+  Bob,25,NYC
+  Carol,35,Chicago
+  Dave,28,Denver
+  Eve,32,Seattle
+grader_config:
+  schema:
+    type: array
+    minItems: 5
+    items:
+      type: object
+      required: [name, age, city]
+      properties:
+        name:
+          type: string
+        age:
+          type: integer
+        city:
+          type: string
+  expected_values:
+    "[0].name": Alice
+    "[0].age": 30

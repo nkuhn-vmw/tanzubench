@@ -1,0 +1,34 @@
+id: debug-py-mutation
+name: Fix mutable default argument in append_item
+category: debugging
+grader: exec_unit_tests
+timeout_sec: 60
+prompt: |
+  The following Python function has a classic mutable default argument bug.
+  The default list `lst=[]` is shared across all calls, so calling the function
+  multiple times accumulates state.
+
+  Fix it using the `lst=None` pattern and return ONLY the corrected function
+  in a Python code block.
+
+  ```python
+  def append_item(item, lst=[]):  # BUG: mutable default argument
+      lst.append(item)
+      return lst
+  ```
+
+  Failing test:
+  ```
+  # First call: append_item(1) -> [1]  (OK)
+  # Second call: append_item(2) -> [1, 2]  (BUG: expected [2])
+  AssertionError: assert append_item(2) == [2]
+  ```
+
+  Return the corrected function only.
+grader_config:
+  language: python
+  entrypoint: append_item
+  unit_tests:
+    - {input: [1], expected: [1]}
+    - {input: [2], expected: [2]}
+    - {input: [3, [10]], expected: [10, 3]}

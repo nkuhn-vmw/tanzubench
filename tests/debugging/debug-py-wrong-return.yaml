@@ -1,0 +1,33 @@
+id: debug-py-wrong-return
+name: Fix wrong return type in count_vowels
+category: debugging
+grader: exec_unit_tests
+timeout_sec: 60
+prompt: |
+  The following Python function has a bug: it returns a string instead of an int.
+  Fix it and return ONLY the corrected function in a Python code block.
+
+  ```python
+  def count_vowels(s):
+      count = 0
+      for ch in s.lower():
+          if ch in 'aeiou':
+              count += 1
+      return str(count)  # BUG: should return int
+  ```
+
+  Failing test:
+  ```
+  AssertionError: assert count_vowels("hello") == 2
+  # got "2" (str), expected 2 (int)
+  ```
+
+  Return the corrected function only.
+grader_config:
+  language: python
+  entrypoint: count_vowels
+  unit_tests:
+    - {input: ["hello"], expected: 2}
+    - {input: ["xyz"], expected: 0}
+    - {input: ["aeiou"], expected: 5}
+    - {input: [""], expected: 0}

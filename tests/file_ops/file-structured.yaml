@@ -1,0 +1,13 @@
+id: file-structured
+name: Write CSV file
+category: file_ops
+grader: file_check
+timeout_sec: 30
+prompt: |
+  Write a CSV with headers "name,age,city" and exactly 2 data rows.
+grader_config:
+  write_response_to: data.csv
+  file_checks:
+    - path: data.csv
+      must_exist: true
+      must_contain: ["name,age,city"]

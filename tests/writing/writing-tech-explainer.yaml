@@ -1,0 +1,16 @@
+id: writing-tech-explainer
+name: Writing — explain HTTP caching for non-technical readers
+category: writing
+grader: llm_judge
+timeout_sec: 120
+prompt: |
+  Write a 200-word explanation of HTTP caching for a non-technical reader. Avoid jargon. Use an analogy to help illustrate the concept. Do not exceed 250 words.
+grader_config:
+  judge_rubric: |
+    Grade on three axes, each 0.0-1.0:
+    - clarity: readable, well-formed, appropriate for a non-technical audience
+    - accuracy: technically correct at the level of detail provided
+    - follows_constraints: approximately 200 words (not exceeding 250), includes an analogy, avoids excessive jargon
+    Return JSON: {"clarity": float, "accuracy": float, "follows_constraints": float, "rationale": string}
+  judge_aggregation: mean
+  judge_temperature: 0.0

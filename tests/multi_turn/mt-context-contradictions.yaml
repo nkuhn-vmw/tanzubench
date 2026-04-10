@@ -1,0 +1,20 @@
+id: mt-context-contradictions
+name: Context carryover — follow most recent contradictory claim
+category: multi_turn
+grader: multi_turn
+timeout_sec: 60
+grader_config:
+  turns:
+    - user_message: |
+        The capital of France is Paris.
+      checks:
+        - { contains: "Paris" }
+    - user_message: |
+        Actually, I was wrong. The capital of France is Lyon.
+      checks:
+        - { contains: "Lyon" }
+    - user_message: |
+        What did I most recently say is the capital of France?
+      checks:
+        - { contains: "Lyon" }
+        - { not_contains: "Paris" }

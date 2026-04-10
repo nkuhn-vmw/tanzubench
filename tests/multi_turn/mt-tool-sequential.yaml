@@ -1,0 +1,30 @@
+id: mt-tool-sequential
+name: Multi-step tool use — read file then extract port
+category: multi_turn
+grader: multi_turn
+timeout_sec: 60
+grader_config:
+  turns:
+    - user_message: |
+        Read the file config.yaml.
+      tools:
+        - type: function
+          function:
+            name: read_file
+            description: Read the contents of a file
+            parameters:
+              type: object
+              properties:
+                path:
+                  type: string
+                  description: Path to the file to read
+              required: [path]
+      checks:
+        - { tool_called: "read_file" }
+    - user_message: |
+        What port is the server running on?
+      tool_result:
+        tool_call_id: "call_0"
+        content: "server:\n  port: 8080\n  host: localhost"
+      checks:
+        - { contains: "8080" }

@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --primary: 202 100% 43%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --ring: 202 100% 43%;
+    --radius: 0.5rem;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+  }
+
+  .dark {
+    /* Canvas: very dark, almost black — gives panels room to feel "lifted" */
+    --background: 222 47% 5%;
+    /* Body text: near-white for high contrast */
+    --foreground: 210 40% 96%;
+    /* Panel surface (table headers, filter bar, summary cards) — distinct lift over canvas */
+    --muted: 220 32% 13%;
+    /* Secondary text — bumped from 65% to 72% for readability */
+    --muted-foreground: 215 20% 72%;
+    /* Borders — distinct enough to define edges without screaming */
+    --border: 216 30% 22%;
+    --input: 216 30% 22%;
+    /* Tanzu blue — brighter in dark mode so it pops against the dark panels */
+    --primary: 202 100% 62%;
+    --primary-foreground: 222 47% 5%;
+    /* Hover/selected state — clearly distinct from --muted so rows light up on hover */
+    --accent: 220 32% 18%;
+    --accent-foreground: 210 40% 98%;
+    --ring: 202 100% 62%;
+    /* Popover (dropdowns) — slightly elevated above canvas */
+    --popover: 220 32% 11%;
+    --popover-foreground: 210 40% 96%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+    /* Slightly larger base size — most text is text-sm/text-base, this lifts the floor */
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  /* In dark mode, numeric table cells use monospace for terminal feel */
+  .dark .num {
+    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+    /* Tighter tracking for monospace numbers in dark mode */
+    letter-spacing: -0.01em;
+  }
+
+  /* In dark mode the leaderboard table panel sits on muted (lifted) background */
+  .dark .leaderboard-panel {
+    background-color: hsl(var(--muted) / 0.4);
+  }
+}

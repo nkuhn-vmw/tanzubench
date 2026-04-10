@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0.0",
+  "result_type": "scale",
+  "meta": {
+    "timestamp": "2026-04-06T22:30:00Z",
+    "foundation": "dev210",
+    "tile_version": "10.3.4",
+    "tag": "gemma4-scale-test",
+    "notes": null,
+    "source_file": "results/dev210/cpu/2026-04-06_gemma4-scale-test.json"
+  },
+  "target": {
+    "name": "gemma4:e4b",
+    "display_name": null,
+    "family": "gemma4",
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": null,
+    "quant": "Q4_K_M",
+    "size_gb": null
+  },
+  "engine": {
+    "name": "ollama",
+    "version": "0.20.2",
+    "config": null
+  },
+  "hardware": {
+    "vm_type": null,
+    "cpu": "Intel Xeon Gold",
+    "cpu_cores": 16,
+    "ram_gb": "32 (e4b) / 64 (26b)",
+    "gpu_count": 0,
+    "gpu_model": null,
+    "gpu_memory_gb": null,
+    "power_limit_watts": null
+  },
+  "tests": [
+    {
+      "name": "sequential_consistency",
+      "elapsed_ms": 1710.0,
+      "completion_tokens": 15,
+      "tok_per_sec": null,
+      "notes": "requests=10; errors=0; p95=1.66s"
+    },
+    {
+      "name": "concurrent_load",
+      "elapsed_ms": 4390.0,
+      "completion_tokens": null,
+      "tok_per_sec": null,
+      "notes": "errors=0"
+    },
+    {
+      "name": "sustained_throughput",
+      "elapsed_ms": null,
+      "completion_tokens": 300,
+      "tok_per_sec": 11.55,
+      "notes": "requests=5"
+    }
+  ],
+  "summary": {
+    "headline_metric": "sequential_consistency_ms",
+    "headline_value": 1710.0,
+    "headline_unit": "ms",
+    "accuracy_pct": null,
+    "total_tokens": null,
+    "total_time_ms": null
+  }
+}

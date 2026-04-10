@@ -1,0 +1,35 @@
+id: struct-tool-nested-args
+name: Function Call with Nested Object Arguments
+category: structured_output
+grader: json_schema
+timeout_sec: 30
+prompt: |
+  You need to call a function send_mail(to: {name, email}, subject, body). Generate the function call as JSON exactly in this format:
+  {"function": "send_mail", "arguments": {"to": {"name": "Alice", "email": "alice@example.com"}, "subject": "Meeting", "body": "See you at 3pm"}}
+  Return only JSON, no explanation.
+grader_config:
+  schema:
+    type: object
+    required: [function, arguments]
+    properties:
+      function:
+        type: string
+      arguments:
+        type: object
+        required: [to, subject, body]
+        properties:
+          to:
+            type: object
+            required: [name, email]
+            properties:
+              name:
+                type: string
+              email:
+                type: string
+          subject:
+            type: string
+          body:
+            type: string
+  expected_values:
+    function: send_mail
+    arguments.to.name: Alice

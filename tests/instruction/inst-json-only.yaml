@@ -1,0 +1,13 @@
+id: inst-json-only
+name: JSON-only output
+category: instruction
+grader: regex
+timeout_sec: 30
+prompt: |
+  Return a JSON object with keys "name" (string, value "alice") and "age"
+  (number, value 30). Respond with JSON only, no prose, no markdown fences.
+grader_config:
+  pattern: '\{[^{}]*"name"\s*:\s*"alice"[^{}]*"age"\s*:\s*30[^{}]*\}'
+  flags: [DOTALL]
+  must_not_match:
+    - '```'

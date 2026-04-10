@@ -1,0 +1,10 @@
+id: basic-boiling-point
+name: Boiling point of water
+category: basic
+grader: exact_match
+timeout_sec: 15
+prompt: |
+  What is the boiling point of water in Celsius? Just the number.
+grader_config:
+  expected_answer: "100"
+  case_sensitive: false

@@ -1,0 +1,19 @@
+id: coding-bash-wc
+name: Bash line count
+category: coding
+grader: exec_unit_tests
+timeout_sec: 60
+prompt: |
+  Write a bash script that counts the number of newline-terminated lines
+  in the file given as the first argument and prints ONLY the number — no
+  filename, no other text. For example, for a file with 3 lines the output
+  must be exactly:
+
+      3
+
+  Only the script, in a code block. Prefer `wc -l < "$1"` to avoid the
+  trailing filename that plain `wc -l` adds.
+grader_config:
+  language: bash
+  unit_tests:
+    - {input: ["/etc/hostname"], expected: "1"}

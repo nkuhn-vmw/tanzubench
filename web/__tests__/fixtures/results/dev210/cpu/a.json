@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "result_type": "speed",
+  "meta": { "timestamp": "2026-04-06T18:27:00Z", "foundation": "dev210" },
+  "target": { "name": "gemma4:e4b" },
+  "engine": { "name": "ollama", "version": "0.20.2" },
+  "hardware": { "gpu_count": 0 },
+  "tests": [{ "name": "tool_call_dual", "elapsed_ms": 3100 }],
+  "summary": { "headline_metric": "tool_call_dual_ms", "headline_value": 3100 }
+}

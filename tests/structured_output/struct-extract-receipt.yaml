@@ -1,0 +1,48 @@
+id: struct-extract-receipt
+name: Extract Receipt Data to JSON
+category: structured_output
+grader: json_schema
+timeout_sec: 30
+prompt: |
+  Extract the following receipt into JSON with this structure: {store, date, items: [{name, qty, price}], total}. The total should be a number. Return only JSON, no explanation.
+
+  ACME STORE #42
+  123 Main St, Springfield
+  Date: 2026-04-10
+
+    Widget     2 x $4.99   $9.98
+    Gadget     1 x $12.50  $12.50
+    Cable      3 x $3.00   $9.00
+
+    Subtotal:  $31.48
+    Tax:       $2.52
+    TOTAL:     $34.00
+
+    Paid: VISA ending 4242
+grader_config:
+  schema:
+    type: object
+    required: [store, date, items, total]
+    properties:
+      store:
+        type: string
+      date:
+        type: string
+      items:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          required: [name, qty, price]
+          properties:
+            name:
+              type: string
+            qty:
+              type: [integer, number]
+            price:
+              type: number
+      total:
+        type: number
+  expected_values:
+    store: ACME STORE #42
+    total: 34.0

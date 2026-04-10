@@ -1,0 +1,15 @@
+id: coding-py-palindrome
+name: Python palindrome
+category: coding
+grader: exec_unit_tests
+timeout_sec: 60
+prompt: |
+  Write a Python function is_palindrome(s) that returns True if s reads the
+  same forwards and backwards (ignore case and spaces). Only the function.
+grader_config:
+  language: python
+  entrypoint: is_palindrome
+  unit_tests:
+    - {input: ["racecar"], expected: true}
+    - {input: ["hello"], expected: false}
+    - {input: ["A man a plan a canal Panama"], expected: true}

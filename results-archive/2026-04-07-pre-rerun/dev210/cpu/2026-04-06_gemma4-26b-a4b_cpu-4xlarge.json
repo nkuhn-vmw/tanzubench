@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0.0",
+  "result_type": "speed",
+  "meta": {
+    "timestamp": "2026-04-06T18:27:00Z",
+    "foundation": "dev210",
+    "tile_version": "10.3.4",
+    "tag": "thinking-default",
+    "notes": "New cpu-4xlarge (16 vCPU, 64GB RAM) VM type created specifically for this and 31b. MoE model - only 3.8B parameters fire per token despite 18GB model size.",
+    "source_file": "results/dev210/cpu/2026-04-06_gemma4-26b-a4b_cpu-4xlarge.json"
+  },
+  "target": {
+    "name": "gemma4:26b",
+    "display_name": null,
+    "family": "gemma4",
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": "Mixture of Experts - 128 experts, 8+1 active per token, 3.8B active / 26B total",
+    "quant": "Q4_K_M",
+    "size_gb": null
+  },
+  "engine": {
+    "name": "ollama",
+    "version": "0.20.2",
+    "config": null
+  },
+  "hardware": {
+    "vm_type": "cpu-4xlarge",
+    "cpu": "Intel Xeon Gold",
+    "cpu_cores": 16,
+    "ram_gb": 64,
+    "gpu_count": 0,
+    "gpu_model": null,
+    "gpu_memory_gb": null,
+    "power_limit_watts": null
+  },
+  "tests": [
+    {
+      "name": "tool_call_dual",
+      "prompt": "What is the weather in San Francisco and what time is it in Tokyo?",
+      "elapsed_ms": 20100,
+      "completion_tokens": 162,
+      "tok_per_sec": 8.0,
+      "tool_calls_actual": 2,
+      "tools_called": [
+        "get_weather",
+        "get_time"
+      ],
+      "notes": "Best of 2 runs. Run 1 was 23.2s/181tok."
+    },
+    {
+      "name": "agentic_file_read",
+      "prompt": "Read the file at src/main.py and tell me what it does",
+      "elapsed_ms": 5600,
+      "completion_tokens": 23,
+      "tok_per_sec": 4.1,
+      "tool_calls_actual": 1,
+      "tools_called": [
+        "read_file"
+      ],
+      "notes": "Surprisingly fast completion time - most token-efficient tool call of any Gemma 4 default variant"
+    },
+    {
+      "name": "multi_step_agentic",
+      "prompt": "Fix the login bug in auth.py - search, read, then fix",
+      "elapsed_ms": 11500,
+      "completion_tokens": 73,
+      "tok_per_sec": 6.4,
+      "tool_calls_actual": 1,
+      "tools_called": [
+        "run_command"
+      ]
+    },
+    {
+      "name": "simple_chat",
+      "prompt": "Explain what a REST API is in 2 sentences.",
+      "elapsed_ms": 22600,
+      "completion_tokens": 200,
+      "tok_per_sec": 8.9
+    },
+    {
+      "name": "code_gen_500",
+      "prompt": "Write a Python REST API for a todo list",
+      "elapsed_ms": 59500,
+      "completion_tokens": 500,
+      "tok_per_sec": 8.4
+    }
+  ],
+  "summary": {
+    "headline_metric": "tool_call_dual_ms",
+    "headline_value": 20100.0,
+    "headline_unit": "ms",
+    "accuracy_pct": null,
+    "total_tokens": 958,
+    "total_time_ms": 119300
+  }
+}

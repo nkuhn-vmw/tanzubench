@@ -1,0 +1,12 @@
+id: needle-64k
+name: Needle-in-haystack 64K
+category: long_context
+grader: needle
+timeout_sec: 120
+prompt_template: "unused; the needle grader builds its own prompt"
+grader_config:
+  haystack_asset: haystack-64k.txt
+  needle: "ROOM 64K code is CHARLIE-TWO-ONE."
+  depth: 0.5
+  question: "What is the code for room 64K?"
+  expected_answer: "CHARLIE-TWO-ONE"

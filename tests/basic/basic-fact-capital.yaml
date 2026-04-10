@@ -1,0 +1,10 @@
+id: basic-fact-capital
+name: Capital of France
+category: basic
+grader: exact_match
+timeout_sec: 15
+prompt: |
+  What is the capital of France? One word answer.
+grader_config:
+  expected_answer: "Paris"
+  case_sensitive: false

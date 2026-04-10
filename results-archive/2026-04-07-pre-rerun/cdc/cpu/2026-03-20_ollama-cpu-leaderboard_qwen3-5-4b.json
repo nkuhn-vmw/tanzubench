@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "result_type": "speed",
+  "meta": {
+    "timestamp": "2026-03-20T00:00:00Z",
+    "foundation": "cdc",
+    "tile_version": "10.3.4",
+    "tag": "ollama-cpu-leaderboard",
+    "notes": "Verdict: Thinking overhead kills perf on CPU",
+    "source_file": "results/cdc/cpu/2026-03-20_ollama-cpu-leaderboard.json"
+  },
+  "target": {
+    "name": "qwen3.5:4b",
+    "display_name": null,
+    "family": "qwen3.5",
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": null,
+    "quant": "Q4_K_M",
+    "size_gb": null
+  },
+  "engine": {
+    "name": "ollama",
+    "version": "0.18.2",
+    "config": null
+  },
+  "hardware": {
+    "vm_type": null,
+    "cpu": "Intel Xeon Gold 6254 @ 3.10GHz",
+    "cpu_cores": 16,
+    "ram_gb": 32,
+    "gpu_count": 0,
+    "gpu_model": null,
+    "gpu_memory_gb": null,
+    "power_limit_watts": null
+  },
+  "tests": [
+    {
+      "name": "tool_call_single",
+      "elapsed_ms": 17100,
+      "completion_tokens": 152,
+      "tok_per_sec": 7.2
+    },
+    {
+      "name": "tool_call_dual",
+      "elapsed_ms": 34300,
+      "completion_tokens": 152,
+      "tok_per_sec": 4.4
+    },
+    {
+      "name": "code_gen_500",
+      "elapsed_ms": 69100,
+      "completion_tokens": 500,
+      "tok_per_sec": 7.2
+    },
+    {
+      "name": "multi_step_agentic",
+      "elapsed_ms": 22000
+    }
+  ],
+  "summary": {
+    "headline_metric": "tool_call_dual_ms",
+    "headline_value": 34300.0,
+    "headline_unit": "ms",
+    "accuracy_pct": null,
+    "total_tokens": 804,
+    "total_time_ms": 142500
+  }
+}

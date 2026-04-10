@@ -1,0 +1,21 @@
+id: mt-refine-code
+name: Iterative code refinement (greet function → error handling → docstring)
+category: multi_turn
+grader: multi_turn
+timeout_sec: 60
+grader_config:
+  turns:
+    - user_message: |
+        Write a Python function called greet(name) that returns "Hello, <name>!".
+      checks:
+        - { contains: "def greet" }
+        - { contains: "return" }
+    - user_message: |
+        Add error handling so it raises a TypeError if name is None.
+      checks:
+        - { contains: "None" }
+        - { any_contains: ["raise", "if", "TypeError"] }
+    - user_message: |
+        Add a docstring to the function explaining what it does.
+      checks:
+        - { regex: '""".*"""' }

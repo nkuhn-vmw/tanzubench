@@ -1,0 +1,21 @@
+id: agentic-cli-integration
+name: Write CLI passing integration tests
+category: agentic
+grader: agentic
+timeout_sec: 600
+fixture: cli-integration
+task_prompt: |
+  Read README.md and tests/test_cli.py. Write cli.py so that the tests
+  pass. Only create the cli.py file — do not modify the tests.
+frameworks: [opencode, aider, custom]
+grader_config:
+  setup_commands:
+    - "python3 -m pip install -q pytest"
+  success_check:
+    command: "python3 -m pytest tests/ -q"
+    max_diff_lines: 80
+  partial_credit:
+    - {check: "test -f cli.py", points: 0.2}
+    - {check: "python3 -m pytest tests/test_cli.py::test_cli_greets -q", points: 0.4}
+    - {check: "python3 -m pytest tests/test_cli.py::test_cli_exits_nonzero_on_missing_arg -q", points: 0.4}
+  cleanup: always

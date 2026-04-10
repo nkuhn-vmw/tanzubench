@@ -1,0 +1,22 @@
+id: agentic-add-failing-test
+name: Add failing test then fix
+category: agentic
+grader: agentic
+timeout_sec: 600
+fixture: add-failing-test
+task_prompt: |
+  Add a function sub(a, b) to src/calc.py that returns a - b. Then add a
+  test for it to tests/test_calc.py covering at least two cases. Finally,
+  run python3 -m pytest tests/ and make sure all tests pass.
+frameworks: [opencode, aider, custom]
+grader_config:
+  setup_commands:
+    - "python3 -m pip install -q pytest"
+  success_check:
+    command: "python3 -m pytest tests/ -q"
+    max_diff_lines: 100
+  partial_credit:
+    - {check: "grep -q 'def sub' src/calc.py", points: 0.3}
+    - {check: "grep -q 'sub' tests/test_calc.py", points: 0.3}
+    - {check: "python3 -m pytest tests/ -q", points: 0.4}
+  cleanup: always

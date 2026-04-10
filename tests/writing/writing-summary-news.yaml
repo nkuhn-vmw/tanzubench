@@ -1,0 +1,19 @@
+id: writing-summary-news
+name: Writing — summarize news article in 3 sentences
+category: writing
+grader: llm_judge
+timeout_sec: 120
+prompt_template: |
+  Summarize the following article in 3 sentences or fewer. Do not include opinions or claims not present in the article.
+
+  SOURCE:
+  {{ asset:news-article-1.txt }}
+grader_config:
+  judge_rubric: |
+    Grade on three axes, each 0.0-1.0:
+    - clarity: readable, well-formed
+    - accuracy: every claim is supported by the source
+    - follows_constraints: meets the stated format/length constraints (3 sentences or fewer, no opinions)
+    Return JSON: {"clarity": float, "accuracy": float, "follows_constraints": float, "rationale": string}
+  judge_aggregation: mean
+  judge_temperature: 0.0

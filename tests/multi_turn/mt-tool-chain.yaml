@@ -1,0 +1,30 @@
+id: mt-tool-chain
+name: Multi-step tool use — weather query then umbrella advice
+category: multi_turn
+grader: multi_turn
+timeout_sec: 60
+grader_config:
+  turns:
+    - user_message: |
+        What's the weather in Paris?
+      tools:
+        - type: function
+          function:
+            name: get_weather
+            description: Get current weather for a location
+            parameters:
+              type: object
+              properties:
+                location:
+                  type: string
+                  description: City name
+              required: [location]
+      checks:
+        - { tool_called: "get_weather" }
+    - user_message: |
+        Should I bring an umbrella?
+      tool_result:
+        tool_call_id: "call_0"
+        content: "Temperature: 18°C, Condition: rainy"
+      checks:
+        - { any_contains: ["umbrella", "rain", "yes"] }

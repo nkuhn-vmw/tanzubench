@@ -1,0 +1,19 @@
+id: mt-refine-summary
+name: Iterative summary refinement (summarize → shorten → bullet points)
+category: multi_turn
+grader: multi_turn
+timeout_sec: 60
+grader_config:
+  turns:
+    - user_message: |
+        Summarize this: "The quick brown fox jumps over the lazy dog near the river bank on a sunny afternoon."
+      checks:
+        - { any_contains: ["fox", "dog", "river"] }
+    - user_message: |
+        Make it even shorter — one sentence only.
+      checks:
+        - { length_max: 25 }
+    - user_message: |
+        Convert it to 3 bullet points.
+      checks:
+        - { any_contains: ["- ", "* ", "• "] }

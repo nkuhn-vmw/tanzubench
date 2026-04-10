@@ -1,0 +1,28 @@
+id: struct-tool-array-arg
+name: Function Call with Array and Boolean Arguments
+category: structured_output
+grader: json_schema
+timeout_sec: 30
+prompt: |
+  Generate a JSON function call for delete_files(paths: string[], dry_run: boolean). Delete these 3 files: /tmp/a.txt, /tmp/b.txt, /tmp/c.txt. Set dry_run to true. Format: {"function": "delete_files", "arguments": {...}}. Return only JSON, no explanation.
+grader_config:
+  schema:
+    type: object
+    required: [function, arguments]
+    properties:
+      function:
+        type: string
+      arguments:
+        type: object
+        required: [paths, dry_run]
+        properties:
+          paths:
+            type: array
+            minItems: 3
+            items:
+              type: string
+          dry_run:
+            type: boolean
+  expected_values:
+    function: delete_files
+    arguments.dry_run: true

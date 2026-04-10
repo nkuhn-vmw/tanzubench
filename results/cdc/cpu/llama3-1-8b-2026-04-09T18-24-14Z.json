@@ -1,0 +1,1108 @@
+{
+  "schema_version": "2.0.0",
+  "result_type": "suite",
+  "meta": {
+    "timestamp": "2026-04-09T18:31:44Z",
+    "foundation": "cdc",
+    "tile_version": null,
+    "tag": "cdc-llama3-1-8b-noagentic-2026-04-09",
+    "notes": null,
+    "source_file": null
+  },
+  "target": {
+    "name": "llama3.1:8b",
+    "display_name": null,
+    "family": null,
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": null,
+    "quant": null,
+    "size_gb": null
+  },
+  "engine": {
+    "name": "ollama",
+    "version": null,
+    "config": {
+      "_source": "ollama:/api/tags",
+      "models": [
+        {
+          "name": "llama3.1:8b",
+          "model": "llama3.1:8b",
+          "modified_at": "2026-03-20T18:07:36.506857629Z",
+          "size": 4920753381,
+          "digest": "10c622cb41bacaea0a1ed9839c121eb5d392bf93fcc6f2294f8b95412cd022aa",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "llama",
+            "families": [
+              "llama"
+            ],
+            "parameter_size": "8.0B",
+            "quantization_level": "Q4_K_M"
+          }
+        },
+        {
+          "name": "llama3.1:8b-tuned",
+          "model": "llama3.1:8b-tuned",
+          "modified_at": "2026-03-20T18:07:31.482987538Z",
+          "size": 4920753381,
+          "digest": "10c622cb41bacaea0a1ed9839c121eb5d392bf93fcc6f2294f8b95412cd022aa",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "llama",
+            "families": [
+              "llama"
+            ],
+            "parameter_size": "8.0B",
+            "quantization_level": "Q4_K_M"
+          }
+        }
+      ]
+    }
+  },
+  "hardware": {
+    "vm_type": null,
+    "cpu": null,
+    "cpu_cores": null,
+    "ram_gb": null,
+    "gpu_count": 0,
+    "gpu_model": null,
+    "gpu_memory_gb": null,
+    "power_limit_watts": null
+  },
+  "grading": {
+    "judge_configured": true,
+    "judge_model": "google/gemma-4-31B-it",
+    "judge_endpoint": "http://127.0.0.1:4000",
+    "judge_fingerprint": "sha256:52791ec32ba4e0ef",
+    "judge_run_date": "2026-04-09T18:31:44Z",
+    "skipped_categories": [
+      "long_context",
+      "agentic"
+    ]
+  },
+  "tests": [
+    {
+      "id": "basic-boiling-point",
+      "name": "Boiling point of water",
+      "category": "basic",
+      "grader": "exact_match",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 50,
+      "completion_tokens": 2,
+      "elapsed_ms": 800,
+      "tok_per_sec": 2.5,
+      "details": {
+        "expected": "100",
+        "got": "100",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "100",
+      "notes": null
+    },
+    {
+      "id": "basic-fact-capital",
+      "name": "Capital of France",
+      "category": "basic",
+      "grader": "exact_match",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 47,
+      "completion_tokens": 3,
+      "elapsed_ms": 763,
+      "tok_per_sec": 3.93,
+      "details": {
+        "expected": "Paris",
+        "got": "Paris.",
+        "matched": false
+      },
+      "judge": null,
+      "raw_response": "Paris.",
+      "notes": null
+    },
+    {
+      "id": "basic-math-multiply",
+      "name": "15 times 23",
+      "category": "basic",
+      "grader": "exact_match",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 50,
+      "completion_tokens": 2,
+      "elapsed_ms": 723,
+      "tok_per_sec": 2.77,
+      "details": {
+        "expected": "345",
+        "got": "345",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "345",
+      "notes": null
+    },
+    {
+      "id": "tool-dual-call",
+      "name": "Dual tool call",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 282,
+      "completion_tokens": 35,
+      "elapsed_ms": 11210,
+      "tok_per_sec": 3.12,
+      "details": {
+        "mode": "dual",
+        "tool_calls": [
+          "get_weather",
+          "get_time"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "tool-nested-schema",
+      "name": "Nested args",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 278,
+      "completion_tokens": 23,
+      "elapsed_ms": 3613,
+      "tok_per_sec": 6.37,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "search_code"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "tool-read-file",
+      "name": "Read file",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 275,
+      "completion_tokens": 19,
+      "elapsed_ms": 2961,
+      "tok_per_sec": 6.42,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "read_file"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "tool-restraint",
+      "name": "Restraint \u2014 no tool",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 0.5,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 274,
+      "completion_tokens": 113,
+      "elapsed_ms": 16215,
+      "tok_per_sec": 6.97,
+      "details": {
+        "mode": "restraint",
+        "tool_calls": [],
+        "matched": true,
+        "reason": "restraint ok, answer missing"
+      },
+      "judge": null,
+      "raw_response": "I don't have an answer to the question \"What is 2+2?\" in the format provided. The provided functions seem to be related to external data retrieval and analysis, but not mathematical operations.\n\nHowever, if we were to use a hypothetical function that matches the provided format:\n\n{function <nil> {calculate Calculate math expression {object <nil> <nil> [expression] {\"expression\":{\"type\":\"string\"}}}}}\n\nWe could have an answer in JSON:\n\n{\"name\": \"calculate\", \"parameters\": {\"expression\": \"2*2\"}}",
+      "notes": null
+    },
+    {
+      "id": "tool-search-code",
+      "name": "Search code",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 279,
+      "completion_tokens": 26,
+      "elapsed_ms": 3971,
+      "tok_per_sec": 6.55,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "search_code"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "tool-weather-single",
+      "name": "Weather single-call",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 274,
+      "completion_tokens": 17,
+      "elapsed_ms": 2924,
+      "tok_per_sec": 5.81,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "get_weather"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "inst-forbidden-words",
+      "name": "Forbidden words \u2014 sunset",
+      "category": "instruction",
+      "grader": "contains",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 60,
+      "completion_tokens": 61,
+      "elapsed_ms": 9156,
+      "tok_per_sec": 6.66,
+      "details": {
+        "missing": [],
+        "forbidden": []
+      },
+      "judge": null,
+      "raw_response": "As the sun dips below the horizon, the sky is set ablaze with warm, golden hues that softly gradate into rich, velvety tones. Warm light dances across the clouds, casting a serene glow over the landscape. The colors deepen and intensify as the day succumbs to twilight.",
+      "notes": null
+    },
+    {
+      "id": "inst-json-only",
+      "name": "JSON-only output",
+      "category": "instruction",
+      "grader": "regex",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 74,
+      "completion_tokens": 13,
+      "elapsed_ms": 2709,
+      "tok_per_sec": 4.8,
+      "details": {
+        "pattern": "\\{[^{}]*\"name\"\\s*:\\s*\"alice\"[^{}]*\"age\"\\s*:\\s*30[^{}]*\\}",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "{\"name\": \"alice\", \"age\": 30}",
+      "notes": null
+    },
+    {
+      "id": "inst-markdown-structure",
+      "name": "Markdown structure",
+      "category": "instruction",
+      "grader": "regex",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 56,
+      "completion_tokens": 46,
+      "elapsed_ms": 7093,
+      "tok_per_sec": 6.49,
+      "details": {
+        "pattern": "^##\\s.*##\\s.*[-*]\\s",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "## Header 1\n### Header 2\n\nThis is some *italic* text.\n\nHere are some points to consider:\n* This is point 1\n* This is point 2\n* This is another important point",
+      "notes": null
+    },
+    {
+      "id": "inst-word-count",
+      "name": "Word count \u2014 20 words",
+      "category": "instruction",
+      "grader": "regex",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 47,
+      "completion_tokens": 24,
+      "elapsed_ms": 4378,
+      "tok_per_sec": 5.48,
+      "details": {
+        "pattern": "^(\\S+\\s+){19}\\S+$",
+        "matched": false
+      },
+      "judge": null,
+      "raw_response": "Coffee is a highly sought-after beverage globally, renowned for its rich flavor and energizing effects on mental performance daily.",
+      "notes": null
+    },
+    {
+      "id": "file-create",
+      "name": "Create haiku file",
+      "category": "file_ops",
+      "grader": "file_check",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 70,
+      "completion_tokens": 17,
+      "elapsed_ms": 3863,
+      "tok_per_sec": 4.4,
+      "details": {
+        "checks": [
+          {
+            "path": "haiku.txt",
+            "passed": true,
+            "reasons": []
+          }
+        ],
+        "passed": 1,
+        "total": 1
+      },
+      "judge": null,
+      "raw_response": "Autumn leaves cascade\nGolden hues upon my face\nFleeting autumn sky",
+      "notes": null
+    },
+    {
+      "id": "file-python",
+      "name": "Write Python function file",
+      "category": "file_ops",
+      "grader": "file_check",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 57,
+      "completion_tokens": 17,
+      "elapsed_ms": 3532,
+      "tok_per_sec": 4.81,
+      "details": {
+        "checks": [
+          {
+            "path": "add.py",
+            "passed": true,
+            "reasons": []
+          }
+        ],
+        "passed": 1,
+        "total": 1
+      },
+      "judge": null,
+      "raw_response": "```python\ndef add(a, b):\n    return a + b\n```",
+      "notes": null
+    },
+    {
+      "id": "file-structured",
+      "name": "Write CSV file",
+      "category": "file_ops",
+      "grader": "file_check",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 55,
+      "completion_tokens": 33,
+      "elapsed_ms": 6214,
+      "tok_per_sec": 5.31,
+      "details": {
+        "checks": [
+          {
+            "path": "data.csv",
+            "passed": false,
+            "reasons": [
+              "missing: 'name,age,city'"
+            ]
+          }
+        ],
+        "passed": 0,
+        "total": 1
+      },
+      "judge": null,
+      "raw_response": "Here is the CSV:\n\n```\n\"name\",\"age\",\"city\"\n\"John Doe\",25,\"New York\"\n\"Alice Smith\",30,\"Los Angeles\"\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-bash-wc",
+      "name": "Bash line count",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 127,
+      "completion_tokens": 12,
+      "elapsed_ms": 4346,
+      "tok_per_sec": 2.76,
+      "details": {
+        "language": "bash",
+        "passed": 0,
+        "total": 1,
+        "per_test": [
+          {
+            "input": [
+              "/etc/hostname"
+            ],
+            "ok": false,
+            "got": ""
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```bash\nwc -l < \"$1\"\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-js-debounce",
+      "name": "JavaScript sumArr",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 60,
+      "completion_tokens": 282,
+      "elapsed_ms": 38337,
+      "tok_per_sec": 7.36,
+      "details": {
+        "language": "javascript",
+        "passed": 3,
+        "total": 3,
+        "per_test": [
+          {
+            "input": [
+              [
+                1,
+                2,
+                3
+              ]
+            ],
+            "ok": true,
+            "got": "6"
+          },
+          {
+            "input": [
+              []
+            ],
+            "ok": true,
+            "got": "0"
+          },
+          {
+            "input": [
+              [
+                -1,
+                1
+              ]
+            ],
+            "ok": true,
+            "got": "0"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```javascript\nfunction sumArr(arr) {\n  return arr.reduce((a, b) => a + b, 0);\n}\n\nmodule.exports = {\n  sumArr: sumArr,\n};\n```\n\nTo use this function, you can require it in another JavaScript file like so:\n\n```javascript\nconst { sumArr } = require('./your_file_name');\nconsole.log(sumArr([1, 2, 3, 4]));\n```\n\nThis code exports a sumArr function which takes an array as input and returns the sum of all its numbers. It uses Array.prototype.reduce to calculate the sum. The initial value for 'a' is set to 0, because you can't add anything to undefined, otherwise it would throw an error if your inputs are not numeric. \n\nIf you're using a recent version of Node.js with its built-in support for modules (in which case `require` and `module.exports` probably aren't being used as shown above) the code might look like this:\n\n```javascript\nfunction sumArr(arr) {\n  return arr.reduce((a, b) => a + b, 0);\n}\n\nexport default sumArr;\n```\n\nThen you can use it in another file with an ES6 module system:\n\n```javascript\nimport sumArr from './your_file_name';\nconsole.log(sumArr([1, 2, 3, 4]));\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-py-fizzbuzz",
+      "name": "Python fizzbuzz",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 79,
+      "completion_tokens": 116,
+      "elapsed_ms": 16111,
+      "tok_per_sec": 7.2,
+      "details": {
+        "language": "python",
+        "passed": 4,
+        "total": 4,
+        "per_test": [
+          {
+            "input": [
+              5
+            ],
+            "ok": true,
+            "got": "['1', '2', 'Fizz', '4', 'Buzz']"
+          },
+          {
+            "input": [
+              15
+            ],
+            "ok": true,
+            "got": "['1', '2', 'Fizz', '4', 'Buzz', 'Fizz', '7', '8', 'Fizz', 'Buzz', '11', 'Fizz', '13', '14', 'FizzBuz"
+          },
+          {
+            "input": [
+              0
+            ],
+            "ok": true,
+            "got": "[]"
+          },
+          {
+            "input": [
+              3
+            ],
+            "ok": true,
+            "got": "['1', '2', 'Fizz']"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```python\ndef fizzbuzz(n):\n    \"\"\"Returns the FizzBuzz sequence from 1 to n.\"\"\"\n    return [\n        \"Fizz\" * (not i % 3) + \"Buzz\" * (not i % 5)\n        if not i % 15 else (\n            \"Fizz\" * (not i % 3)\n            if not i % 3 else (\n                \"Buzz\" * (not i % 5)\n                if not i % 5 else str(i)))\n        for i in range(1, n+1)]\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-py-palindrome",
+      "name": "Python palindrome",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 67,
+      "completion_tokens": 84,
+      "elapsed_ms": 11523,
+      "tok_per_sec": 7.29,
+      "details": {
+        "language": "python",
+        "passed": 3,
+        "total": 3,
+        "per_test": [
+          {
+            "input": [
+              "racecar"
+            ],
+            "ok": true,
+            "got": "True"
+          },
+          {
+            "input": [
+              "hello"
+            ],
+            "ok": true,
+            "got": "False"
+          },
+          {
+            "input": [
+              "A man a plan a canal Panama"
+            ],
+            "ok": true,
+            "got": "True"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```python\ndef is_palindrome(s):\n    \"\"\"\n    Returns True if string is the same forward and backward (ignores case and spaces).\n    \n    Parameters:\n    s (str): Input string\n    \n    Returns:\n    bool: Whether string is a palindrome or not\n    \"\"\"\n    s = ''.join(e for e in s if e.isalnum()).lower()\n    return s == s[::-1]\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-sql-topn",
+      "name": "SQL top-N recent users",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 73,
+      "completion_tokens": 18,
+      "elapsed_ms": 3358,
+      "tok_per_sec": 5.36,
+      "details": {
+        "language": "sql",
+        "passed": 1,
+        "total": 1,
+        "per_test": [
+          {
+            "ok": true,
+            "got": [
+              [
+                "d"
+              ],
+              [
+                "b"
+              ],
+              [
+                "c"
+              ]
+            ]
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```sql\nSELECT name FROM users ORDER BY signup_date DESC LIMIT 3;\n```",
+      "notes": null
+    },
+    {
+      "id": "reasoning-cause-effect",
+      "name": "Causal reasoning \u2014 root cause of extended shutdown",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 497,
+      "completion_tokens": 45,
+      "elapsed_ms": 18100,
+      "tok_per_sec": 2.49,
+      "details": {
+        "judge": {
+          "model_response": "Failure to reconcile entity name discrepancies before the policy renewal deadline (Insurance Lapse \u2192 Chain 3) led Northgate's insurance claim being rejected, preventing immediate replacement, and the resulting arbitration causing a freeze on financial reserves.",
+          "rubric_scores": {
+            "factual_correctness": 1.0,
+            "completeness": 1.0
+          },
+          "rationale": "The candidate correctly identifies the root cause (failure to reconcile entity name discrepancies) and explains the causal link to the extended shutdown (insurance rejection and financial reserve freeze) as detailed in Chain 3 of the document.",
+          "judge_raw": "{\"factual_correctness\": 1.0, \"completeness\": 1.0, \"rationale\": \"The candidate correctly identifies the root cause (failure to reconcile entity name discrepancies) and explains the causal link to the extended shutdown (insurance rejection and financial reserve freeze) as detailed in Chain 3 of the document.\"}"
+        }
+      },
+      "judge": {
+        "model_response": "Failure to reconcile entity name discrepancies before the policy renewal deadline (Insurance Lapse \u2192 Chain 3) led Northgate's insurance claim being rejected, preventing immediate replacement, and the resulting arbitration causing a freeze on financial reserves.",
+        "rubric_scores": {
+          "factual_correctness": 1.0,
+          "completeness": 1.0
+        },
+        "rationale": "The candidate correctly identifies the root cause (failure to reconcile entity name discrepancies) and explains the causal link to the extended shutdown (insurance rejection and financial reserve freeze) as detailed in Chain 3 of the document.",
+        "judge_raw": "{\"factual_correctness\": 1.0, \"completeness\": 1.0, \"rationale\": \"The candidate correctly identifies the root cause (failure to reconcile entity name discrepancies) and explains the causal link to the extended shutdown (insurance rejection and financial reserve freeze) as detailed in Chain 3 of the document.\"}"
+      },
+      "raw_response": "Failure to reconcile entity name discrepancies before the policy renewal deadline (Insurance Lapse \u2192 Chain 3) led Northgate's insurance claim being rejected, preventing immediate replacement, and the resulting arbitration causing a freeze on financial reserves.",
+      "notes": null
+    },
+    {
+      "id": "reasoning-multihop-1",
+      "name": "Multi-hop reasoning \u2014 biography dates and places",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 556,
+      "completion_tokens": 187,
+      "elapsed_ms": 38439,
+      "tok_per_sec": 4.86,
+      "details": {
+        "judge": {
+          "model_response": "1997, Research Scientist at Meridian Applied Science. \n\nHowever, according to the text, this appears incorrect. After reevaluating the information, I can say that Dr. Mendes moved to Boston in 1997, but the job was taken before moving to Edinburgh, which makes it a job prior to 1997 (she had accepted a research scientist position at Meridian Applied Science immediately after defending her dissertation). According to the text, she defended her dissertation in June 1997.\n\nTo correct the previous a",
+          "rubric_scores": {
+            "factual_correctness": 1.0,
+            "completeness": 1.0
+          },
+          "rationale": "The candidate's initial answer ('1997, Research Scientist at Meridian Applied Science') is factually correct and complete. Although the candidate then enters a confused internal monologue questioning their own correct answer, the core facts provided match the document exactly: she defended her dissertation in June 1997 and immediately relocated to Boston for the research scientist position at Meridian Applied Science.",
+          "judge_raw": "{\"factual_correctness\": 1.0, \"completeness\": 1.0, \"rationale\": \"The candidate's initial answer ('1997, Research Scientist at Meridian Applied Science') is factually correct and complete. Although the candidate then enters a confused internal monologue questioning their own correct answer, the core facts provided match the document exactly: she defended her dissertation in June 1997 and immediately relocated to Boston for the research scientist position at Meridian Applied Science.\"}"
+        }
+      },
+      "judge": {
+        "model_response": "1997, Research Scientist at Meridian Applied Science. \n\nHowever, according to the text, this appears incorrect. After reevaluating the information, I can say that Dr. Mendes moved to Boston in 1997, but the job was taken before moving to Edinburgh, which makes it a job prior to 1997 (she had accepted a research scientist position at Meridian Applied Science immediately after defending her dissertation). According to the text, she defended her dissertation in June 1997.\n\nTo correct the previous a",
+        "rubric_scores": {
+          "factual_correctness": 1.0,
+          "completeness": 1.0
+        },
+        "rationale": "The candidate's initial answer ('1997, Research Scientist at Meridian Applied Science') is factually correct and complete. Although the candidate then enters a confused internal monologue questioning their own correct answer, the core facts provided match the document exactly: she defended her dissertation in June 1997 and immediately relocated to Boston for the research scientist position at Meridian Applied Science.",
+        "judge_raw": "{\"factual_correctness\": 1.0, \"completeness\": 1.0, \"rationale\": \"The candidate's initial answer ('1997, Research Scientist at Meridian Applied Science') is factually correct and complete. Although the candidate then enters a confused internal monologue questioning their own correct answer, the core facts provided match the document exactly: she defended her dissertation in June 1997 and immediately relocated to Boston for the research scientist position at Meridian Applied Science.\"}"
+      },
+      "raw_response": "1997, Research Scientist at Meridian Applied Science. \n\nHowever, according to the text, this appears incorrect. After reevaluating the information, I can say that Dr. Mendes moved to Boston in 1997, but the job was taken before moving to Edinburgh, which makes it a job prior to 1997 (she had accepted a research scientist position at Meridian Applied Science immediately after defending her dissertation). According to the text, she defended her dissertation in June 1997.\n\nTo correct the previous answer, if we're looking for jobs and years of relevance, then we might consider \"Dr. Carla Mendes moved to Boston in or before 1997 and took a position at Meridian Applied Science prior to that point.\"\n\nHowever, the only year associated with working on simulation software (a job related to Meridian Applied Science) was in four years (implying it started in 1997).",
+      "notes": null
+    },
+    {
+      "id": "reasoning-multihop-2",
+      "name": "Multi-hop reasoning \u2014 org chart before and after reorganization",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 0.5,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 597,
+      "completion_tokens": 76,
+      "elapsed_ms": 24601,
+      "tok_per_sec": 3.09,
+      "details": {
+        "judge": {
+          "model_response": "According to the document, Obasi was promoted to VP of Product Engineering. Before the 2024 reorganization, his team of 34 engineers reported directly to him. Afterward, 20 of those engineers moved to Webb's Platform group, and 14 moved to Nakamura's Data Science group, while Obasi himself took a principal engineer role within Webb's organization.",
+          "rubric_scores": {
+            "factual_correctness": 1.0,
+            "completeness": 0.0
+          },
+          "rationale": "The candidate failed to answer the first part of the question: 'Who reported to the CTO before the 2024 reorganization?'. The response only discusses Obasi, whereas the document states that three VPs (Webb, Nakamura, and Obasi) reported to the CTO. By focusing only on Obasi, the candidate provided an incomplete list of reports.",
+          "judge_raw": "{\n  \"factual_correctness\": 1.0,\n  \"completeness\": 0.0,\n  \"rationale\": \"The candidate failed to answer the first part of the question: 'Who reported to the CTO before the 2024 reorganization?'. The response only discusses Obasi, whereas the document states that three VPs (Webb, Nakamura, and Obasi) reported to the CTO. By focusing only on Obasi, the candidate provided an incomplete list of reports.\"\n}"
+        }
+      },
+      "judge": {
+        "model_response": "According to the document, Obasi was promoted to VP of Product Engineering. Before the 2024 reorganization, his team of 34 engineers reported directly to him. Afterward, 20 of those engineers moved to Webb's Platform group, and 14 moved to Nakamura's Data Science group, while Obasi himself took a principal engineer role within Webb's organization.",
+        "rubric_scores": {
+          "factual_correctness": 1.0,
+          "completeness": 0.0
+        },
+        "rationale": "The candidate failed to answer the first part of the question: 'Who reported to the CTO before the 2024 reorganization?'. The response only discusses Obasi, whereas the document states that three VPs (Webb, Nakamura, and Obasi) reported to the CTO. By focusing only on Obasi, the candidate provided an incomplete list of reports.",
+        "judge_raw": "{\n  \"factual_correctness\": 1.0,\n  \"completeness\": 0.0,\n  \"rationale\": \"The candidate failed to answer the first part of the question: 'Who reported to the CTO before the 2024 reorganization?'. The response only discusses Obasi, whereas the document states that three VPs (Webb, Nakamura, and Obasi) reported to the CTO. By focusing only on Obasi, the candidate provided an incomplete list of reports.\"\n}"
+      },
+      "raw_response": "According to the document, Obasi was promoted to VP of Product Engineering. Before the 2024 reorganization, his team of 34 engineers reported directly to him. Afterward, 20 of those engineers moved to Webb's Platform group, and 14 moved to Nakamura's Data Science group, while Obasi himself took a principal engineer role within Webb's organization.",
+      "notes": null
+    },
+    {
+      "id": "reasoning-timeline",
+      "name": "Timeline ordering \u2014 Project Helios events",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 385,
+      "completion_tokens": 35,
+      "elapsed_ms": 13498,
+      "tok_per_sec": 2.59,
+      "details": {
+        "judge": {
+          "model_response": "The correct order is:\n\n(B) 2019-07-22\n(A) 2021-08-03\n(C) 2022-04-28",
+          "rubric_scores": {
+            "factual_correctness": 1.0,
+            "completeness": 1.0
+          },
+          "rationale": "The candidate correctly identified the dates for all three events from the document and ordered them chronologically: (B) July 2019, (A) August 2021, and (C) April 2022.",
+          "judge_raw": "{\"factual_correctness\": 1.0, \"completeness\": 1.0, \"rationale\": \"The candidate correctly identified the dates for all three events from the document and ordered them chronologically: (B) July 2019, (A) August 2021, and (C) April 2022.\"}"
+        }
+      },
+      "judge": {
+        "model_response": "The correct order is:\n\n(B) 2019-07-22\n(A) 2021-08-03\n(C) 2022-04-28",
+        "rubric_scores": {
+          "factual_correctness": 1.0,
+          "completeness": 1.0
+        },
+        "rationale": "The candidate correctly identified the dates for all three events from the document and ordered them chronologically: (B) July 2019, (A) August 2021, and (C) April 2022.",
+        "judge_raw": "{\"factual_correctness\": 1.0, \"completeness\": 1.0, \"rationale\": \"The candidate correctly identified the dates for all three events from the document and ordered them chronologically: (B) July 2019, (A) August 2021, and (C) April 2022.\"}"
+      },
+      "raw_response": "The correct order is:\n\n(B) 2019-07-22\n(A) 2021-08-03\n(C) 2022-04-28",
+      "notes": null
+    },
+    {
+      "id": "writing-email-draft",
+      "name": "Writing \u2014 professional meeting reschedule email",
+      "category": "writing",
+      "grader": "llm_judge",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 113,
+      "completion_tokens": 131,
+      "elapsed_ms": 19159,
+      "tok_per_sec": 6.84,
+      "details": {
+        "judge": {
+          "model_response": "Subject: Rescheduling of Quarterly Planning Meeting\n\nDear All,\n\nI am writing to inform you that the Quarterly Planning Meeting previously scheduled for Thursday, April 10 at 2:00 PM in Conference Room B has been rescheduled to Monday, April 14 at 10:00 AM in the same location. The meeting agenda remains unchanged.\n\nPlease note that this change may cause inconvenience and for that, I apologize in advance. To confirm your availability at the new time, please reply by end of business Friday, April ",
+          "rubric_scores": {
+            "clarity": 1.0,
+            "accuracy": 1.0,
+            "follows_constraints": 1.0
+          },
+          "rationale": "The response is professional, clear, and accurate. It includes all required details (original and new date/time/location, unchanged agenda, and confirmation request). The word count is approximately 115 words, which aligns closely with the 'approximately 120 words' constraint.",
+          "judge_raw": "{\"clarity\": 1.0, \"accuracy\": 1.0, \"follows_constraints\": 1.0, \"rationale\": \"The response is professional, clear, and accurate. It includes all required details (original and new date/time/location, unchanged agenda, and confirmation request). The word count is approximately 115 words, which aligns closely with the 'approximately 120 words' constraint.\"}"
+        }
+      },
+      "judge": {
+        "model_response": "Subject: Rescheduling of Quarterly Planning Meeting\n\nDear All,\n\nI am writing to inform you that the Quarterly Planning Meeting previously scheduled for Thursday, April 10 at 2:00 PM in Conference Room B has been rescheduled to Monday, April 14 at 10:00 AM in the same location. The meeting agenda remains unchanged.\n\nPlease note that this change may cause inconvenience and for that, I apologize in advance. To confirm your availability at the new time, please reply by end of business Friday, April ",
+        "rubric_scores": {
+          "clarity": 1.0,
+          "accuracy": 1.0,
+          "follows_constraints": 1.0
+        },
+        "rationale": "The response is professional, clear, and accurate. It includes all required details (original and new date/time/location, unchanged agenda, and confirmation request). The word count is approximately 115 words, which aligns closely with the 'approximately 120 words' constraint.",
+        "judge_raw": "{\"clarity\": 1.0, \"accuracy\": 1.0, \"follows_constraints\": 1.0, \"rationale\": \"The response is professional, clear, and accurate. It includes all required details (original and new date/time/location, unchanged agenda, and confirmation request). The word count is approximately 115 words, which aligns closely with the 'approximately 120 words' constraint.\"}"
+      },
+      "raw_response": "Subject: Rescheduling of Quarterly Planning Meeting\n\nDear All,\n\nI am writing to inform you that the Quarterly Planning Meeting previously scheduled for Thursday, April 10 at 2:00 PM in Conference Room B has been rescheduled to Monday, April 14 at 10:00 AM in the same location. The meeting agenda remains unchanged.\n\nPlease note that this change may cause inconvenience and for that, I apologize in advance. To confirm your availability at the new time, please reply by end of business Friday, April 11. Your participation is crucial for our planning discussions.\n\nThank you for your understanding and cooperation.\n\nBest regards,\n[Your Name]",
+      "notes": null
+    },
+    {
+      "id": "writing-summary-news",
+      "name": "Writing \u2014 summarize news article in 3 sentences",
+      "category": "writing",
+      "grader": "llm_judge",
+      "score": 0.9,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 680,
+      "completion_tokens": 113,
+      "elapsed_ms": 31090,
+      "tok_per_sec": 3.63,
+      "details": {
+        "judge": {
+          "model_response": "Here is a summary of the article in 3 sentences:\n\nThe Riverdale City Council voted 5-2 to rezone a 1.4-acre parcel for a mixed-use development consisting of a 12-story tower with 200 residential units and 18,000 sq ft of retail space. The project includes community benefits such as 40 affordable units (20% of total) and contributions to a park renovation fund. Construction is expected to begin in early 2027 pending state environmental clearance, with the building set for completion by late 2029.",
+          "rubric_scores": {
+            "clarity": 1.0,
+            "accuracy": 1.0,
+            "follows_constraints": 0.7
+          },
+          "rationale": "The summary is clear and accurate. However, the candidate failed the negative constraint to provide 'ONLY' the summary by including conversational filler ('Here is a summary of the article in 3 sentences:').",
+          "judge_raw": "{\"clarity\": 1.0, \"accuracy\": 1.0, \"follows_constraints\": 0.7, \"rationale\": \"The summary is clear and accurate. However, the candidate failed the negative constraint to provide 'ONLY' the summary by including conversational filler ('Here is a summary of the article in 3 sentences:').\"}"
+        }
+      },
+      "judge": {
+        "model_response": "Here is a summary of the article in 3 sentences:\n\nThe Riverdale City Council voted 5-2 to rezone a 1.4-acre parcel for a mixed-use development consisting of a 12-story tower with 200 residential units and 18,000 sq ft of retail space. The project includes community benefits such as 40 affordable units (20% of total) and contributions to a park renovation fund. Construction is expected to begin in early 2027 pending state environmental clearance, with the building set for completion by late 2029.",
+        "rubric_scores": {
+          "clarity": 1.0,
+          "accuracy": 1.0,
+          "follows_constraints": 0.7
+        },
+        "rationale": "The summary is clear and accurate. However, the candidate failed the negative constraint to provide 'ONLY' the summary by including conversational filler ('Here is a summary of the article in 3 sentences:').",
+        "judge_raw": "{\"clarity\": 1.0, \"accuracy\": 1.0, \"follows_constraints\": 0.7, \"rationale\": \"The summary is clear and accurate. However, the candidate failed the negative constraint to provide 'ONLY' the summary by including conversational filler ('Here is a summary of the article in 3 sentences:').\"}"
+      },
+      "raw_response": "Here is a summary of the article in 3 sentences:\n\nThe Riverdale City Council voted 5-2 to rezone a 1.4-acre parcel for a mixed-use development consisting of a 12-story tower with 200 residential units and 18,000 sq ft of retail space. The project includes community benefits such as 40 affordable units (20% of total) and contributions to a park renovation fund. Construction is expected to begin in early 2027 pending state environmental clearance, with the building set for completion by late 2029.",
+      "notes": null
+    },
+    {
+      "id": "writing-tech-explainer",
+      "name": "Writing \u2014 explain HTTP caching for non-technical readers",
+      "category": "writing",
+      "grader": "llm_judge",
+      "score": 0.7333,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 72,
+      "completion_tokens": 234,
+      "elapsed_ms": 30619,
+      "tok_per_sec": 7.64,
+      "details": {
+        "judge": {
+          "model_response": "Imagine you have a library with a vast collection of books. You go to check out a book, but the librarian remembers that someone borrowed it just yesterday and returned it today.\n\nTo save time, the librarian says, \"Let me see if I can find that book for you without having to retrieve it from storage.\" You agree, and after verifying with their records, they hand you the book you wanted. But before returning it, they also ask you to sign a slip of paper so they know for next time.\n\nThis is similar",
+          "rubric_scores": {
+            "clarity": 0.8,
+            "accuracy": 0.4,
+            "follows_constraints": 1.0
+          },
+          "rationale": "The response follows all length and formatting constraints. However, the technical accuracy is poor. The analogy suggests that the server shares a resource because 'another visitor has access to it locally,' which is a fundamental misunderstanding of how HTTP caching (client-side or proxy) works. Caching is about storing a copy of a resource to avoid redundant requests, not sharing local copies between different users via the server.",
+          "judge_raw": "{\"clarity\": 0.8, \"accuracy\": 0.4, \"follows_constraints\": 1.0, \"rationale\": \"The response follows all length and formatting constraints. However, the technical accuracy is poor. The analogy suggests that the server shares a resource because 'another visitor has access to it locally,' which is a fundamental misunderstanding of how HTTP caching (client-side or proxy) works. Caching is about storing a copy of a resource to avoid redundant requests, not sharing local copies between different users vi"
+        }
+      },
+      "judge": {
+        "model_response": "Imagine you have a library with a vast collection of books. You go to check out a book, but the librarian remembers that someone borrowed it just yesterday and returned it today.\n\nTo save time, the librarian says, \"Let me see if I can find that book for you without having to retrieve it from storage.\" You agree, and after verifying with their records, they hand you the book you wanted. But before returning it, they also ask you to sign a slip of paper so they know for next time.\n\nThis is similar",
+        "rubric_scores": {
+          "clarity": 0.8,
+          "accuracy": 0.4,
+          "follows_constraints": 1.0
+        },
+        "rationale": "The response follows all length and formatting constraints. However, the technical accuracy is poor. The analogy suggests that the server shares a resource because 'another visitor has access to it locally,' which is a fundamental misunderstanding of how HTTP caching (client-side or proxy) works. Caching is about storing a copy of a resource to avoid redundant requests, not sharing local copies between different users via the server.",
+        "judge_raw": "{\"clarity\": 0.8, \"accuracy\": 0.4, \"follows_constraints\": 1.0, \"rationale\": \"The response follows all length and formatting constraints. However, the technical accuracy is poor. The analogy suggests that the server shares a resource because 'another visitor has access to it locally,' which is a fundamental misunderstanding of how HTTP caching (client-side or proxy) works. Caching is about storing a copy of a resource to avoid redundant requests, not sharing local copies between different users vi"
+      },
+      "raw_response": "Imagine you have a library with a vast collection of books. You go to check out a book, but the librarian remembers that someone borrowed it just yesterday and returned it today.\n\nTo save time, the librarian says, \"Let me see if I can find that book for you without having to retrieve it from storage.\" You agree, and after verifying with their records, they hand you the book you wanted. But before returning it, they also ask you to sign a slip of paper so they know for next time.\n\nThis is similar to how HTTP caching works on the internet. When your browser requests information (like a website or image) from a server, it's like asking the librarian for a book. If the server knows that you've asked for the same resource recently and that another visitor has access to it locally, they can share that with you instead of sending the full thing again.\n\nThis speeds up page loads and reduces data transfer. But when you request something new or updated on a website, they'll know not to rely on those saved copies and will instead provide you with the latest version. Just like you signed that slip to help the librarian keep track!",
+      "notes": null
+    },
+    {
+      "id": "research-cited-answer",
+      "name": "Cited answer \u2014 source trust for policy decision",
+      "category": "research",
+      "grader": "llm_judge",
+      "score": 0.7767,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 1321,
+      "completion_tokens": 175,
+      "elapsed_ms": 59553,
+      "tok_per_sec": 2.94,
+      "details": {
+        "judge": {
+          "model_response": "The source that provides the most directly applicable evidence for a startup deciding between a remote-first or hybrid work policy is Source C: Hybrid Models \u2014 What the Research Shows. This study provides empirical data from a randomized controlled trial with 1,600 knowledge workers at a large technology firm, comparing fully in-office and hybrid (three days remote, two in office) schedules.\n\nThe key findings of this study are:\n\n* The hybrid group showed productivity scores statistically indisti",
+          "rubric_scores": {
+            "faithful": 1.0,
+            "cited": 0.33,
+            "non_contradictory": 1.0
+          },
+          "rationale": "The response is entirely faithful to the provided text and contains no contradictions. However, it fails the citation requirement significantly; the prompt required citing sources as [A], [B], [C], and the rubric specifically checks for the use of these markers 'at least once each'. The candidate only cited [C] and completely ignored [A] and [B].",
+          "judge_raw": "{\"faithful\": 1.0, \"cited\": 0.33, \"non_contradictory\": 1.0, \"rationale\": \"The response is entirely faithful to the provided text and contains no contradictions. However, it fails the citation requirement significantly; the prompt required citing sources as [A], [B], [C], and the rubric specifically checks for the use of these markers 'at least once each'. The candidate only cited [C] and completely ignored [A] and [B].\"}"
+        }
+      },
+      "judge": {
+        "model_response": "The source that provides the most directly applicable evidence for a startup deciding between a remote-first or hybrid work policy is Source C: Hybrid Models \u2014 What the Research Shows. This study provides empirical data from a randomized controlled trial with 1,600 knowledge workers at a large technology firm, comparing fully in-office and hybrid (three days remote, two in office) schedules.\n\nThe key findings of this study are:\n\n* The hybrid group showed productivity scores statistically indisti",
+        "rubric_scores": {
+          "faithful": 1.0,
+          "cited": 0.33,
+          "non_contradictory": 1.0
+        },
+        "rationale": "The response is entirely faithful to the provided text and contains no contradictions. However, it fails the citation requirement significantly; the prompt required citing sources as [A], [B], [C], and the rubric specifically checks for the use of these markers 'at least once each'. The candidate only cited [C] and completely ignored [A] and [B].",
+        "judge_raw": "{\"faithful\": 1.0, \"cited\": 0.33, \"non_contradictory\": 1.0, \"rationale\": \"The response is entirely faithful to the provided text and contains no contradictions. However, it fails the citation requirement significantly; the prompt required citing sources as [A], [B], [C], and the rubric specifically checks for the use of these markers 'at least once each'. The candidate only cited [C] and completely ignored [A] and [B].\"}"
+      },
+      "raw_response": "The source that provides the most directly applicable evidence for a startup deciding between a remote-first or hybrid work policy is Source C: Hybrid Models \u2014 What the Research Shows. This study provides empirical data from a randomized controlled trial with 1,600 knowledge workers at a large technology firm, comparing fully in-office and hybrid (three days remote, two in office) schedules.\n\nThe key findings of this study are:\n\n* The hybrid group showed productivity scores statistically indistinguishable from the remote group after six months.\n* The hybrid group had significantly higher scores on peer-rated collaboration quality, manager-rated innovation contribution, and self-reported job satisfaction.\n* Voluntary attrition in the hybrid group fell 35 percent relative to the in-office control.\n\nThis research suggests that a hybrid approach can capture the productivity advantages of remote work while preserving enough in-person interaction to sustain collaboration and culture [C].",
+      "notes": null
+    },
+    {
+      "id": "research-synthesis-remote",
+      "name": "Synthesis with citations \u2014 remote work productivity",
+      "category": "research",
+      "grader": "llm_judge",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 1293,
+      "completion_tokens": 208,
+      "elapsed_ms": 60837,
+      "tok_per_sec": 3.42,
+      "details": {
+        "judge": {
+          "model_response": "Here is a 150-word synthesis answering the question \"What does the evidence suggest about the productivity impact of remote work?\" :\n\nThe evidence suggests that, for most knowledge workers, remote work has a net positive impact on productivity. A study by Nicholas Bloom found that remote workers completed 13.5% more calls than in-office counterparts [A]. Another study analyzed keystrokes and emails across 100,000 knowledge workers, concluding that employees working from home produced an average ",
+          "rubric_scores": {
+            "faithful": 1.0,
+            "cited": 1.0,
+            "non_contradictory": 1.0
+          },
+          "rationale": "The candidate response adheres strictly to the provided sources. It accurately summarizes the productivity gains from Source A, the collaboration and cultural concerns from Source B, and the hybrid model findings from Source C. All claims are supported by the text, all three sources are cited correctly, and there are no contradictory claims.",
+          "judge_raw": "{\"faithful\": 1.0, \"cited\": 1.0, \"non_contradictory\": 1.0, \"rationale\": \"The candidate response adheres strictly to the provided sources. It accurately summarizes the productivity gains from Source A, the collaboration and cultural concerns from Source B, and the hybrid model findings from Source C. All claims are supported by the text, all three sources are cited correctly, and there are no contradictory claims.\"}"
+        }
+      },
+      "judge": {
+        "model_response": "Here is a 150-word synthesis answering the question \"What does the evidence suggest about the productivity impact of remote work?\" :\n\nThe evidence suggests that, for most knowledge workers, remote work has a net positive impact on productivity. A study by Nicholas Bloom found that remote workers completed 13.5% more calls than in-office counterparts [A]. Another study analyzed keystrokes and emails across 100,000 knowledge workers, concluding that employees working from home produced an average ",
+        "rubric_scores": {
+          "faithful": 1.0,
+          "cited": 1.0,
+          "non_contradictory": 1.0
+        },
+        "rationale": "The candidate response adheres strictly to the provided sources. It accurately summarizes the productivity gains from Source A, the collaboration and cultural concerns from Source B, and the hybrid model findings from Source C. All claims are supported by the text, all three sources are cited correctly, and there are no contradictory claims.",
+        "judge_raw": "{\"faithful\": 1.0, \"cited\": 1.0, \"non_contradictory\": 1.0, \"rationale\": \"The candidate response adheres strictly to the provided sources. It accurately summarizes the productivity gains from Source A, the collaboration and cultural concerns from Source B, and the hybrid model findings from Source C. All claims are supported by the text, all three sources are cited correctly, and there are no contradictory claims.\"}"
+      },
+      "raw_response": "Here is a 150-word synthesis answering the question \"What does the evidence suggest about the productivity impact of remote work?\" :\n\nThe evidence suggests that, for most knowledge workers, remote work has a net positive impact on productivity. A study by Nicholas Bloom found that remote workers completed 13.5% more calls than in-office counterparts [A]. Another study analyzed keystrokes and emails across 100,000 knowledge workers, concluding that employees working from home produced an average of 5% more output per hour [A]. However, critics argue that collaboration is compromised by remote work, citing metrics such as network shrinkage reduced exposure to novel information, harmed innovation cycles [B], and a sense of belonging lower among fully remote workers [B]. Research suggests that hybrid models may be the best approach, balancing individual productivity with team cohesion and culture. A study found that teams with more structure in-office time showed larger gains from flexible work arrangements [C]. The exact impact can vary by task type, team size, and seniority [C].",
+      "notes": null
+    }
+  ],
+  "summary": {
+    "headline_metric": "composite_score",
+    "headline_value": 0.8051,
+    "headline_unit": null,
+    "composite_score": 0.8051,
+    "composite_max": 1.0,
+    "composite_over": 8,
+    "total_tokens": 2167,
+    "total_time_ms": 449696,
+    "category_scores": [
+      {
+        "category": "basic",
+        "score": 0.6667,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored"
+      },
+      {
+        "category": "tool_use",
+        "score": 0.9167,
+        "max": 1.0,
+        "tasks": 6,
+        "status": "scored"
+      },
+      {
+        "category": "instruction",
+        "score": 0.75,
+        "max": 1.0,
+        "tasks": 4,
+        "status": "scored"
+      },
+      {
+        "category": "file_ops",
+        "score": 0.6667,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored"
+      },
+      {
+        "category": "coding",
+        "score": 0.8,
+        "max": 1.0,
+        "tasks": 5,
+        "status": "scored"
+      },
+      {
+        "category": "long_context",
+        "score": null,
+        "max": 1.0,
+        "tasks": 0,
+        "status": "skipped"
+      },
+      {
+        "category": "reasoning",
+        "score": 0.875,
+        "max": 1.0,
+        "tasks": 4,
+        "status": "scored"
+      },
+      {
+        "category": "writing",
+        "score": 0.8778,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored"
+      },
+      {
+        "category": "research",
+        "score": 0.8883,
+        "max": 1.0,
+        "tasks": 2,
+        "status": "scored"
+      },
+      {
+        "category": "agentic",
+        "score": null,
+        "max": 1.0,
+        "tasks": 0,
+        "status": "skipped"
+      }
+    ],
+    "agent_framework_scores": null
+  }
+}

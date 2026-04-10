@@ -1,0 +1,77 @@
+{
+  "schema_version": "2.0.0",
+  "result_type": "suite",
+  "meta": {
+    "timestamp": "2026-04-08T14:00:00Z",
+    "foundation": "tdc",
+    "tile_version": null,
+    "tag": "test-fixture",
+    "notes": null,
+    "source_file": null
+  },
+  "target": {
+    "name": "qwen3-32b",
+    "display_name": "Qwen3-32B",
+    "family": "Qwen3",
+    "parameters_b": 32,
+    "active_parameters_b": null,
+    "architecture": "qwen3",
+    "quant": "gptq-int4",
+    "size_gb": 20
+  },
+  "engine": {
+    "name": "vllm",
+    "version": "0.6.3",
+    "config": {
+      "max_model_len": 32768,
+      "gpu_memory_utilization": 0.9,
+      "_source": "vllm:/v1/models"
+    }
+  },
+  "hardware": {
+    "vm_type": null, "cpu": null, "cpu_cores": null, "ram_gb": null,
+    "gpu_count": 2, "gpu_model": "RTX 3090", "gpu_memory_gb": 24,
+    "power_limit_watts": 350
+  },
+  "grading": {
+    "judge_configured": true,
+    "judge_model": "Qwen3-32B",
+    "judge_endpoint": "http://<judge-endpoint>/v1",
+    "judge_fingerprint": "sha256:abc123def456",
+    "judge_run_date": "2026-04-08T14:00:00Z",
+    "skipped_categories": []
+  },
+  "tests": [
+    {"id": "basic-math-1", "name": "Multiply", "category": "basic",
+     "grader": "exact_match", "score": 1.0, "max_score": 1.0,
+     "status": "scored", "agent_framework": null,
+     "prompt_tokens": 20, "completion_tokens": 3, "elapsed_ms": 120,
+     "tok_per_sec": 25, "details": {"matched": true},
+     "judge": null, "raw_response": "345", "notes": null},
+    {"id": "agentic-fix.aider", "name": "Fix bug", "category": "agentic",
+     "grader": "agentic", "score": 1.0, "max_score": 1.0,
+     "status": "scored", "agent_framework": "aider",
+     "prompt_tokens": null, "completion_tokens": null, "elapsed_ms": 120000,
+     "tok_per_sec": null, "details": {"framework": "aider"},
+     "judge": null, "raw_response": null, "notes": null}
+  ],
+  "summary": {
+    "headline_metric": "composite_score",
+    "headline_value": 1.0,
+    "headline_unit": null,
+    "composite_score": 1.0,
+    "composite_max": 1.0,
+    "composite_over": 2,
+    "total_tokens": 3,
+    "total_time_ms": 120120,
+    "category_scores": [
+      {"category": "basic", "score": 1.0, "max": 1.0, "tasks": 1, "status": "scored",
+       "avg_tok_per_sec": 25.0, "avg_elapsed_ms": 120.0},
+      {"category": "agentic", "score": 1.0, "max": 1.0, "tasks": 1, "status": "scored",
+       "avg_tok_per_sec": null, "avg_elapsed_ms": null}
+    ],
+    "agent_framework_scores": [
+      {"framework": "aider", "score": 1.0, "tasks": 1}
+    ]
+  }
+}

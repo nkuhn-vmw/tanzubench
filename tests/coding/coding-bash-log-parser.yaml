@@ -1,0 +1,23 @@
+id: coding-bash-log-parser
+name: Bash parse log for unique IPs
+category: coding
+grader: exec_unit_tests
+timeout_sec: 60
+prompt: |
+  Write a bash script that receives a multi-line string as its first
+  argument. Each line starts with an IP address followed by a space.
+  Print ONLY the count of unique IP addresses. Example:
+
+  Input (as $1): "192.168.1.10 GET /\n10.0.0.5 POST /\n192.168.1.10 GET /css"
+  Output: 2
+
+  Use echo -e "$1" to expand the newlines. Only the script in a code block.
+grader_config:
+  language: bash
+  unit_tests:
+    - input: ["192.168.1.10 x\n10.0.0.5 x\n192.168.1.10 x\n172.16.0.1 x"]
+      expected: "3"
+    - input: ["1.1.1.1 x"]
+      expected: "1"
+    - input: ["1.1.1.1 x\n1.1.1.1 x\n1.1.1.1 x"]
+      expected: "1"

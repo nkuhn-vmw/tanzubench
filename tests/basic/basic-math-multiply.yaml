@@ -1,0 +1,10 @@
+id: basic-math-multiply
+name: 15 times 23
+category: basic
+grader: exact_match
+timeout_sec: 15
+prompt: |
+  What is 15 times 23? Reply with just the number.
+grader_config:
+  expected_answer: "345"
+  case_sensitive: false

@@ -1,0 +1,32 @@
+id: debug-py-off-by-one
+name: Fix off-by-one in find_max_index
+category: debugging
+grader: exec_unit_tests
+timeout_sec: 60
+prompt: |
+  The following Python function has a bug. Fix it and return ONLY the corrected
+  function in a Python code block.
+
+  ```python
+  def find_max_index(lst):
+      max_idx = 0
+      for i in range(len(lst)):
+          if lst[i] > lst[max_idx]:
+              max_idx = i
+      return max_idx + 1  # BUG: off-by-one
+  ```
+
+  Failing test:
+  ```
+  AssertionError: assert find_max_index([1, 5, 3]) == 1
+  # got 2, expected 1
+  ```
+
+  Return the corrected function only.
+grader_config:
+  language: python
+  entrypoint: find_max_index
+  unit_tests:
+    - {input: [[1, 5, 3]], expected: 1}
+    - {input: [[10]], expected: 0}
+    - {input: [[1, 2, 3, 4, 5]], expected: 4}

@@ -1,0 +1,40 @@
+id: struct-k8s-pod
+name: Kubernetes Pod Manifest JSON
+category: structured_output
+grader: json_schema
+timeout_sec: 30
+prompt: |
+  Generate a Kubernetes Pod manifest as JSON for an nginx container on port 80. Include apiVersion, kind, metadata with a name, and spec with containers array. Return only valid JSON, no explanation.
+grader_config:
+  schema:
+    type: object
+    required: [apiVersion, kind, metadata, spec]
+    properties:
+      apiVersion:
+        type: string
+      kind:
+        type: string
+      metadata:
+        type: object
+        required: [name]
+        properties:
+          name:
+            type: string
+      spec:
+        type: object
+        required: [containers]
+        properties:
+          containers:
+            type: array
+            minItems: 1
+            items:
+              type: object
+              required: [name, image]
+              properties:
+                name:
+                  type: string
+                image:
+                  type: string
+  expected_values:
+    kind: Pod
+    apiVersion: v1

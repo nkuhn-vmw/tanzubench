@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tanzubench.example.com/schema/test-v1.json",
+  "title": "GenAI Benchmark Test Definition v1",
+  "type": "object",
+  "required": ["id", "name", "category", "grader", "timeout_sec"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "name": { "type": "string", "minLength": 1 },
+    "category": {
+      "type": "string",
+      "enum": ["basic", "tool_use", "structured_output", "coding", "debugging",
+               "long_context", "instruction", "file_ops", "multi_turn",
+               "reasoning", "writing", "research", "agentic"]
+    },
+    "grader": {
+      "type": "string",
+      "enum": ["exact_match", "contains", "regex", "tool_call", "needle",
+               "file_check", "exec_unit_tests", "llm_judge", "json_schema", "multi_turn", "agentic"]
+    },
+    "max_score": { "type": "number", "minimum": 0, "default": 1.0 },
+    "timeout_sec": { "type": "integer", "minimum": 1 },
+    "prompt": { "type": "string" },
+    "prompt_template": { "type": "string" },
+    "fixture": { "type": "string" },
+    "task_prompt": { "type": "string" },
+    "frameworks": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["opencode", "aider", "custom"] }
+    },
+    "grader_config": { "type": "object", "additionalProperties": true },
+    "notes": { "type": ["string", "null"] }
+  },
+  "anyOf": [
+    { "required": ["prompt"] },
+    { "required": ["prompt_template"] },
+    { "required": ["task_prompt"] },
+    { "required": ["grader_config"] }
+  ]
+}

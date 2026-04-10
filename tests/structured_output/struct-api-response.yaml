@@ -1,0 +1,41 @@
+id: struct-api-response
+name: REST API Paginated Response JSON
+category: structured_output
+grader: json_schema
+timeout_sec: 30
+prompt: |
+  Generate a JSON REST API response for a paginated list of 2 users. Include: status (string 'ok'), data (array of objects with id, name, and email), pagination (object with page, per_page, and total), and errors (empty array). Return only JSON, no explanation.
+grader_config:
+  schema:
+    type: object
+    required: [status, data, pagination, errors]
+    properties:
+      status:
+        type: string
+      data:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          required: [id, name, email]
+          properties:
+            id:
+              type: [string, integer]
+            name:
+              type: string
+            email:
+              type: string
+      pagination:
+        type: object
+        required: [page, per_page, total]
+        properties:
+          page:
+            type: integer
+          per_page:
+            type: integer
+          total:
+            type: integer
+      errors:
+        type: array
+  expected_values:
+    status: ok

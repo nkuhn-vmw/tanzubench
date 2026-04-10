@@ -1,0 +1,24 @@
+id: agentic-rename-function
+name: Rename function everywhere
+category: agentic
+grader: agentic
+timeout_sec: 600
+fixture: rename-function
+task_prompt: |
+  The tests in tests/test_utils.py import functions `double` and
+  `double_plus_one` from src/utils.py, but the source currently defines
+  `do_thing` and `do_thing_plus_one`. Rename the functions in the source
+  (and any internal call sites) so that the tests pass without modifying
+  the tests themselves.
+frameworks: [opencode, aider, custom]
+grader_config:
+  setup_commands:
+    - "python3 -m pip install -q pytest"
+  success_check:
+    command: "python3 -m pytest tests/ -q"
+    max_diff_lines: 60
+  partial_credit:
+    - {check: "grep -q 'def double' src/utils.py", points: 0.4}
+    - {check: "! grep -q 'do_thing' src/utils.py", points: 0.3}
+    - {check: "python3 -m pytest tests/ -q", points: 0.3}
+  cleanup: always

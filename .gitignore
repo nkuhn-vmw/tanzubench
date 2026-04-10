@@ -1,0 +1,15 @@
+.superpowers/
+node_modules/
+.next/
+out/
+*.log
+.DS_Store
+.env
+.env.local
+.bench-work/
+
+# Internal design docs — specs, plans, and working notes contain
+# infrastructure layout details (foundation names, credential store
+# paths, internal hostnames) that shouldn't be public.
+docs/superpowers/
+docs/blog-notes.md

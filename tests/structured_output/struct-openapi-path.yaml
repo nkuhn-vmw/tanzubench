@@ -1,0 +1,28 @@
+id: struct-openapi-path
+name: OpenAPI 3.0 Path Definition JSON
+category: structured_output
+grader: json_schema
+timeout_sec: 30
+prompt: |
+  Generate an OpenAPI 3.0 path definition as JSON for GET /users that returns a 200 response with a JSON array of user objects. Include: get.summary, get.responses.200.description, and get.responses.200.content.'application/json'.schema. Return only the path definition object as JSON, no explanation.
+grader_config:
+  schema:
+    type: object
+    required: [get]
+    properties:
+      get:
+        type: object
+        required: [summary, responses]
+        properties:
+          summary:
+            type: string
+          responses:
+            type: object
+            required: ["200"]
+            properties:
+              "200":
+                type: object
+                required: [description]
+                properties:
+                  description:
+                    type: string

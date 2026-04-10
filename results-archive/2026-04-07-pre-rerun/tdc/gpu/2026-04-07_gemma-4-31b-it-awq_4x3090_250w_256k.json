@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "result_type": "speed",
+  "meta": {
+    "timestamp": "2026-04-07T13:50:00Z",
+    "foundation": "tdc",
+    "tile_version": null,
+    "tag": "4x3090-250w-256k-awq-int4",
+    "notes": "INT4 AWQ quantization unlocks 256K context AND max-num-seqs=16 simultaneously. Model weights drop from 62GB BF16 to 20GB INT4, freeing 42GB for KV cache. Throughput nearly DOUBLES BF16 (75 vs 36 tok/s) on the same hardware. Tool call format is also fixed by using --tool-call-parser gemma4 instead of hermes.",
+    "source_file": "results/tdc/gpu/2026-04-07_gemma-4-31b-it-awq_4x3090_250w_256k.json"
+  },
+  "target": {
+    "name": "QuantTrio/gemma-4-31B-it-AWQ",
+    "display_name": null,
+    "family": "QuantTrio/gemma-4-31B-it-AWQ",
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": null,
+    "quant": "Q4_K_M",
+    "size_gb": null
+  },
+  "engine": {
+    "name": "vllm",
+    "version": "0.19.1rc1.dev60 (nightly)",
+    "config": null
+  },
+  "hardware": {
+    "vm_type": null,
+    "cpu": null,
+    "cpu_cores": 16,
+    "ram_gb": 96,
+    "gpu_count": 4,
+    "gpu_model": "NVIDIA GeForce RTX 3090",
+    "gpu_memory_gb": null,
+    "power_limit_watts": 250
+  },
+  "tests": [
+    {
+      "name": "simple_qa",
+      "elapsed_ms": 59,
+      "completion_tokens": 2
+    },
+    {
+      "name": "chat",
+      "elapsed_ms": 162,
+      "completion_tokens": 10,
+      "tok_per_sec": 61.7
+    },
+    {
+      "name": "tool_call_single",
+      "elapsed_ms": 265,
+      "completion_tokens": 15,
+      "tok_per_sec": 56.6,
+      "notes": "Clean JSON tool call (gemma4 parser)"
+    },
+    {
+      "name": "code_gen_500",
+      "elapsed_ms": 6560,
+      "completion_tokens": 500,
+      "tok_per_sec": 76.2
+    },
+    {
+      "name": "long_gen_1000",
+      "elapsed_ms": 13242,
+      "completion_tokens": 1000,
+      "tok_per_sec": 75.5
+    }
+  ],
+  "summary": {
+    "headline_metric": "tool_call_single_ms",
+    "headline_value": 265.0,
+    "headline_unit": "ms",
+    "accuracy_pct": null,
+    "total_tokens": 1527,
+    "total_time_ms": 20288
+  }
+}

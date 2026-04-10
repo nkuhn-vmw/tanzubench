@@ -1,0 +1,12 @@
+id: needle-16k
+name: Needle-in-haystack 16K
+category: long_context
+grader: needle
+timeout_sec: 120
+prompt_template: "unused; the needle grader builds its own prompt"
+grader_config:
+  haystack_asset: haystack-16k.txt
+  needle: "ROOM 16K code is BRAVO-EIGHT-FOUR."
+  depth: 0.5
+  question: "What is the code for room 16K?"
+  expected_answer: "BRAVO-EIGHT-FOUR"

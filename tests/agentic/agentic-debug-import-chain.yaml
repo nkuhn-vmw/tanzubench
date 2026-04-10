@@ -1,0 +1,24 @@
+id: agentic-debug-import-chain
+name: Debug bug buried in import chain
+category: agentic
+grader: agentic
+timeout_sec: 600
+fixture: debug-import-chain
+task_prompt: |
+  Running the tests fails with a TypeError because a function deep in the
+  package returns the wrong type. The error surfaces when importing from pkg
+  (pointing at pkg/__init__.py), but the actual bug is elsewhere.
+
+  Trace the import chain and fix the root cause. When done, all tests in
+  tests/ must pass.
+frameworks: [opencode, aider, custom]
+grader_config:
+  setup_commands:
+    - "python3 -m pip install -q pytest"
+  success_check:
+    command: "python3 -m pytest tests/ -q"
+    max_diff_lines: 50
+  partial_credit:
+    - {check: "grep -q 'int\\|return.*\\*' pkg/helpers.py", points: 0.5}
+    - {check: "python3 -m pytest tests/ -q", points: 0.5}
+  cleanup: always

@@ -1,0 +1,31 @@
+id: debug-py-logic-error
+name: Fix logic error in is_valid_age
+category: debugging
+grader: exec_unit_tests
+timeout_sec: 60
+prompt: |
+  The following Python function has a logic bug: it accepts negative ages and
+  ages over 120 because it uses `or` instead of `and`. Fix it and return ONLY
+  the corrected function in a Python code block.
+
+  ```python
+  def is_valid_age(age):
+      return age >= 0 or age <= 120  # BUG: always True
+  ```
+
+  Failing test:
+  ```
+  AssertionError: assert is_valid_age(-1) == False
+  # got True, expected False
+  ```
+
+  Return the corrected function only.
+grader_config:
+  language: python
+  entrypoint: is_valid_age
+  unit_tests:
+    - {input: [25], expected: true}
+    - {input: [-1], expected: false}
+    - {input: [121], expected: false}
+    - {input: [0], expected: true}
+    - {input: [120], expected: true}

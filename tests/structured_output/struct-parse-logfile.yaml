@@ -1,0 +1,36 @@
+id: struct-parse-logfile
+name: Parse Nginx Access Log to JSON
+category: structured_output
+grader: json_schema
+timeout_sec: 30
+prompt: |
+  Parse the following nginx access log lines into a JSON array of objects. Each object must have: ip (string), method (string), path (string), status (integer), bytes (integer). Return only the JSON array, no explanation.
+
+  192.168.1.10 - - [10/Apr/2026:10:00:01] "GET /index.html HTTP/1.1" 200 1234
+  10.0.0.5 - - [10/Apr/2026:10:00:02] "POST /api/login HTTP/1.1" 200 567
+  172.16.0.1 - - [10/Apr/2026:10:00:03] "GET /about HTTP/1.1" 304 0
+  10.1.2.3 - - [10/Apr/2026:10:00:04] "GET /images/logo.png HTTP/1.1" 200 8192
+  192.168.1.20 - - [10/Apr/2026:10:00:05] "DELETE /api/session HTTP/1.1" 204 0
+  10.0.0.7 - - [10/Apr/2026:10:00:06] "GET /api/users HTTP/1.1" 401 89
+  172.16.0.2 - - [10/Apr/2026:10:00:07] "PUT /api/profile HTTP/1.1" 200 312
+  192.168.1.11 - - [10/Apr/2026:10:00:08] "GET /favicon.ico HTTP/1.1" 404 152
+  10.0.0.9 - - [10/Apr/2026:10:00:09] "GET /health HTTP/1.1" 200 18
+  172.16.0.3 - - [10/Apr/2026:10:00:10] "POST /api/upload HTTP/1.1" 413 201
+grader_config:
+  schema:
+    type: array
+    minItems: 3
+    items:
+      type: object
+      required: [ip, method, path, status, bytes]
+      properties:
+        ip:
+          type: string
+        method:
+          type: string
+        path:
+          type: string
+        status:
+          type: integer
+        bytes:
+          type: integer

@@ -1,0 +1,83 @@
+name: CI
+
+# Single workflow for both validation and deploy.
+# - schema and web-build run on PRs and on pushes to main
+# - deploy runs only on pushes to main, AND only after schema + web-build pass
+#
+# This means a PR merge cannot accidentally deploy a broken build:
+# the deploy job's `needs:` ensures it waits for the validation jobs,
+# and branch protection on `main` (configured separately via `gh api`)
+# blocks merges until those same checks are green on the PR.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install jsonschema pyyaml pytest
+      - name: Run grader and runner tests
+        run: PYTHONPATH=. python3 -m pytest tools/test_graders.py tools/test_bench_suite.py -v
+      - name: Validate all results against schema v2
+        run: python3 tools/validate.py results/
+      - name: Validate test definitions
+        run: python3 tools/validate.py --tests tests/
+
+  web-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: web/package-lock.json
+      - run: cd web && npm ci
+      - run: cd web && npm run lint
+      - run: cd web && npm test
+      - run: cd web && npm run build
+      - name: Upload built site
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-out
+          path: web/out
+          retention-days: 7
+
+  deploy:
+    needs: [schema, web-build]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download tested build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-out
+          path: web/out
+
+      - name: Install cf CLI
+        run: |
+          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=v8" | tar -xz
+          sudo mv cf8 /usr/local/bin/cf
+          cf --version
+
+      - name: cf login and push
+        env:
+          CF_API: ${{ secrets.CF_API }}
+          CF_USER: ${{ secrets.CF_USER }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+          CF_ORG: ${{ secrets.CF_ORG }}
+          CF_SPACE: ${{ secrets.CF_SPACE }}
+        run: |
+          cf api "$CF_API" --skip-ssl-validation
+          cf auth "$CF_USER" "$CF_PASSWORD"
+          cf target -o "$CF_ORG" -s "$CF_SPACE"
+          cd web && cf push -f manifest.yml

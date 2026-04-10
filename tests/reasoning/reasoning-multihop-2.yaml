@@ -1,0 +1,21 @@
+id: reasoning-multihop-2
+name: Multi-hop reasoning — org chart before and after reorganization
+category: reasoning
+grader: llm_judge
+timeout_sec: 90
+prompt_template: |
+  Read the following document and answer the question.
+
+  DOCUMENT:
+  {{ asset:doc-multihop-2.md }}
+
+  QUESTION: Who reported to the CTO before the 2024 reorganization, and what happened to that person's team afterward?
+grader_config:
+  judge_rubric: |
+    Grade the answer on two axes, each 0.0-1.0:
+    - factual_correctness: does the answer match what the document says
+    - completeness: does the answer address every part of the question
+      (if the question asks two things, both must be answered)
+    Return JSON: {"factual_correctness": float, "completeness": float, "rationale": string}
+  judge_aggregation: mean
+  judge_temperature: 0.0

@@ -1,0 +1,24 @@
+id: agentic-multi-language
+name: Align Python response key with JS frontend expectation
+category: agentic
+grader: agentic
+timeout_sec: 600
+fixture: multi-language
+task_prompt: |
+  The Python backend in app.py returns {"result": 42}, but the JavaScript
+  frontend (and the Python tests) expect the key to be "data" instead of
+  "result". The test in tests/test_app.py currently fails.
+
+  Fix app.py so get_response() returns {"data": 42}. All tests in tests/
+  must pass when you are done. See README.md for context.
+frameworks: [opencode, aider, custom]
+grader_config:
+  setup_commands:
+    - "python3 -m pip install -q pytest"
+  success_check:
+    command: "python3 -m pytest tests/ -q"
+    max_diff_lines: 50
+  partial_credit:
+    - {check: "grep -q 'data' app.py", points: 0.5}
+    - {check: "python3 -m pytest tests/ -q", points: 0.5}
+  cleanup: always

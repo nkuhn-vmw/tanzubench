@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "result_type": "speed",
+  "meta": {
+    "timestamp": "2026-04-06T21:40:00Z",
+    "foundation": "tdc",
+    "tile_version": null,
+    "tag": "2x3090-150w-cuda-graphs",
+    "notes": null,
+    "source_file": "results/tdc/gpu/2026-04-06_qwen3.5-27b-gptq-int4_2x3090_150w.json"
+  },
+  "target": {
+    "name": "Qwen/Qwen3.5-27B-GPTQ-Int4",
+    "display_name": null,
+    "family": "Qwen/Qwen3.5-27B-GPTQ-Int4",
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": null,
+    "quant": "Q4_K_M",
+    "size_gb": null
+  },
+  "engine": {
+    "name": "vllm",
+    "version": "0.18.0",
+    "config": null
+  },
+  "hardware": {
+    "vm_type": null,
+    "cpu": null,
+    "cpu_cores": 16,
+    "ram_gb": 96,
+    "gpu_count": 2,
+    "gpu_model": "NVIDIA GeForce RTX 3090",
+    "gpu_memory_gb": null,
+    "power_limit_watts": 150
+  },
+  "tests": [
+    {
+      "name": "simple_qa",
+      "elapsed_ms": 20246,
+      "completion_tokens": 2,
+      "notes": "First request, CUDA graph warmup"
+    },
+    {
+      "name": "chat",
+      "elapsed_ms": 567,
+      "completion_tokens": 8,
+      "tok_per_sec": 14.1
+    },
+    {
+      "name": "tool_call_single",
+      "elapsed_ms": 2133,
+      "completion_tokens": 27,
+      "tok_per_sec": 12.7
+    },
+    {
+      "name": "code_gen_500",
+      "elapsed_ms": 31840,
+      "completion_tokens": 464,
+      "tok_per_sec": 14.6
+    },
+    {
+      "name": "long_gen_1000",
+      "elapsed_ms": 72514,
+      "completion_tokens": 1000,
+      "tok_per_sec": 13.8
+    }
+  ],
+  "summary": {
+    "headline_metric": "tool_call_single_ms",
+    "headline_value": 2133.0,
+    "headline_unit": "ms",
+    "accuracy_pct": null,
+    "total_tokens": 1501,
+    "total_time_ms": 127300
+  }
+}

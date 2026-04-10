@@ -1,0 +1,43 @@
+id: tool-dual-call
+name: Dual tool call
+category: tool_use
+grader: tool_call
+timeout_sec: 20
+prompt: |
+  What is the weather in San Francisco and what time is it in Tokyo?
+grader_config:
+  mode: dual
+  expected_tools: [get_weather, get_time]
+  tools:
+    - type: function
+      function:
+        name: get_weather
+        description: Get weather for a location
+        parameters:
+          type: object
+          properties: {location: {type: string}}
+          required: [location]
+    - type: function
+      function:
+        name: get_time
+        description: Get current time in a timezone
+        parameters:
+          type: object
+          properties: {timezone: {type: string}}
+          required: [timezone]
+    - type: function
+      function:
+        name: read_file
+        description: Read file contents
+        parameters:
+          type: object
+          properties: {path: {type: string}}
+          required: [path]
+    - type: function
+      function:
+        name: search_code
+        description: Search for code patterns
+        parameters:
+          type: object
+          properties: {pattern: {type: string}, path: {type: string}}
+          required: [pattern]

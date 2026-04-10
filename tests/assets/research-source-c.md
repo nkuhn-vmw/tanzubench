@@ -1,0 +1,11 @@
+# Source C: Hybrid Models — What the Research Shows
+
+Neither pure remote nor pure in-office arrangements appear to maximize both individual productivity and team cohesion simultaneously. A growing body of research suggests that hybrid models — typically two to three days per week in office — capture the measurable output advantages of remote work while preserving enough in-person interaction to sustain collaboration and culture.
+
+A 2024 randomized controlled trial conducted by researchers at the University of Pittsburgh and Tsinghua University assigned 1,600 knowledge workers at a large technology firm to either a fully in-office schedule or a hybrid schedule (three days remote, two in office). After six months, the hybrid group showed productivity scores statistically indistinguishable from the remote group, while recording significantly higher scores on peer-rated collaboration quality, manager-rated innovation contribution, and self-reported job satisfaction. Crucially, voluntary attrition in the hybrid group fell 35 percent relative to the in-office control, a finding the authors described as the most economically significant result in the study.
+
+The research also illuminates which tasks benefit most from which setting. Deep individual work — coding, writing, analysis — is consistently completed faster and with fewer errors in quiet home environments. Brainstorming, conflict resolution, onboarding, and relationship-building score better in-person. Effective hybrid policies therefore tend to designate in-office days around collaborative activities rather than mandating presence for heads-down work.
+
+Team size and seniority moderate the findings. Small teams of five or fewer showed smaller hybrid benefits, likely because coordination overhead is manageable regardless of location. Teams larger than 15, and teams with high proportions of employees in their first two years, showed the largest gains from structured in-office time.
+
+Policy design matters as much as the number of days. Hybrid mandates that stagger in-office days across team members — leaving individuals alone in the office on their assigned days — produce outcomes closer to fully remote than to well-coordinated hybrid. The productivity and collaboration benefits require that team members overlap in office on the same days.

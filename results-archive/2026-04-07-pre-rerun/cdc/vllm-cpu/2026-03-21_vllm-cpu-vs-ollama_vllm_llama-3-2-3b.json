@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "result_type": "speed",
+  "meta": {
+    "timestamp": "2026-03-21T00:00:00Z",
+    "foundation": "cdc",
+    "tile_version": "10.3.4",
+    "tag": "vllm-cpu-vs-ollama",
+    "notes": "Migrated from comparison file: results/cdc/vllm-cpu/2026-03-21_vllm-cpu-vs-ollama.json",
+    "source_file": "results/cdc/vllm-cpu/2026-03-21_vllm-cpu-vs-ollama.json"
+  },
+  "target": {
+    "name": "Llama-3.2-3B",
+    "display_name": null,
+    "family": "Llama-3.2-3B",
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": null,
+    "quant": "BF16",
+    "size_gb": null
+  },
+  "engine": {
+    "name": "vllm",
+    "version": null,
+    "config": null
+  },
+  "hardware": {
+    "vm_type": null,
+    "cpu": "Intel Xeon Gold 6254 @ 3.10GHz",
+    "cpu_cores": 16,
+    "ram_gb": 32,
+    "gpu_count": 0,
+    "gpu_model": null,
+    "gpu_memory_gb": null,
+    "power_limit_watts": null
+  },
+  "tests": [
+    {
+      "name": "code_gen_500",
+      "elapsed_ms": 65600,
+      "completion_tokens": 500,
+      "tok_per_sec": 7.6
+    }
+  ],
+  "summary": {
+    "headline_metric": "code_gen_500_ms",
+    "headline_value": 65600.0,
+    "headline_unit": "ms",
+    "accuracy_pct": null,
+    "total_tokens": 500,
+    "total_time_ms": 65600
+  }
+}

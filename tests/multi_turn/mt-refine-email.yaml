@@ -1,0 +1,23 @@
+id: mt-refine-email
+name: Iterative email refinement (apologetic + deadline + shorten)
+category: multi_turn
+grader: multi_turn
+timeout_sec: 60
+grader_config:
+  turns:
+    - user_message: |
+        Write a short email to Sarah explaining that a project delivery will be delayed.
+      checks:
+        - { contains: "Sarah" }
+        - { contains: "delay" }
+        - { length_max: 120 }
+    - user_message: |
+        Make it more apologetic and add that the new deadline is April 25.
+      checks:
+        - { contains: "April 25" }
+        - { any_contains: ["sorry", "apologize", "apolog"] }
+    - user_message: |
+        Shorten it to under 50 words while keeping the April 25 deadline.
+      checks:
+        - { contains: "April 25" }
+        - { length_max: 60 }

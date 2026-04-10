@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "result_type": "accuracy",
+  "meta": {
+    "timestamp": "2026-04-06T21:53:00Z",
+    "foundation": "cdc",
+    "tile_version": "10.3.4",
+    "tag": "cdc-accuracy-leaderboard",
+    "notes": "Verdict: Lowest accuracy of any tested model - refuses read_file and search_code tools, responding with text clarifications instead. Speed without accuracy.",
+    "source_file": "results/cdc/cpu/2026-04-06_accuracy-leaderboard.json"
+  },
+  "target": {
+    "name": "ministral-3:3b",
+    "display_name": null,
+    "family": "ministral-3",
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": null,
+    "quant": "Q4_K_M",
+    "size_gb": null
+  },
+  "engine": {
+    "name": "ollama",
+    "version": "0.18.2",
+    "config": null
+  },
+  "hardware": {
+    "vm_type": "cpu-2xlarge",
+    "cpu": "Intel Xeon Gold 6254 @ 3.10GHz",
+    "cpu_cores": 16,
+    "ram_gb": 32,
+    "gpu_count": 0,
+    "gpu_model": null,
+    "gpu_memory_gb": null,
+    "power_limit_watts": null
+  },
+  "tests": [
+    {
+      "name": "accuracy_factual",
+      "elapsed_ms": 3200.0,
+      "completion_tokens": 21,
+      "notes": "Category score: 5/5"
+    },
+    {
+      "name": "accuracy_tool_single",
+      "elapsed_ms": 14500.0,
+      "completion_tokens": 168,
+      "notes": "Category score: 1/3"
+    },
+    {
+      "name": "accuracy_tool_dual",
+      "elapsed_ms": 2300.0,
+      "completion_tokens": 27,
+      "notes": "Category score: 1/1"
+    },
+    {
+      "name": "accuracy_tool_restraint",
+      "elapsed_ms": 2200.0,
+      "completion_tokens": 9,
+      "notes": "Category score: 1/1"
+    }
+  ],
+  "summary": {
+    "headline_metric": "accuracy_pct",
+    "headline_value": 80.0,
+    "headline_unit": "%",
+    "accuracy_pct": 80.0,
+    "total_tokens": 225,
+    "total_time_ms": 22200
+  }
+}

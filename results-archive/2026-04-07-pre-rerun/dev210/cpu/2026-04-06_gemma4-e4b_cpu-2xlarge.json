@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0.0",
+  "result_type": "speed",
+  "meta": {
+    "timestamp": "2026-04-06T18:27:00Z",
+    "foundation": "dev210",
+    "tile_version": "10.3.4",
+    "tag": "thinking-default",
+    "notes": "E4B inconsistently engages thinking mode - run1 produced 320 tokens (thinking), run2 produced 30 tokens (direct). See dev210-gemma4-nothink-comparison for suppressed variant.",
+    "source_file": "results/dev210/cpu/2026-04-06_gemma4-e4b_cpu-2xlarge.json"
+  },
+  "target": {
+    "name": "gemma4:e4b",
+    "display_name": null,
+    "family": "gemma4",
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": "PLE (Per-Layer Embeddings), ~4.5B effective parameters",
+    "quant": "Q4_K_M",
+    "size_gb": null
+  },
+  "engine": {
+    "name": "ollama",
+    "version": "0.20.2",
+    "config": null
+  },
+  "hardware": {
+    "vm_type": "cpu-2xlarge",
+    "cpu": "Intel Xeon Gold",
+    "cpu_cores": 16,
+    "ram_gb": 32,
+    "gpu_count": 0,
+    "gpu_model": null,
+    "gpu_memory_gb": null,
+    "power_limit_watts": null
+  },
+  "tests": [
+    {
+      "name": "tool_call_dual",
+      "prompt": "What is the weather in San Francisco and what time is it in Tokyo?",
+      "elapsed_ms": 3100,
+      "completion_tokens": 30,
+      "tok_per_sec": 9.8,
+      "tool_calls_actual": 2,
+      "tools_called": [
+        "get_weather",
+        "get_time"
+      ],
+      "notes": "Run 2 (efficient - no thinking). Run 1 took 29.4s/320tok with thinking engaged."
+    },
+    {
+      "name": "agentic_file_read",
+      "prompt": "Read the file at src/main.py and tell me what it does",
+      "elapsed_ms": 8300,
+      "completion_tokens": 67,
+      "tok_per_sec": 8.1,
+      "tool_calls_actual": 1,
+      "tools_called": [
+        "read_file"
+      ]
+    },
+    {
+      "name": "multi_step_agentic",
+      "prompt": "Fix the login bug in auth.py - search, read, then fix",
+      "elapsed_ms": 47300,
+      "completion_tokens": 504,
+      "tok_per_sec": 10.7,
+      "tool_calls_actual": 1,
+      "tools_called": [
+        "search_code"
+      ],
+      "notes": "Only single-step. Generated many tokens before calling tool."
+    },
+    {
+      "name": "simple_chat",
+      "prompt": "Explain what a REST API is in 2 sentences.",
+      "elapsed_ms": 4900,
+      "completion_tokens": 52,
+      "tok_per_sec": 10.6,
+      "notes": "Most efficient chat response of any Gemma 4 variant - actually answered in 2 sentences"
+    },
+    {
+      "name": "code_gen_500",
+      "prompt": "Write a Python REST API for a todo list",
+      "elapsed_ms": 43400,
+      "completion_tokens": 500,
+      "tok_per_sec": 11.5
+    }
+  ],
+  "summary": {
+    "headline_metric": "tool_call_dual_ms",
+    "headline_value": 3100.0,
+    "headline_unit": "ms",
+    "accuracy_pct": null,
+    "total_tokens": 1153,
+    "total_time_ms": 107000
+  }
+}

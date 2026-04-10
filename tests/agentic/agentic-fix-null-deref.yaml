@@ -1,0 +1,22 @@
+id: agentic-fix-null-deref
+name: Fix null deref bug
+category: agentic
+grader: agentic
+timeout_sec: 600
+fixture: fix-null-deref
+task_prompt: |
+  There is a bug in app/handlers.py that causes a crash when the 'user'
+  field is missing from the request. Fix the bug. When done, all tests
+  in tests/ must pass.
+frameworks: [opencode, aider, custom]
+grader_config:
+  setup_commands:
+    - "python3 -m pip install -q pytest"
+  success_check:
+    command: "python3 -m pytest tests/ -q"
+    max_diff_lines: 50
+  partial_credit:
+    - {check: "grep -qE \"get\\s*\\(|in request|if.*user\" app/handlers.py", points: 0.3}
+    - {check: "python3 -m pytest tests/test_handlers.py::test_missing_user -q", points: 0.5}
+    - {check: "python3 -m pytest tests/ -q", points: 0.2}
+  cleanup: always

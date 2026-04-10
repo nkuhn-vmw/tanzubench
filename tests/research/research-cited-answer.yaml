@@ -1,0 +1,31 @@
+id: research-cited-answer
+name: Cited answer — source trust for policy decision
+category: research
+grader: llm_judge
+timeout_sec: 180
+prompt_template: |
+  Based on the three sources below, answer the following question in
+  approximately 150 words. Cite sources as [A], [B], [C]. Do not add
+  claims not in the sources.
+
+  QUESTION: A startup is deciding whether to adopt a remote-first or
+  hybrid work policy. Which source provides the most directly applicable
+  evidence for that decision, and what does it recommend?
+
+  SOURCE A:
+  {{ asset:research-source-a.md }}
+
+  SOURCE B:
+  {{ asset:research-source-b.md }}
+
+  SOURCE C:
+  {{ asset:research-source-c.md }}
+grader_config:
+  judge_rubric: |
+    Grade 0.0-1.0 on:
+    - faithful: no claims outside the sources
+    - cited: uses [A] [B] [C] markers at least once each
+    - non_contradictory: does not make mutually exclusive claims
+    Return JSON: {"faithful": float, "cited": float, "non_contradictory": float, "rationale": string}
+  judge_aggregation: mean
+  judge_temperature: 0.0

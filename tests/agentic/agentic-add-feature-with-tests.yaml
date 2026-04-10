@@ -1,0 +1,26 @@
+id: agentic-add-feature-with-tests
+name: Add pagination to get_items
+category: agentic
+grader: agentic
+timeout_sec: 600
+fixture: add-feature-with-tests
+task_prompt: |
+  app.py has a get_items() function. A new test (test_pagination) has been
+  added to tests/test_app.py that calls get_items(page=2, per_page=2) and
+  expects a paginated slice of items, but get_items() does not support
+  pagination yet.
+
+  Add page and per_page parameters to get_items() so the pagination test
+  passes while keeping existing tests green. See README.md for details.
+frameworks: [opencode, aider, custom]
+grader_config:
+  setup_commands:
+    - "python3 -m pip install -q pytest"
+  success_check:
+    command: "python3 -m pytest tests/ -q"
+    max_diff_lines: 50
+  partial_credit:
+    - {check: "grep -q 'page' app.py", points: 0.3}
+    - {check: "grep -q 'per_page' app.py", points: 0.2}
+    - {check: "python3 -m pytest tests/test_app.py::test_pagination -q", points: 0.5}
+  cleanup: always

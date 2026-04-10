@@ -1,0 +1,36 @@
+id: debug-js-async
+name: Fix missing return in JS map callback
+category: debugging
+grader: exec_unit_tests
+timeout_sec: 60
+prompt: |
+  The following JavaScript function has two bugs:
+  1. The arrow function uses curly braces `{}` without a `return` statement,
+     so it returns `undefined` instead of the doubled value.
+  2. `arr.map(...)` returns a new array but the original `arr` is returned,
+     so the result is always the unmodified input.
+
+  Fix the function and return ONLY the corrected function in a JavaScript code block.
+  Use `module.exports`.
+
+  ```javascript
+  function doubleAll(arr) {
+    arr.map(x => { x * 2 });  // BUG: no return, result discarded
+    return arr;
+  }
+  module.exports = { doubleAll };
+  ```
+
+  Failing test:
+  ```
+  AssertionError: expected [ 1, 2, 3 ] to deeply equal [ 2, 4, 6 ]
+  ```
+
+  Return the corrected function only (with module.exports).
+grader_config:
+  language: javascript
+  entrypoint: doubleAll
+  unit_tests:
+    - {input: [[1, 2, 3]], expected: [2, 4, 6]}
+    - {input: [[]], expected: []}
+    - {input: [[0]], expected: [0]}

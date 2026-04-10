@@ -1,0 +1,28 @@
+id: struct-tool-enum-arg
+name: Function Call with Enum Argument
+category: structured_output
+grader: json_schema
+timeout_sec: 30
+prompt: |
+  Generate a JSON function call for create_ticket(title, priority, assignee). Title: 'Fix login bug', priority must be one of 'low', 'medium', 'high' -- set it to 'high', assignee: 'alice'. Format: {"function": "create_ticket", "arguments": {...}}. Return only JSON, no explanation.
+grader_config:
+  schema:
+    type: object
+    required: [function, arguments]
+    properties:
+      function:
+        type: string
+      arguments:
+        type: object
+        required: [title, priority, assignee]
+        properties:
+          title:
+            type: string
+          priority:
+            type: string
+            enum: [low, medium, high]
+          assignee:
+            type: string
+  expected_values:
+    function: create_ticket
+    arguments.priority: high
