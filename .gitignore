@@ -13,3 +13,5 @@ out/
 # paths, internal hostnames) that shouldn't be public.
 docs/superpowers/
 docs/blog-notes.md
+results-archive/
+RESULTS.md
