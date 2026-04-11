@@ -100,16 +100,10 @@ const fullFixture: LoadedResult[] = [
   makeLoaded('qwen3', { name: 'qwen3-32b', compositeScore: 0.80 }),
 ];
 
-// One judge-configured, one not — for judge toggle tests
+// One judge-configured, one not — for judge filtering tests
 const mixedFixture: LoadedResult[] = [
   makeLoaded('full-model', { name: 'full-model', judgeConfigured: true, compositeScore: 0.90 }),
   makeLoaded('core-model', { name: 'core-model', judgeConfigured: false, compositeScore: 0.85 }),
-];
-
-// Fixture with differing throughput (total_tokens / total_time_ms)
-const tpsFixture: LoadedResult[] = [
-  makeLoaded('fast', { name: 'fast-model', totalTokens: 10000, totalTimeMs: 1000 }),  // 10 tok/s
-  makeLoaded('slow', { name: 'slow-model', totalTokens: 100, totalTimeMs: 10000 }),   // 0.01 tok/s
 ];
 
 describe('HomeClient — composite view (default)', () => {
@@ -122,7 +116,7 @@ describe('HomeClient — composite view (default)', () => {
     render(<HomeClient results={fullFixture} />);
     const matches = screen.getAllByText((_content, element) => {
       const text = element?.textContent ?? '';
-      return /Showing\s+2\s+composite\s+results/i.test(text);
+      return /Showing\s+2\s+results/i.test(text);
     });
     expect(matches.length).toBeGreaterThan(0);
   });
@@ -145,68 +139,10 @@ describe('HomeClient — composite view (default)', () => {
   });
 });
 
-describe('HomeClient — judge mode toggle', () => {
-  it('full mode (default) hides core-only rows', () => {
-    // Default: judgeMode=full → filter out judgeConfigured===false
+describe('HomeClient — judge filtering (hardcoded full mode)', () => {
+  it('always hides rows where judgeConfigured === false', () => {
     render(<HomeClient results={mixedFixture} />);
     expect(screen.getAllByText('full-model').length).toBeGreaterThan(0);
     expect(screen.queryAllByText('core-model').length).toBe(0);
-  });
-
-  it('core mode shows all rows including non-judge-graded', () => {
-    mockParams = new URLSearchParams('judge=core');
-    render(<HomeClient results={mixedFixture} />);
-    expect(screen.getAllByText('full-model').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('core-model').length).toBeGreaterThan(0);
-  });
-});
-
-describe('HomeClient — Tok/s view', () => {
-  beforeEach(() => {
-    mockParams = new URLSearchParams('view=tps');
-  });
-
-  it('sorts by throughput descending (highest tok/s first)', () => {
-    render(<HomeClient results={tpsFixture} />);
-    const links = screen.getAllByRole('link');
-    const linkTexts = links.map((l) => l.textContent ?? '');
-    const fastIdx = linkTexts.findIndex((t) => t.includes('fast-model'));
-    const slowIdx = linkTexts.findIndex((t) => t.includes('slow-model'));
-    expect(fastIdx).toBeGreaterThanOrEqual(0);
-    expect(slowIdx).toBeGreaterThanOrEqual(0);
-    expect(fastIdx).toBeLessThan(slowIdx);
-  });
-
-  it('shows throughput results in the footer', () => {
-    render(<HomeClient results={tpsFixture} />);
-    const matches = screen.getAllByText((_content, element) => {
-      const text = element?.textContent ?? '';
-      return /Showing\s+2\s+throughput\s+results/i.test(text);
-    });
-    expect(matches.length).toBeGreaterThan(0);
-  });
-});
-
-describe('HomeClient — accuracy view', () => {
-  beforeEach(() => {
-    mockParams = new URLSearchParams('view=accuracy');
-  });
-
-  it('shows accuracy results in the footer', () => {
-    render(<HomeClient results={fullFixture} />);
-    const matches = screen.getAllByText((_content, element) => {
-      const text = element?.textContent ?? '';
-      return /Showing\s+2\s+accuracy\s+results/i.test(text);
-    });
-    expect(matches.length).toBeGreaterThan(0);
-  });
-
-  it('sorts by composite descending', () => {
-    render(<HomeClient results={fullFixture} />);
-    const links = screen.getAllByRole('link');
-    const linkTexts = links.map((l) => l.textContent ?? '');
-    const gemmaIdx = linkTexts.findIndex((t) => t.includes('gemma4:e4b'));
-    const qwenIdx = linkTexts.findIndex((t) => t.includes('qwen3-32b'));
-    expect(gemmaIdx).toBeLessThan(qwenIdx);
   });
 });

@@ -4,13 +4,10 @@ import Link from 'next/link';
 import { RankMedal } from '@/components/rank-medal';
 import { cn } from '@/lib/utils';
 import type { Enriched } from '@/lib/enriched';
-import type { ViewName, JudgeMode } from '@/lib/filters';
 import { CategorySparkline } from '@/components/category-sparkline';
 
 interface LeaderboardTableProps {
   results: Enriched[];
-  view?: ViewName;
-  judgeMode?: JudgeMode;
 }
 
 function formatComposite(score: number | null | undefined): string {
@@ -59,16 +56,7 @@ function HardwareBadge({ hardware }: { hardware: 'cpu' | 'gpu' }) {
   );
 }
 
-/** Subtle "Core" badge shown next to composite when in core mode. */
-function CoreBadge() {
-  return (
-    <span className="inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-medium bg-amber-500/15 text-amber-700 dark:text-amber-300 ml-1">
-      Core
-    </span>
-  );
-}
-
-export function LeaderboardTable({ results, view = 'composite', judgeMode = 'full' }: LeaderboardTableProps) {
+export function LeaderboardTable({ results }: LeaderboardTableProps) {
   if (results.length === 0) {
     return (
       <div className="rounded-lg border p-8 md:p-12 text-center text-muted-foreground text-base leaderboard-panel">
@@ -79,15 +67,15 @@ export function LeaderboardTable({ results, view = 'composite', judgeMode = 'ful
 
   return (
     <>
-      <DesktopTable results={results} view={view} judgeMode={judgeMode} />
-      <MobileCardList results={results} view={view} judgeMode={judgeMode} />
+      <DesktopTable results={results} />
+      <MobileCardList results={results} />
     </>
   );
 }
 
 // ─── Desktop grid ────────────────────────────────────────────────────────────
 
-function DesktopTable({ results, view, judgeMode }: { results: Enriched[]; view: ViewName; judgeMode: JudgeMode }) {
+function DesktopTable({ results }: { results: Enriched[] }) {
   return (
     <div className="hidden md:block rounded-lg border overflow-hidden leaderboard-panel">
       <div className="grid grid-cols-[48px_2.4fr_1.6fr_1fr_1.6fr_1fr] px-5 py-3 bg-muted text-xs uppercase tracking-wider font-semibold text-muted-foreground border-b">
@@ -139,7 +127,6 @@ function DesktopTable({ results, view, judgeMode }: { results: Enriched[]; view:
                 rank <= 3 && 'text-emerald-600 dark:text-emerald-400',
               )}>
                 {formatComposite(r.composite)}
-                {judgeMode === 'core' && r.composite != null && <CoreBadge />}
               </div>
               {r.composite != null && (
                 <div className="mt-1 flex justify-end">
@@ -159,7 +146,7 @@ function DesktopTable({ results, view, judgeMode }: { results: Enriched[]; view:
 
 // ─── Mobile card list ────────────────────────────────────────────────────────
 
-function MobileCardList({ results, view, judgeMode }: { results: Enriched[]; view: ViewName; judgeMode: JudgeMode }) {
+function MobileCardList({ results }: { results: Enriched[] }) {
   return (
     <div className="md:hidden flex flex-col gap-3">
       {results.map((r, i) => {
@@ -199,7 +186,6 @@ function MobileCardList({ results, view, judgeMode }: { results: Enriched[]; vie
                 )}
               >
                 {headlineValue}
-                {judgeMode === 'core' && r.composite != null && <CoreBadge />}
               </div>
             </div>
 

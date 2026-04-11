@@ -37,7 +37,7 @@ export default function FoundationPage({ params }: { params: { slug: string } })
       <SiteHeader />
       <main className="container py-8 space-y-6">
         <FoundationSummaryCard summary={summary} />
-        <LeaderboardTable results={sorted} view="composite" judgeMode="full" />
+        <LeaderboardTable results={sorted} />
       </main>
     </>
   );
