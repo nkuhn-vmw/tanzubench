@@ -129,14 +129,17 @@ class ModelClient:
 
 # ----- Engine config introspection ---------------------------------------
 
-def probe_engine_config(url: str, engine_name: str, api_key: str) -> Dict[str, Any]:
-    """Query the engine's metadata endpoint and return settings.
+def probe_engine_config(url: str, engine_name: str, model_name: str,
+                        api_key: str, extra: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """Query the engine's metadata endpoint and return a clean, structured
+    config dict. Extracts the most useful fields from the raw API response
+    and merges in any manual --engine-config overrides.
 
-    vLLM: GET /v1/models → returns model list with settings.
-    Ollama: POST /api/show → returns modelfile + parameters.
-    Unknown: return a minimal stub.
+    The goal is to produce config that mirrors what an operator configured
+    in OpsManager / the GenAI tile — not a raw API dump.
     """
     import urllib.request
+    config: Dict[str, Any] = {"_source": "unknown"}
     try:
         if engine_name == "vllm":
             req = urllib.request.Request(
@@ -145,21 +148,82 @@ def probe_engine_config(url: str, engine_name: str, api_key: str) -> Dict[str, A
             )
             with urllib.request.urlopen(req, timeout=5) as r:
                 data = json.loads(r.read())
-            return {"_source": "vllm:/v1/models", **data}
-        if engine_name == "ollama":
-            # Ollama's /api/show expects {"name": "<model>"} — we don't know
-            # model here; runner will call this after the first chat. For
-            # now, return list.
+            # Extract clean fields from the first model entry
+            models = data.get("data", [])
+            if models:
+                m = models[0]
+                config = {
+                    "_source": "vllm:/v1/models",
+                    "model_id": m.get("id"),
+                    "root": m.get("root"),
+                    "max_model_len": m.get("max_model_len"),
+                    # Infer quantization from root name if present
+                    "quantization": (
+                        "awq" if "awq" in (m.get("root") or "").lower()
+                        else "gptq" if "gptq" in (m.get("root") or "").lower()
+                        else "fp8" if "fp8" in (m.get("root") or "").lower()
+                        else None
+                    ),
+                }
+        elif engine_name == "ollama":
+            # Use /api/show for detailed model info
             req = urllib.request.Request(
-                f"{url.rstrip('/')}/api/tags",
-                headers={"Authorization": f"Bearer {api_key}"},
+                f"{url.rstrip('/')}/api/show",
+                data=json.dumps({"name": model_name}).encode(),
+                headers={"Content-Type": "application/json",
+                         "Authorization": f"Bearer {api_key}"},
+                method="POST",
             )
-            with urllib.request.urlopen(req, timeout=5) as r:
-                data = json.loads(r.read())
-            return {"_source": "ollama:/api/tags", **data}
+            try:
+                with urllib.request.urlopen(req, timeout=10) as r:
+                    data = json.loads(r.read())
+                details = data.get("details", {})
+                config = {
+                    "_source": "ollama:/api/show",
+                    "model": model_name,
+                    "format": details.get("format"),
+                    "family": details.get("family"),
+                    "parameter_size": details.get("parameter_size"),
+                    "quantization_level": details.get("quantization_level"),
+                }
+                # Parse modelfile for num_ctx and other parameters
+                modelfile = data.get("modelfile", "")
+                for line in modelfile.split("\n"):
+                    line = line.strip()
+                    if line.startswith("PARAMETER "):
+                        parts = line.split(None, 2)
+                        if len(parts) == 3:
+                            config[f"param_{parts[1]}"] = parts[2]
+            except Exception:
+                # Fallback to /api/tags if /api/show fails
+                req2 = urllib.request.Request(
+                    f"{url.rstrip('/')}/api/tags",
+                    headers={"Authorization": f"Bearer {api_key}"},
+                )
+                with urllib.request.urlopen(req2, timeout=5) as r2:
+                    tags = json.loads(r2.read())
+                for m in tags.get("models", []):
+                    if m.get("name") == model_name or m.get("model") == model_name:
+                        config = {
+                            "_source": "ollama:/api/tags",
+                            "model": model_name,
+                            "format": m.get("details", {}).get("format"),
+                            "family": m.get("details", {}).get("family"),
+                            "parameter_size": m.get("details", {}).get("parameter_size"),
+                            "quantization_level": m.get("details", {}).get("quantization_level"),
+                            "size_bytes": m.get("size"),
+                        }
+                        break
     except Exception as e:
-        return {"_error": f"metadata unreachable: {type(e).__name__}: {e}"}
-    return {"_source": "unknown"}
+        config = {"_error": f"metadata unreachable: {type(e).__name__}: {e}"}
+
+    # Merge manual overrides from --engine-config (OpsMan-level settings
+    # like tensor_parallel_size, gpu_memory_utilization, etc. that aren't
+    # available from the API)
+    if extra:
+        config.update(extra)
+
+    return config
 
 
 # ----- Test loading ------------------------------------------------------
@@ -238,6 +302,8 @@ class RunConfig:
     tests_dir: Path
     output_dir: Path
     tag: Optional[str]
+    tile_version: Optional[str]
+    engine_config_extra: Optional[Dict[str, Any]]  # manual OpsMan-level overrides
     no_interactive: bool
     runs: int = 1
     max_run_time: int = 7200       # total wall-clock cap for the entire run (seconds)
@@ -539,7 +605,8 @@ def run(cfg: RunConfig) -> Path:
         print(f" WARN: {e} (continuing)")
 
     # Engine config probe.
-    engine_config = probe_engine_config(cfg.url, cfg.engine, cfg.api_key)
+    engine_config = probe_engine_config(cfg.url, cfg.engine, cfg.model,
+                                        cfg.api_key, cfg.engine_config_extra)
 
     # Output path + in-progress file.
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
@@ -668,7 +735,7 @@ def run(cfg: RunConfig) -> Path:
         "meta": {
             "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "foundation": cfg.foundation,
-            "tile_version": None,
+            "tile_version": cfg.tile_version,
             "tag": cfg.tag,
             "notes": None,
             "source_file": None,
@@ -756,6 +823,12 @@ def main() -> int:
     p.add_argument("--output", default=None,
                    help="output directory; default results/<foundation>/<hw>/")
     p.add_argument("--tag", default=None)
+    p.add_argument("--tile-version", default=None,
+                   help="GenAI tile version (e.g., '10.3.4'), stored in meta.tile_version")
+    p.add_argument("--engine-config", default=None,
+                   help="JSON string of OpsManager-level engine settings to merge "
+                        "into engine.config (e.g., '{\"tensor_parallel_size\": 2, "
+                        "\"gpu_memory_utilization\": 0.9}')")
     p.add_argument("--no-interactive", action="store_true")
     p.add_argument("--runs", type=int, default=1, metavar="N",
                    help="repeat each non-agentic test N times (1–5) and record "
@@ -781,7 +854,10 @@ def main() -> int:
         suppress_thinking=args.suppress_thinking,
         categories=args.categories.split(",") if args.categories else None,
         tests_dir=Path(args.tests_dir), output_dir=output,
-        tag=args.tag, no_interactive=args.no_interactive,
+        tag=args.tag,
+        tile_version=args.tile_version,
+        engine_config_extra=json.loads(args.engine_config) if args.engine_config else None,
+        no_interactive=args.no_interactive,
         runs=max(1, min(5, args.runs)),
         max_run_time=args.max_run_time,
         task_timeout=args.task_timeout,
