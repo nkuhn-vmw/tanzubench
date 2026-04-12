@@ -1,0 +1,28 @@
+id: iac-cf-service-binding
+name: Generate CF manifest with service bindings
+category: iac
+grader: json_schema
+timeout_sec: 30
+prompt: |
+  Generate a Cloud Foundry application manifest as JSON for an app named 'data-processor'
+  that binds to the following services:
+  - A MySQL service instance named 'my-db'
+  - A Redis service instance named 'cache'
+
+  Use 512M memory, 1 instance, and the python_buildpack. The manifest must have a top-level
+  "applications" array. Return only valid JSON, no explanation.
+grader_config:
+  schema:
+    type: object
+    required: [applications]
+    properties:
+      applications:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          required: [services]
+          properties:
+            services:
+              type: array
+              minItems: 2

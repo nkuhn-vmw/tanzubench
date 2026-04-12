@@ -1,0 +1,43 @@
+id: mon-diego-cell
+name: Diagnose Diego cell resource exhaustion
+category: monitoring
+grader: contains
+timeout_sec: 30
+prompt: |
+  New application staging is failing with "insufficient resources". The following
+  are Diego cell rep metrics collected via the Loggregator Firehose. Why can't
+  new apps be staged, and what remediation steps do you recommend?
+
+  Diego Cell Rep Metrics — foundation: production, collected: 2024-03-15T17:20:00Z
+
+  cell-1 (10.0.16.10):
+    rep.CapacityRemainingMemory:       512
+    rep.CapacityTotalMemory:           30720
+    rep.CapacityRemainingDisk:         4096
+    rep.CapacityTotalDisk:             102400
+    rep.CapacityRemainingContainers:   0
+    rep.CapacityTotalContainers:       256
+    rep.ContainerCount:                256
+
+  cell-2 (10.0.16.11):
+    rep.CapacityRemainingMemory:       256
+    rep.CapacityTotalMemory:           30720
+    rep.CapacityRemainingDisk:         2048
+    rep.CapacityTotalDisk:             102400
+    rep.CapacityRemainingContainers:   0
+    rep.CapacityTotalContainers:       256
+    rep.ContainerCount:                256
+
+  cell-3 (10.0.16.12):
+    rep.CapacityRemainingMemory:       768
+    rep.CapacityTotalMemory:           30720
+    rep.CapacityRemainingDisk:         3072
+    rep.CapacityTotalDisk:             102400
+    rep.CapacityRemainingContainers:   0
+    rep.CapacityTotalContainers:       256
+    rep.ContainerCount:                256
+
+  BBS log excerpt:
+  [2024-03-15T17:19:44Z] failed-to-find-cell-for-lrp: insufficient capacity on all cells
+grader_config:
+  must_contain: ["capacity", "cell"]

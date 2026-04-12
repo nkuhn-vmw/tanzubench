@@ -1,0 +1,20 @@
+id: mon-top-cpu-spike
+name: Diagnose CPU spike from top output
+category: monitoring
+grader: contains
+timeout_sec: 30
+prompt: |
+  The following is output from the `top` command on a production server.
+  Identify the problem process and recommend a remediation.
+
+  top - 14:32:01 up 45 days, 3:21, 2 users, load average: 7.82, 6.54, 3.21
+  Tasks: 312 total, 2 running, 310 sleeping
+  %Cpu(s): 97.3 us, 1.2 sy, 0.0 ni, 1.0 id, 0.0 wa, 0.3 si, 0.2 st
+  MiB Mem:  32168.4 total, 12450.2 free, 15420.8 used, 4297.4 buff/cache
+
+    PID USER  PR  NI    VIRT    RES    SHR S  %CPU  %MEM   COMMAND
+  24531 app   20   0 8245120 2.1g  12480 R  98.2  6.7   java
+   1204 root  20   0  425600  45120  8960 S   0.3  0.1   systemd
+    892 mysql 20   0 2145280 512000 32768 S   0.2  1.6   mysqld
+grader_config:
+  must_contain: ["java", "24531"]

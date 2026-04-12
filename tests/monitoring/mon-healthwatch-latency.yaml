@@ -1,0 +1,35 @@
+id: mon-healthwatch-latency
+name: Identify latency anomaly in Healthwatch metrics
+category: monitoring
+grader: contains
+timeout_sec: 30
+prompt: |
+  The following JSON payload is a Healthwatch metric snapshot from a Cloud Foundry
+  production foundation. Identify the anomaly and explain what it indicates.
+
+  {
+    "timestamp": "2024-03-15T18:00:00Z",
+    "foundation": "production",
+    "metrics": {
+      "gorouter.latency.p50": 18,
+      "gorouter.latency.p95": 420,
+      "gorouter.latency.p99": 12000,
+      "gorouter.requests.per_second": 3842,
+      "gorouter.bad_gateways": 147,
+      "gorouter.responses.5xx": 312,
+      "bbs.domain.cf-apps.freshness": 1,
+      "bbs.lrps.running": 1847,
+      "diego.auctioneer.fetch_states_duration.p99": 9200,
+      "uaa.latency.p50": 45,
+      "uaa.latency.p99": 380,
+      "doppler.dropped.total": 0,
+      "system.cpu.user": 12.4,
+      "system.mem.percent": 44.1
+    },
+    "thresholds": {
+      "gorouter.latency.p99.warn_ms": 200,
+      "gorouter.latency.p99.critical_ms": 2000
+    }
+  }
+grader_config:
+  must_contain: ["latency", "gorouter"]

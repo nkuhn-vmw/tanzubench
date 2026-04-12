@@ -1,0 +1,51 @@
+id: iac-k8s-deployment
+name: Generate K8s Deployment JSON for nginx
+category: iac
+grader: json_schema
+timeout_sec: 30
+prompt: |
+  Generate a Kubernetes Deployment JSON manifest for an nginx workload with:
+  - 3 replicas
+  - Container image: nginx:1.25
+  - Resource limits: memory 256Mi, cpu 500m
+  - Resource requests: memory 128Mi, cpu 250m
+  - Liveness probe: HTTP GET on path / port 80, initialDelaySeconds 10, periodSeconds 15
+  - Label selector: app=nginx
+
+  Return only valid JSON, no explanation.
+grader_config:
+  schema:
+    type: object
+    required: [kind, spec]
+    properties:
+      kind:
+        type: string
+        enum: [Deployment]
+      spec:
+        type: object
+        required: [replicas, template]
+        properties:
+          replicas:
+            type: integer
+          template:
+            type: object
+            required: [spec]
+            properties:
+              spec:
+                type: object
+                required: [containers]
+                properties:
+                  containers:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: object
+                      required: [resources]
+                      properties:
+                        resources:
+                          type: object
+                        livenessProbe:
+                          type: object
+  expected_values:
+    kind: Deployment
+    spec.replicas: 3

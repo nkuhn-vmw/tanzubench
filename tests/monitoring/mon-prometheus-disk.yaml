@@ -1,0 +1,60 @@
+id: mon-prometheus-disk
+name: Identify critical disk from Prometheus metrics
+category: monitoring
+grader: contains
+timeout_sec: 30
+prompt: |
+  The following JSON is a Prometheus instant query result for
+  node_filesystem_avail_bytes across a three-node cluster. Which node and
+  mount point is in a critical state, and what immediate actions should be taken?
+
+  {
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {
+            "__name__": "node_filesystem_avail_bytes",
+            "instance": "node-1:9100",
+            "job": "node",
+            "mountpoint": "/",
+            "fstype": "ext4"
+          },
+          "value": [1710525600, "42949672960"]
+        },
+        {
+          "metric": {
+            "__name__": "node_filesystem_avail_bytes",
+            "instance": "node-2:9100",
+            "job": "node",
+            "mountpoint": "/data",
+            "fstype": "xfs"
+          },
+          "value": [1710525600, "10737418240"]
+        },
+        {
+          "metric": {
+            "__name__": "node_filesystem_avail_bytes",
+            "instance": "node-3:9100",
+            "job": "node",
+            "mountpoint": "/data",
+            "fstype": "xfs"
+          },
+          "value": [1710525600, "4096"]
+        },
+        {
+          "metric": {
+            "__name__": "node_filesystem_avail_bytes",
+            "instance": "node-3:9100",
+            "job": "node",
+            "mountpoint": "/",
+            "fstype": "ext4"
+          },
+          "value": [1710525600, "21474836480"]
+        }
+      ]
+    }
+  }
+grader_config:
+  must_contain: ["node-3", "/data"]

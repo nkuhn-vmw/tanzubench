@@ -1,0 +1,16 @@
+id: iac-github-actions
+name: Write GitHub Actions workflow for test and deploy
+category: iac
+grader: contains
+timeout_sec: 30
+prompt: |
+  Write a GitHub Actions workflow file that:
+  1. On pull_request to any branch: runs the test suite (assume a Node.js project,
+     use actions/checkout, setup-node with Node 20, run npm ci then npm test)
+  2. On push to the main branch only: after tests pass, deploy by running npm run deploy
+
+  The workflow should have two jobs: 'test' and 'deploy'. The deploy job should depend
+  on the test job and only run on the main branch. Return only the workflow YAML content
+  suitable for .github/workflows/ci.yml.
+grader_config:
+  must_contain: ["pull_request", "push", "main", "jobs"]

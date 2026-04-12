@@ -1,0 +1,18 @@
+id: iac-dockerfile
+name: Write multi-stage Dockerfile for Go app
+category: iac
+grader: contains
+timeout_sec: 30
+prompt: |
+  Write a multi-stage Dockerfile for a Go application with the following requirements:
+  - Build stage: use golang:1.22-alpine as the builder, copy source from ./cmd/server,
+    build a statically-linked binary named 'server' (CGO_ENABLED=0, GOOS=linux)
+  - Final stage: use a minimal base image (scratch or alpine), copy only the compiled
+    binary from the build stage
+  - Expose port 8080
+  - Set the binary as the ENTRYPOINT
+
+  The application source is in ./cmd/server/main.go and uses Go modules (go.mod/go.sum
+  are in the repo root). Return only the Dockerfile content.
+grader_config:
+  must_contain: ["FROM", "AS build", "COPY --from=build"]
