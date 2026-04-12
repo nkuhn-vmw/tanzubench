@@ -1,0 +1,30 @@
+id: ci-go-mod-tidy
+name: Fix missing require directive in go.mod
+category: ci_repair
+grader: exec_build
+timeout_sec: 60
+prompt: |
+  This go.mod file is missing a required dependency, causing the CI build to
+  fail with a missing module error. Add the missing require directive and
+  return only the corrected go.mod.
+
+  ```
+  module github.com/example/myapp
+
+  go 1.21
+  ```
+
+  Error: `no required module provides package github.com/gin-gonic/gin`
+
+  The application imports gin but it is not declared in go.mod. Add:
+  `require github.com/gin-gonic/gin v1.9.1`
+grader_config:
+  target_file: go.mod
+  build_command: >-
+    python3 -c "
+    content = open('go.mod').read();
+    assert 'github.com/gin-gonic/gin' in content, 'gin not found in go.mod';
+    assert 'require' in content, 'no require block in go.mod';
+    print('ok')
+    "
+  build_tool: python3

@@ -1,0 +1,28 @@
+id: ci-dockerfile-bad-base
+name: Fix invalid base image tag in Dockerfile
+category: ci_repair
+grader: exec_build
+timeout_sec: 60
+prompt: |
+  This Dockerfile uses a non-existent base image tag, causing the CI build to
+  fail. Fix the FROM line and return only the corrected Dockerfile.
+
+  ```dockerfile
+  FROM node:999
+
+  WORKDIR /app
+  COPY package*.json ./
+  RUN npm install
+  COPY . .
+  EXPOSE 3000
+  CMD ["node", "index.js"]
+  ```
+
+  Error: `manifest unknown: manifest not found` (node:999 does not exist)
+
+  Use node:20-alpine as the base image instead.
+grader_config:
+  target_file: Dockerfile
+  build_command: >-
+    grep -q 'FROM node:' Dockerfile && ! grep -q 'node:999' Dockerfile
+  build_tool: python3

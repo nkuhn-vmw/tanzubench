@@ -331,6 +331,32 @@ def test_multi_turn_basic():
     assert r.details["total_checks"] == 4
 
 
+def test_exec_build_pass(tmp_path):
+    from tools.graders.exec_build import grade
+    client = FakeClient(responses=[('{"name": "test", "version": "1.0.0"}', [], 10, 0.1)])
+    ctx_obj = _ctx(tmp_path)
+    r = grade({"prompt": "fix this", "grader_config": {
+        "target_file": "data.json",
+        "build_command": "python3 -c \"import json; json.load(open('data.json'))\"",
+        "build_tool": "python3",
+    }}, client, ctx_obj)
+    assert r.score == 1.0
+    assert r.details["build_ok"] is True
+
+
+def test_exec_build_fail(tmp_path):
+    from tools.graders.exec_build import grade
+    client = FakeClient(responses=[("not valid json at all", [], 10, 0.1)])
+    ctx_obj = _ctx(tmp_path)
+    r = grade({"prompt": "fix this", "grader_config": {
+        "target_file": "data.json",
+        "build_command": "python3 -c \"import json; json.load(open('data.json'))\"",
+        "build_tool": "python3",
+    }}, client, ctx_obj)
+    assert r.score == 0.0
+    assert r.details["build_ok"] is False
+
+
 def test_multi_turn_partial():
     from tools.graders.multi_turn import grade
     client = FakeClient(responses=[
