@@ -1,0 +1,19 @@
+id: sys-systemd-service
+name: Create systemd unit file for a Python app
+category: sysadmin
+grader: container_exec
+timeout_sec: 120
+prompt: |
+  Write a shell script that creates a systemd unit file at
+  /etc/systemd/system/myapp.service for a Python web application with the
+  following requirements: runs as user 'appuser', restarts on failure,
+  has an ExecStart directive pointing to the application. Return only the
+  shell script in a code block.
+grader_config:
+  image: ubuntu:22.04
+  setup_commands: []
+  state_checks:
+    - { file_exists: "/etc/systemd/system/myapp.service" }
+    - { command: "grep -q 'Restart=on-failure' /etc/systemd/system/myapp.service", exit_code: 0 }
+    - { command: "grep -q 'User=appuser' /etc/systemd/system/myapp.service", exit_code: 0 }
+    - { command: "grep -q 'ExecStart' /etc/systemd/system/myapp.service", exit_code: 0 }

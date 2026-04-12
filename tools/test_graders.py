@@ -390,3 +390,14 @@ def test_multi_turn_tool_result_injection():
         ]
     }}, client, _ctx(Path("/tmp")))
     assert r.score == 1.0
+
+
+def test_container_exec_skips_without_docker(tmp_path, monkeypatch):
+    from tools.graders.container_exec import grade
+    monkeypatch.setattr("shutil.which", lambda x: None if x == "docker" else "/usr/bin/" + x)
+    client = FakeClient(responses=[("echo hello", [], 5, 0.1)])
+    ctx_obj = _ctx(tmp_path)
+    r = grade({"prompt": "do something", "grader_config": {"image": "ubuntu:22.04", "state_checks": []}},
+              client, ctx_obj)
+    assert r.status == "skipped"
+    assert "docker" in r.details["error"]

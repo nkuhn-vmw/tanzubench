@@ -1,0 +1,16 @@
+id: sys-user-permissions
+name: Create deploy user with www-data group
+category: sysadmin
+grader: container_exec
+timeout_sec: 120
+prompt: |
+  Write a shell script that creates a user named 'deploy' with the following
+  properties: primary or secondary group is 'www-data', login shell is
+  /bin/bash. Return only the shell script in a code block.
+grader_config:
+  image: ubuntu:22.04
+  setup_commands: []
+  state_checks:
+    - { command: "id deploy", exit_code: 0 }
+    - { command: "id deploy", stdout_contains: "www-data" }
+    - { command: "getent passwd deploy", stdout_contains: "/bin/bash" }
