@@ -1,0 +1,33 @@
+id: mon-cf-route-404
+name: Diagnose CF 404s from routes and app state
+category: monitoring
+grader: contains
+timeout_sec: 30
+prompt: |
+  Users are reporting 404 errors when hitting https://api.acme.example.com.
+  The following is output from `cf routes` and `cf apps` in the production space.
+  Why are users getting 404s, and how do you fix it?
+
+  $ cf routes
+  Getting routes for org acme / space production as admin...
+
+  space        host   domain               port   path   type   apps             services
+  production   api    acme.example.com                          api-backend
+  production   www    acme.example.com                          frontend-v2
+  production   admin  acme.example.com                          admin-portal
+
+  $ cf apps
+  Getting apps in org acme / space production as admin...
+
+  name            requested state   processes           routes
+  api-backend     stopped           web:0/2             api.acme.example.com
+  frontend-v2     started           web:2/2             www.acme.example.com
+  admin-portal    started           web:1/1             admin.acme.example.com
+  api-backend-v2  started           web:2/2             (no routes)
+
+  Recent deploy log:
+  2024-03-15T16:12:04Z  ci-bot: cf stop api-backend
+  2024-03-15T16:12:07Z  ci-bot: cf push api-backend-v2 --no-route
+  2024-03-15T16:12:41Z  ci-bot: Deploy complete
+grader_config:
+  must_contain: ["stopped"]

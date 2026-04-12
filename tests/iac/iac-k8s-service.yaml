@@ -1,0 +1,17 @@
+id: iac-k8s-service
+name: Generate K8s Service and Ingress for nginx on 443
+category: iac
+grader: contains
+timeout_sec: 30
+prompt: |
+  Write Kubernetes YAML (or JSON) manifests to expose an nginx Deployment externally
+  on port 443 with TLS termination at the Ingress. Requirements:
+  - A Service of type ClusterIP exposing the nginx pods on port 80
+  - An Ingress resource that terminates TLS and forwards traffic to the Service on port 443
+  - Host: nginx.example.com
+  - TLS secret name: nginx-tls
+  - Nginx Deployment selector label: app=nginx
+
+  Include both the Service and Ingress definitions. Return valid YAML or JSON.
+grader_config:
+  must_contain: ["Service", "Ingress", "443", "nginx"]

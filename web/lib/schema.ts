@@ -5,7 +5,7 @@ export const SCHEMA_VERSION = '2.0.0' as const;
 export const CATEGORIES = [
   'basic', 'tool_use', 'structured_output', 'coding', 'debugging',
   'long_context', 'instruction', 'file_ops', 'multi_turn',
-  'reasoning', 'writing', 'research', 'agentic',
+  'reasoning', 'writing', 'research', 'monitoring', 'iac', 'ci_repair', 'repo_patch', 'sysadmin', 'agentic',
 ] as const;
 export type Category = typeof CATEGORIES[number];
 
@@ -64,7 +64,7 @@ const TestSchema = z.object({
   name: z.string().min(1),
   category: z.enum(CATEGORIES),
   grader: z.enum(['exact_match', 'contains', 'regex', 'tool_call', 'needle',
-                   'file_check', 'exec_unit_tests', 'llm_judge', 'json_schema', 'multi_turn', 'agentic']),
+                   'file_check', 'exec_unit_tests', 'llm_judge', 'json_schema', 'multi_turn', 'exec_build', 'container_exec', 'agentic']),
   score: z.number().min(0).max(1),
   max_score: z.number().nonnegative(),
   status: z.enum(['scored', 'skipped', 'timeout', 'error']),

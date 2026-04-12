@@ -1,0 +1,32 @@
+id: ci-python-requirements
+name: Fix incompatible package versions in requirements.txt
+category: ci_repair
+grader: exec_build
+timeout_sec: 60
+prompt: |
+  This requirements.txt has incompatible package versions that cause the CI
+  build to fail. Fix the version conflict and return only the corrected
+  requirements.txt content.
+
+  ```
+  flask==2.0.0
+  werkzeug==3.0.0
+  requests==2.31.0
+  ```
+
+  Error: `flask 2.0.0 requires Werkzeug<2.1, but you have werkzeug 3.0.0`
+
+  Fix by updating flask to a version compatible with werkzeug 3.0.0
+  (flask>=3.0.0 works with werkzeug>=3.0.0).
+grader_config:
+  target_file: requirements.txt
+  build_command: >-
+    python3 -c "
+    lines = open('requirements.txt').read().splitlines();
+    pkgs = {l.split('==')[0].lower(): l.split('==')[1] for l in lines if '==' in l};
+    flask_ver = tuple(int(x) for x in pkgs.get('flask','0.0.0').split('.'));
+    wz_ver = tuple(int(x) for x in pkgs.get('werkzeug','0.0.0').split('.'));
+    assert not (flask_ver < (2,1,0) and wz_ver >= (2,1,0)), 'incompatible versions';
+    print('ok')
+    "
+  build_tool: python3

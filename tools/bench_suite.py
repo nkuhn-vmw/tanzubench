@@ -43,8 +43,10 @@ from tools.graders.agentic import grade_multi as agentic_grade_multi  # noqa: E4
 
 CATEGORY_ORDER = [
     "basic", "tool_use", "structured_output", "instruction", "file_ops",
-    "coding", "debugging", "long_context", "multi_turn",
-    "reasoning", "writing", "research", "agentic",
+    "coding", "debugging", "monitoring", "iac", "ci_repair",
+    "long_context", "multi_turn",
+    "reasoning", "writing", "research",
+    "repo_patch", "sysadmin", "agentic",
 ]
 
 

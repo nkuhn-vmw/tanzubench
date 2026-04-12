@@ -1,0 +1,19 @@
+id: sys-cron-job
+name: Set up cron job for backup
+category: sysadmin
+grader: container_exec
+timeout_sec: 120
+prompt: |
+  Write a shell script that sets up a cron job to run /usr/local/bin/backup.sh
+  every day at 2:00 AM. The script should also create the backup.sh file
+  with a simple "echo backup started" command and make it executable.
+  Return only the shell script in a code block.
+grader_config:
+  image: ubuntu:22.04
+  setup_commands:
+    - "apt-get update -qq && apt-get install -y -qq cron > /dev/null 2>&1"
+  state_checks:
+    - { file_exists: "/usr/local/bin/backup.sh" }
+    - { command: "test -x /usr/local/bin/backup.sh", exit_code: 0 }
+    - { command: "crontab -l 2>/dev/null", stdout_contains: "backup.sh" }
+    - { command: "crontab -l 2>/dev/null", stdout_contains: "0 2" }

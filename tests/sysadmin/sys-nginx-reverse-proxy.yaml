@@ -1,0 +1,17 @@
+id: sys-nginx-reverse-proxy
+name: Configure nginx reverse proxy for /api
+category: sysadmin
+grader: container_exec
+timeout_sec: 120
+prompt: |
+  Write a shell script that configures nginx as a reverse proxy so that
+  requests to /api are forwarded to localhost:3000. Create the nginx
+  configuration at /etc/nginx/conf.d/proxy.conf. Return only the shell
+  script in a code block.
+grader_config:
+  image: nginx:latest
+  setup_commands: []
+  state_checks:
+    - { file_exists: "/etc/nginx/conf.d/proxy.conf" }
+    - { command: "grep -q proxy_pass /etc/nginx/conf.d/proxy.conf", exit_code: 0 }
+    - { command: "nginx -t 2>&1", stdout_contains: "ok" }

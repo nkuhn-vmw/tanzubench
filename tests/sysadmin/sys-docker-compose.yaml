@@ -1,0 +1,20 @@
+id: sys-docker-compose
+name: Write a valid docker-compose.yml with postgres, redis, and volumes
+category: sysadmin
+grader: container_exec
+timeout_sec: 120
+prompt: |
+  Write a shell script that creates a valid docker-compose.yml file at
+  /docker-compose.yml. The compose file should define a web application
+  stack that includes postgres, redis, and named volumes. Return only
+  the shell script in a code block.
+grader_config:
+  image: ubuntu:22.04
+  setup_commands:
+    - "apt-get update -qq && apt-get install -y -qq python3-yaml > /dev/null 2>&1"
+  state_checks:
+    - { file_exists: "/docker-compose.yml" }
+    - { command: "python3 -c \"import yaml; yaml.safe_load(open('/docker-compose.yml'))\"", exit_code: 0 }
+    - { command: "cat /docker-compose.yml", stdout_contains: "postgres" }
+    - { command: "cat /docker-compose.yml", stdout_contains: "redis" }
+    - { command: "cat /docker-compose.yml", stdout_contains: "volumes" }

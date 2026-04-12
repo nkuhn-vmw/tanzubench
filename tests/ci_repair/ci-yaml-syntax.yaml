@@ -1,0 +1,28 @@
+id: ci-yaml-syntax
+name: Fix YAML syntax error in GitHub Actions workflow
+category: ci_repair
+grader: exec_build
+timeout_sec: 60
+prompt: |
+  This GitHub Actions workflow has a YAML syntax error. Fix it and return
+  only the corrected YAML.
+
+  ```yaml
+  name: CI
+  on:
+    push:
+      branches: [main]
+  jobs:
+    test:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - name: Run tests
+        run: npm test
+  ```
+
+  Error: `mapping values are not allowed in this context at line 12`
+grader_config:
+  target_file: workflow.yml
+  build_command: "python3 -c \"import yaml; yaml.safe_load(open('workflow.yml'))\""
+  build_tool: python3

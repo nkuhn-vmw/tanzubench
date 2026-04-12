@@ -1,0 +1,16 @@
+id: sys-firewall-rules
+name: Set iptables rules to allow 22/80/443 and drop rest
+category: sysadmin
+grader: container_exec
+timeout_sec: 120
+prompt: |
+  Write a shell script that configures iptables to allow inbound traffic on
+  ports 22 (SSH), 80 (HTTP), and 443 (HTTPS), and sets the default INPUT
+  policy to DROP everything else. Return only the shell script in a code block.
+grader_config:
+  image: ubuntu:22.04
+  setup_commands:
+    - "apt-get update -qq && apt-get install -y -qq iptables > /dev/null 2>&1"
+  state_checks:
+    - { command: "iptables -L INPUT", stdout_contains: "ACCEPT" }
+    - { command: "iptables -L INPUT", stdout_contains: "DROP" }

@@ -1,0 +1,29 @@
+id: mon-cf-crash-loop
+name: Diagnose CF app crash loop from events
+category: monitoring
+grader: contains
+timeout_sec: 30
+prompt: |
+  The following is output from `cf events my-spring-app` on a Cloud Foundry
+  foundation. Why is this app crashing, and what should be done to fix it?
+
+  Getting events for app my-spring-app in org acme / space production as admin...
+
+  time                          event                  actor   description
+  2024-03-15T14:58:33.00+0000   app.crash              diego   index: 0, reason: CRASHED, exit_description: out of memory
+  2024-03-15T14:58:10.00+0000   audit.app.update       admin   instances: 2
+  2024-03-15T14:55:21.00+0000   app.crash              diego   index: 1, reason: CRASHED, exit_description: out of memory
+  2024-03-15T14:52:44.00+0000   app.crash              diego   index: 0, reason: CRASHED, exit_description: out of memory
+  2024-03-15T14:49:03.00+0000   app.crash              diego   index: 1, reason: CRASHED, exit_description: out of memory
+  2024-03-15T14:45:17.00+0000   app.crash              diego   index: 0, reason: CRASHED, exit_description: out of memory
+  2024-03-15T14:41:52.00+0000   audit.app.update       ci-bot  state: STARTED
+  2024-03-15T14:40:10.00+0000   audit.app.update       ci-bot  memory: 256M -> 256M, instances: 1 -> 2
+
+  Current manifest:
+    memory: 256M
+    instances: 2
+    buildpacks: [java_buildpack]
+    env:
+      JAVA_OPTS: "-Xms512m -Xmx512m"
+grader_config:
+  must_contain: ["memory"]

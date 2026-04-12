@@ -1,0 +1,23 @@
+id: mon-df-disk-full
+name: Diagnose full disk from df output
+category: monitoring
+grader: contains
+timeout_sec: 30
+prompt: |
+  The following is output from `df -h` on a production server.
+  Identify which filesystem is critical and recommend a remediation.
+
+  Filesystem      Size  Used Avail Use% Mounted on
+  udev            15G     0   15G   0% /dev
+  tmpfs          3.2G  1.1M  3.2G   1% /run
+  /dev/sda1       99G   41G   53G  44% /
+  tmpfs           16G  512M   16G   4% /dev/shm
+  /dev/sda2       50G   49G  512M  99% /var/log
+  /dev/sdb1      200G   81G  119G  41% /data
+  tmpfs          3.2G   12K  3.2G   1% /run/user/1000
+
+  The monitoring alert fired at 14:55:03 UTC. The application writes structured
+  logs at approximately 200MB/hour. Last log rotation was 6 days ago.
+  Service: nginx, appserver, and audit daemon all write to /var/log.
+grader_config:
+  must_contain: ["/var/log", "log"]

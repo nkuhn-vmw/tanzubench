@@ -1,0 +1,26 @@
+id: agentic-repo-flask-bug
+name: Fix partial-match search bug in Flask-like app
+category: agentic
+grader: agentic
+timeout_sec: 600
+fixture: repo-flask-bug
+task_prompt: |
+  The user search in this app is broken. Running the test suite shows failures
+  in tests/test_search.py — the search only returns exact matches instead of
+  performing case-insensitive partial matching.
+
+  Find the bug in app/models.py and fix find_users() so that searching for
+  "ali" returns users named "Alice" or "Alicia". When done, all tests in
+  tests/ must pass (including those in test_basic.py which should already pass).
+frameworks: [opencode, aider, custom]
+grader_config:
+  setup_commands:
+    - "python3 -m pip install -q pytest"
+  success_check:
+    command: "python3 -m pytest tests/ -q"
+    max_diff_lines: 50
+  partial_credit:
+    - {check: "grep -qE 'in.*lower|lower.*in' app/models.py", points: 0.4}
+    - {check: "python3 -m pytest tests/test_search.py -q", points: 0.3}
+    - {check: "python3 -m pytest tests/test_basic.py -q", points: 0.3}
+  cleanup: always

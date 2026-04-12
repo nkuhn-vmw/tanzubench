@@ -1,0 +1,48 @@
+id: ci-maven-dep
+name: Fix wrong groupId in pom.xml dependency
+category: ci_repair
+grader: exec_build
+timeout_sec: 60
+prompt: |
+  This pom.xml has a dependency with an incorrect groupId, causing the Maven
+  build to fail because the artifact cannot be resolved. Fix the groupId and
+  return only the corrected pom.xml.
+
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <project xmlns="http://maven.apache.org/POM/4.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.example</groupId>
+    <artifactId>myapp</artifactId>
+    <version>1.0.0</version>
+
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <version>3.2.0</version>
+      </dependency>
+    </dependencies>
+  </project>
+  ```
+
+  Error: `Could not find artifact org.springframework:spring-boot-starter-web:jar:3.2.0`
+
+  The correct groupId for spring-boot-starter-web is `org.springframework.boot`,
+  not `org.springframework`. Fix it.
+grader_config:
+  target_file: pom.xml
+  build_command: >-
+    python3 -c "
+    import xml.etree.ElementTree as ET;
+    tree = ET.parse('pom.xml');
+    ns = {'m': 'http://maven.apache.org/POM/4.0.0'};
+    deps = tree.findall('.//m:dependency', ns);
+    group_ids = [d.find('m:groupId', ns).text for d in deps if d.find('m:groupId', ns) is not None];
+    assert 'org.springframework.boot' in group_ids, f'expected org.springframework.boot, got {group_ids}';
+    assert 'org.springframework' not in group_ids or all(g != \"org.springframework\" for g in group_ids), \"wrong groupId still present\";
+    print('ok')
+    "
+  build_tool: python3

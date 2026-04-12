@@ -1,0 +1,35 @@
+id: mon-free-oom
+name: Diagnose OOM risk from free output
+category: monitoring
+grader: contains
+timeout_sec: 30
+prompt: |
+  The following is output from `free -h` on a production server, collected
+  every 5 minutes for the last 30 minutes. Identify the problem and recommend
+  a remediation before the system crashes.
+
+  --- 15:00:01 ---
+               total        used        free      shared  buff/cache   available
+  Mem:            16G        13G       2.1G       512M       896M       1.9G
+  Swap:          2.0G       1.2G       800M
+
+  --- 15:05:01 ---
+               total        used        free      shared  buff/cache   available
+  Mem:            16G        14G       1.1G       512M       896M       987M
+  Swap:          2.0G       1.7G       300M
+
+  --- 15:10:01 ---
+               total        used        free      shared  buff/cache   available
+  Mem:            16G        15G       312M       512M       688M       204M
+  Swap:          2.0G       1.9G        97M
+
+  --- 15:15:01 ---
+               total        used        free      shared  buff/cache   available
+  Mem:            16G        15.5G      200M       512M       300M        88M
+  Swap:          2.0G       2.0G         0M
+
+  Kernel log excerpt:
+  [892341.112] Out of memory: Kill process 18847 (python3) score 712 or sacrifice child
+  [892341.114] Killed process 18847 (python3) total-vm:4194304kB, anon-rss:3276800kB
+grader_config:
+  must_contain: ["memory", "oom"]

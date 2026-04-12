@@ -1,0 +1,40 @@
+id: ci-npm-missing-dep
+name: Fix missing dependency in package.json
+category: ci_repair
+grader: exec_build
+timeout_sec: 60
+prompt: |
+  This package.json is missing a required dependency, causing the CI build to
+  fail. Add the missing dependency and return only the corrected package.json.
+
+  ```json
+  {
+    "name": "my-api",
+    "version": "1.0.0",
+    "scripts": {
+      "start": "node index.js",
+      "test": "jest"
+    },
+    "dependencies": {
+      "dotenv": "^16.0.0"
+    },
+    "devDependencies": {
+      "jest": "^29.0.0"
+    }
+  }
+  ```
+
+  Error: `Cannot find module 'express'`
+
+  The application imports express in index.js but it is not listed in
+  dependencies. Add express (version ^4.18.0) to the dependencies.
+grader_config:
+  target_file: package.json
+  build_command: >-
+    python3 -c "
+    import json;
+    d = json.load(open('package.json'));
+    assert 'express' in d.get('dependencies', {}), 'express not in dependencies';
+    print('ok')
+    "
+  build_tool: python3

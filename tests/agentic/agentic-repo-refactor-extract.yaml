@@ -1,0 +1,30 @@
+id: agentic-repo-refactor-extract
+name: Extract shared validation logic into cli/validators.py
+category: agentic
+grader: agentic
+timeout_sec: 600
+fixture: repo-refactor-extract
+task_prompt: |
+  The CLI tool has identical validation logic copy-pasted into both
+  cli/cmd_export.py and cli/cmd_import.py. The file cli/validators.py exists
+  but is empty.
+
+  Refactor the code to:
+  1. Extract the shared validate_input() function into cli/validators.py
+  2. Update cli/cmd_export.py to import validate_input from cli.validators
+  3. Update cli/cmd_import.py to import validate_input from cli.validators
+  4. Make all tests in tests/ pass, including tests/test_shared.py which
+     currently fails because cli.validators.validate_input does not exist.
+frameworks: [opencode, aider, custom]
+grader_config:
+  setup_commands:
+    - "python3 -m pip install -q pytest"
+  success_check:
+    command: "python3 -m pytest tests/ -q"
+    max_diff_lines: 50
+  partial_credit:
+    - {check: "grep -q 'def validate_input' cli/validators.py", points: 0.3}
+    - {check: "grep -q 'from cli.validators import' cli/cmd_export.py", points: 0.2}
+    - {check: "grep -q 'from cli.validators import' cli/cmd_import.py", points: 0.2}
+    - {check: "python3 -m pytest tests/test_shared.py -q", points: 0.3}
+  cleanup: always

@@ -331,6 +331,32 @@ def test_multi_turn_basic():
     assert r.details["total_checks"] == 4
 
 
+def test_exec_build_pass(tmp_path):
+    from tools.graders.exec_build import grade
+    client = FakeClient(responses=[('{"name": "test", "version": "1.0.0"}', [], 10, 0.1)])
+    ctx_obj = _ctx(tmp_path)
+    r = grade({"prompt": "fix this", "grader_config": {
+        "target_file": "data.json",
+        "build_command": "python3 -c \"import json; json.load(open('data.json'))\"",
+        "build_tool": "python3",
+    }}, client, ctx_obj)
+    assert r.score == 1.0
+    assert r.details["build_ok"] is True
+
+
+def test_exec_build_fail(tmp_path):
+    from tools.graders.exec_build import grade
+    client = FakeClient(responses=[("not valid json at all", [], 10, 0.1)])
+    ctx_obj = _ctx(tmp_path)
+    r = grade({"prompt": "fix this", "grader_config": {
+        "target_file": "data.json",
+        "build_command": "python3 -c \"import json; json.load(open('data.json'))\"",
+        "build_tool": "python3",
+    }}, client, ctx_obj)
+    assert r.score == 0.0
+    assert r.details["build_ok"] is False
+
+
 def test_multi_turn_partial():
     from tools.graders.multi_turn import grade
     client = FakeClient(responses=[
@@ -364,3 +390,14 @@ def test_multi_turn_tool_result_injection():
         ]
     }}, client, _ctx(Path("/tmp")))
     assert r.score == 1.0
+
+
+def test_container_exec_skips_without_docker(tmp_path, monkeypatch):
+    from tools.graders.container_exec import grade
+    monkeypatch.setattr("shutil.which", lambda x: None if x == "docker" else "/usr/bin/" + x)
+    client = FakeClient(responses=[("echo hello", [], 5, 0.1)])
+    ctx_obj = _ctx(tmp_path)
+    r = grade({"prompt": "do something", "grader_config": {"image": "ubuntu:22.04", "state_checks": []}},
+              client, ctx_obj)
+    assert r.status == "skipped"
+    assert "docker" in r.details["error"]

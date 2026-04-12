@@ -1,0 +1,49 @@
+id: iac-k8s-crashloop-fix
+name: Fix K8s Deployment ErrImageNeverPull
+category: iac
+grader: contains
+timeout_sec: 30
+prompt: |
+  The following Kubernetes Deployment is causing pods to crash with ErrImageNeverPull.
+  Identify the bug and provide the corrected Deployment YAML.
+
+  Current Deployment:
+  ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: myapp
+    namespace: default
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: myapp
+    template:
+      metadata:
+        labels:
+          app: myapp
+      spec:
+        containers:
+        - name: myapp
+          image: myapp:latest
+          imagePullPolicy: Never
+          ports:
+          - containerPort: 8080
+  ```
+
+  Pod events:
+  ```
+  Events:
+    Type     Reason             Age   From               Message
+    ----     ------             ----  ----               -------
+    Warning  Failed             12s   kubelet            Failed to pull image "myapp:latest":
+                                                         rpc error: ErrImageNeverPull
+    Warning  BackOff            8s    kubelet            Back-off restarting failed container
+  ```
+
+  The image myapp:latest exists in a remote container registry (not locally on the node).
+  Fix the Deployment so it can pull the image correctly.
+grader_config:
+  must_contain: ["imagePullPolicy"]
+  must_not_contain: ["imagePullPolicy: Never"]

@@ -1,0 +1,31 @@
+id: agentic-repo-api-versioning
+name: Add /v2/users endpoint without breaking /v1
+category: agentic
+grader: agentic
+timeout_sec: 600
+fixture: repo-api-versioning
+task_prompt: |
+  The API currently only supports /v1/users. A new test file tests/test_v2.py
+  expects a /v2/users endpoint that returns users with an additional email field.
+  The api/v2/ package does not exist yet.
+
+  Your tasks:
+  1. Create api/v2/__init__.py and api/v2/users.py
+  2. Implement get_users() in api/v2/users.py — return users with id, name,
+     and email fields (e.g. alice@example.com)
+  3. Update api/router.py to dispatch /v2/users to the v2 handler
+  4. Make all tests pass — tests/test_v1.py must keep passing and
+     tests/test_v2.py must now pass
+frameworks: [opencode, aider, custom]
+grader_config:
+  setup_commands:
+    - "python3 -m pip install -q pytest"
+  success_check:
+    command: "python3 -m pytest tests/ -q"
+    max_diff_lines: 50
+  partial_credit:
+    - {check: "test -f api/v2/users.py", points: 0.2}
+    - {check: "grep -q 'email' api/v2/users.py", points: 0.2}
+    - {check: "python3 -m pytest tests/test_v1.py -q", points: 0.3}
+    - {check: "python3 -m pytest tests/test_v2.py -q", points: 0.3}
+  cleanup: always
