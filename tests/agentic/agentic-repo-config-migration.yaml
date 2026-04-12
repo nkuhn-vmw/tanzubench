@@ -1,0 +1,32 @@
+id: agentic-repo-config-migration
+name: Migrate app config from env vars to YAML with env fallback
+category: agentic
+grader: agentic
+timeout_sec: 600
+fixture: repo-config-migration
+task_prompt: |
+  The app currently reads all configuration from environment variables in
+  myapp/config.py. A new test in tests/test_config.py expects a load_config()
+  function that reads from a YAML file and falls back to env vars for missing
+  keys.
+
+  Your tasks:
+  1. Create config.yaml at the repo root with keys: db_host, db_port, db_name,
+     secret_key, debug (use sensible defaults matching the existing env var defaults)
+  2. Add load_config(path) to myapp/config.py that reads the YAML file and
+     merges with env var fallbacks
+  3. Make all tests in tests/ pass — tests/test_server.py must keep passing and
+     tests/test_config.py must now pass too
+frameworks: [opencode, aider, custom]
+grader_config:
+  setup_commands:
+    - "python3 -m pip install -q pytest pyyaml"
+  success_check:
+    command: "python3 -m pytest tests/ -q"
+    max_diff_lines: 50
+  partial_credit:
+    - {check: "test -f config.yaml", points: 0.2}
+    - {check: "grep -q 'yaml' myapp/config.py", points: 0.2}
+    - {check: "python3 -m pytest tests/test_config.py -q", points: 0.3}
+    - {check: "python3 -m pytest tests/test_server.py -q", points: 0.3}
+  cleanup: always

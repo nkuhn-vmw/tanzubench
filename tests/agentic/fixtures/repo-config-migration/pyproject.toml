@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "config-migration-demo"
+version = "0.1.0"
+description = "App migrating from env-var config to YAML config"
+requires-python = ">=3.9"
+dependencies = ["pyyaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
