@@ -1,0 +1,3310 @@
+{
+  "schema_version": "2.0.0",
+  "result_type": "suite",
+  "meta": {
+    "timestamp": "2026-04-12T02:52:22Z",
+    "foundation": "cdc",
+    "tile_version": null,
+    "tag": "tanzubench-v2-cpu-nemotron-4b",
+    "notes": null,
+    "source_file": null
+  },
+  "target": {
+    "name": "nemotron-3-nano:4b",
+    "display_name": null,
+    "family": null,
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": null,
+    "quant": null,
+    "size_gb": null
+  },
+  "engine": {
+    "name": "ollama",
+    "version": null,
+    "config": {
+      "_source": "ollama:/api/show",
+      "model": "nemotron-3-nano:4b",
+      "format": "gguf",
+      "family": "nemotron_h",
+      "parameter_size": "4.0B",
+      "quantization_level": "Q4_K_M",
+      "param_num_predict": "1024",
+      "param_num_thread": "16",
+      "param_temperature": "0.1",
+      "param_top_p": "1"
+    }
+  },
+  "hardware": {
+    "vm_type": null,
+    "cpu": null,
+    "cpu_cores": null,
+    "ram_gb": null,
+    "gpu_count": 0,
+    "gpu_model": null,
+    "gpu_memory_gb": null,
+    "power_limit_watts": null
+  },
+  "grading": {
+    "judge_configured": true,
+    "judge_model": "Qwen/Qwen3.5-27B-GPTQ-Int4",
+    "judge_endpoint": "http://127.0.0.1:5000",
+    "judge_fingerprint": "sha256:f9413619c3096789",
+    "judge_run_date": "2026-04-12T02:52:22Z",
+    "skipped_categories": []
+  },
+  "tests": [
+    {
+      "id": "basic-boiling-point",
+      "name": "Boiling point of water",
+      "category": "basic",
+      "grader": "exact_match",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 51,
+      "completion_tokens": 31,
+      "elapsed_ms": 2508,
+      "tok_per_sec": 12.36,
+      "details": {
+        "expected": "100",
+        "got": "100",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "100",
+      "notes": null
+    },
+    {
+      "id": "basic-fact-capital",
+      "name": "Capital of France",
+      "category": "basic",
+      "grader": "exact_match",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 48,
+      "completion_tokens": 19,
+      "elapsed_ms": 1942,
+      "tok_per_sec": 9.78,
+      "details": {
+        "expected": "Paris",
+        "got": "Paris",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Paris",
+      "notes": null
+    },
+    {
+      "id": "basic-math-multiply",
+      "name": "15 times 23",
+      "category": "basic",
+      "grader": "exact_match",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 53,
+      "completion_tokens": 34,
+      "elapsed_ms": 2771,
+      "tok_per_sec": 12.27,
+      "details": {
+        "expected": "345",
+        "got": "345",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "345",
+      "notes": null
+    },
+    {
+      "id": "tool-dual-call",
+      "name": "Dual tool call",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 503,
+      "completion_tokens": 88,
+      "elapsed_ms": 12897,
+      "tok_per_sec": 6.82,
+      "details": {
+        "mode": "dual",
+        "tool_calls": [
+          "get_weather",
+          "get_time"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "I need to get weather for San Francisco and time in Tokyo. I'll use get_weather for San Francisco first, then get_time for Tokyo. Let's do that.",
+      "notes": null
+    },
+    {
+      "id": "tool-nested-schema",
+      "name": "Nested args",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 499,
+      "completion_tokens": 77,
+      "elapsed_ms": 11726,
+      "tok_per_sec": 6.57,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "search_code"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "The user wants to search for 'auth' in the src/ directory. I need to call the search_code function to search for the pattern 'auth' in the path src/. Let's do that.",
+      "notes": null
+    },
+    {
+      "id": "tool-read-file",
+      "name": "Read file",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 496,
+      "completion_tokens": 42,
+      "elapsed_ms": 9664,
+      "tok_per_sec": 4.35,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "read_file"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "I'll read the file src/main.py using the read_file tool.",
+      "notes": null
+    },
+    {
+      "id": "tool-restraint",
+      "name": "Restraint \u2014 no tool",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 495,
+      "completion_tokens": 104,
+      "elapsed_ms": 12962,
+      "tok_per_sec": 8.02,
+      "details": {
+        "mode": "restraint",
+        "tool_calls": [],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "4",
+      "notes": null
+    },
+    {
+      "id": "tool-search-code",
+      "name": "Search code",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 500,
+      "completion_tokens": 178,
+      "elapsed_ms": 16980,
+      "tok_per_sec": 10.48,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "search_code"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "I need to search for the word 'login' in the codebase. The user wants me to search for the word 'login' in the codebase, which suggests I should use the search_code function with pattern 'login'. The search_code function requires both pattern and path. The pattern is 'login', but I need to specify path as well. The user says \"in the codebase\" so I need to know the path. Probably the codebase is at some standard path like \"/codebase\" or maybe I should search entire repository. The function search_code expects pattern and path. I'll assume the codebase is at \"/\". Let me try search_code with pattern 'login' and path '/'.",
+      "notes": null
+    },
+    {
+      "id": "tool-weather-single",
+      "name": "Weather single-call",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 495,
+      "completion_tokens": 44,
+      "elapsed_ms": 10231,
+      "tok_per_sec": 4.3,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "get_weather"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "I need to get the weather in Paris. I'll use the get_weather tool.",
+      "notes": null
+    },
+    {
+      "id": "struct-api-response",
+      "name": "REST API Paginated Response JSON",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 99,
+      "completion_tokens": 276,
+      "elapsed_ms": 15624,
+      "tok_per_sec": 17.67,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "status": "ok",
+          "data": [
+            {
+              "id": 1,
+              "name": "Alice",
+              "email": "alice@example.com"
+            },
+            {
+              "id": 2,
+              "name": "Bob",
+              "email": "bob@example.com"
+            }
+          ],
+          "pagination": {
+            "page": 1,
+            "per_page": 2,
+            "total": 2
+          },
+          "errors": []
+        },
+        "schema_errors": [],
+        "schema_score": 1.0,
+        "content_matches": {
+          "status": true
+        },
+        "content_score": 1.0
+      },
+      "judge": null,
+      "raw_response": "{\n  \"status\": \"ok\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"Alice\",\n      \"email\": \"alice@example.com\"\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Bob\",\n      \"email\": \"bob@example.com\"\n    }\n  ],\n  \"pagination\": {\n    \"page\": 1,\n    \"per_page\": 2,\n    \"total\": 2\n  },\n  \"errors\": []\n}",
+      "notes": null
+    },
+    {
+      "id": "struct-cf-manifest",
+      "name": "Cloud Foundry App Manifest JSON",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 0.9375,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 82,
+      "completion_tokens": 108,
+      "elapsed_ms": 6790,
+      "tok_per_sec": 15.91,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "name": "my-app",
+          "memorySize": "256M",
+          "instances": 2,
+          "buildpacks": [
+            "staticfile_buildpack"
+          ]
+        },
+        "schema_errors": [
+          "<root>: 'memory' is a required property"
+        ],
+        "schema_score": 0.875,
+        "content_matches": {
+          "name": true,
+          "instances": true
+        },
+        "content_score": 1.0
+      },
+      "judge": null,
+      "raw_response": "{\n  \"name\": \"my-app\",\n  \"memorySize\": \"256M\",\n  \"instances\": 2,\n  \"buildpacks\": [\"staticfile_buildpack\"]\n}",
+      "notes": null
+    },
+    {
+      "id": "struct-csv-to-json",
+      "name": "Convert CSV to JSON Array",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 0.3,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 124,
+      "completion_tokens": 110,
+      "elapsed_ms": 7547,
+      "tok_per_sec": 14.58,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "name": "Alice",
+          "age": 30,
+          "city": "Boston"
+        },
+        "schema_errors": [
+          "<root>: {'name': 'Alice', 'age': 30, 'city': 'Boston'} is not of type 'array'"
+        ],
+        "schema_score": 0.0,
+        "content_matches": {
+          "[0].name": false,
+          "[0].age": false
+        },
+        "content_score": 0.0
+      },
+      "judge": null,
+      "raw_response": "[{\"name\":\"Alice\",\"age\":30,\"city\":\"Boston\"},{\"name\":\"Bob\",\"age\":25,\"city\":\"NYC\"},{\"name\":\"Carol\",\"age\":35,\"city\":\"Chicago\"},{\"name\":\"Dave\",\"age\":28,\"city\":\"Denver\"},{\"name\":\"Eve\",\"age\":32,\"city\":\"Seattle\"}]",
+      "notes": null
+    },
+    {
+      "id": "struct-extract-receipt",
+      "name": "Extract Receipt Data to JSON",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 0.8,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 212,
+      "completion_tokens": 482,
+      "elapsed_ms": 28557,
+      "tok_per_sec": 16.88,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "store": "ACME STORE #42",
+          "date": "2026-04-10",
+          "items": [
+            {
+              "name": "Widget",
+              "qty": 2,
+              "price": 4.99
+            },
+            {
+              "name": "Gadget",
+              "qty": 1,
+              "price": 12.5
+            },
+            {
+              "name": "Cable",
+              "qty": 3,
+              "price": 3
+            }
+          ],
+          "total": 34
+        },
+        "schema_errors": [],
+        "schema_score": 1.0,
+        "content_matches": {
+          "store": false,
+          "total": false
+        },
+        "content_score": 0.0
+      },
+      "judge": null,
+      "raw_response": "{\"store\":\"ACME STORE #42\",\"date\":\"2026-04-10\",\"items\":[{\"name\":\"Widget\",\"qty\":2,\"price\":4.99},{\"name\":\"Gadget\",\"qty\":1,\"price\":12.5},{\"name\":\"Cable\",\"qty\":3,\"price\":3}],\"total\":34}",
+      "notes": null
+    },
+    {
+      "id": "struct-k8s-pod",
+      "name": "Kubernetes Pod Manifest JSON",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 79,
+      "completion_tokens": 235,
+      "elapsed_ms": 13604,
+      "tok_per_sec": 17.27,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "apiVersion": "v1",
+          "kind": "Pod",
+          "metadata": {
+            "name": "nginx-pod"
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "nginx",
+                "image": "nginx:latest",
+                "ports": [
+                  {
+                    "containerPort": 80
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "schema_errors": [],
+        "schema_score": 1.0,
+        "content_matches": {
+          "kind": true,
+          "apiVersion": true
+        },
+        "content_score": 1.0
+      },
+      "judge": null,
+      "raw_response": "{\n  \"apiVersion\": \"v1\",\n  \"kind\": \"Pod\",\n  \"metadata\": {\n    \"name\": \"nginx-pod\"\n  },\n  \"spec\": {\n    \"containers\": [\n      {\n        \"name\": \"nginx\",\n        \"image\": \"nginx:latest\",\n        \"ports\": [\n          {\n            \"containerPort\": 80\n          }\n        ]\n      }\n    ]\n  }\n}",
+      "notes": null
+    },
+    {
+      "id": "struct-openapi-path",
+      "name": "OpenAPI 3.0 Path Definition JSON",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": null,
+      "prompt_tokens": 110,
+      "completion_tokens": 1024,
+      "elapsed_ms": 55641,
+      "tok_per_sec": 18.4,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "email"
+            ]
+          }
+        },
+        "schema_errors": [
+          "<root>: 'get' is a required property"
+        ],
+        "schema_score": 0.8571,
+        "content_matches": null,
+        "content_score": null,
+        "budget_ms": 30000,
+        "overrun_ms": 25641,
+        "original_score": 0.9143,
+        "overrun_reason": "completed but exceeded usability budget"
+      },
+      "judge": null,
+      "raw_response": "Okay, let's see. The user wants an OpenAPI 3.0 path definition for GET /users. They specified that it should return 200 with a JSON array of user objects.\n\nFirst, I need to structure the path definition. The path is /users, method GET. Then, the summary: maybe \"Get all users\". The response 200 has a description like \"Returns a list of users\".\n\nFor the content, it should be application/json. The schema needs to be an array of user objects. Each user might have fields like id, name, email. But the user didn't specify the exact schema, so maybe just a generic array. Wait, the instruction says \"JSON array of user objects\", so the schema should be an object with type array, items being the user object. But since no specifics, I'll use a placeholder.\n\nWait, the user says \"schema\" under content. So the schema is an array where each item is a user. So the schema would be:\n\ntype: array\nitems:\n  $ref: '#/components/schemas/User'\n\nBut in the problem statement, they didn't mention components, so maybe it's simpler. Maybe just define the schema directly. Wait, OpenAPI schema needs to be valid. But the user just wants the structure. So the schema is:\n\n{\n  \"type\": \"array\",\n  \"items\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"id\": {\"type\": \"integer\"},\n      \"name\": {\"type\": \"string\"},\n      \"email\": {\"type\": \"string\"}\n    },\n    \"required\": [\"id\", \"name\", \"email\"]\n  }\n}\n\nBut maybe the user doesn't need the exact properties, just the structure. However, the instruction says to generate the path definition object. Wait, the path definition in OpenAPI has the responses, and the summary, etc.\n\nPutting it all together:\n\n{\n  \"get\": {\n    \"summary\": \"Get all users\",\n    \"responses\": {\n      \"200\": {\n        \"description\": \"Returns a list of users\",\n        \"content\": {\n          \"application/json\": {\n            \"schema\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"id\": {\"type\": \"in",
+      "notes": null
+    },
+    {
+      "id": "struct-parse-logfile",
+      "name": "Parse Nginx Access Log to JSON",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": null,
+      "prompt_tokens": 600,
+      "completion_tokens": 1024,
+      "elapsed_ms": 64014,
+      "tok_per_sec": 16.0,
+      "details": {
+        "parse_ok": false,
+        "extracted_json": null,
+        "schema_errors": [],
+        "schema_score": 0.0,
+        "content_matches": null,
+        "content_score": null,
+        "budget_ms": 30000,
+        "overrun_ms": 34014,
+        "original_score": 0.0,
+        "overrun_reason": "completed but exceeded usability budget"
+      },
+      "judge": null,
+      "raw_response": "Okay, let's see. I need to parse these nginx access log lines into a JSON array of objects with specific fields. Each line has the IP, method, path, status, and bytes. The user wants just the JSON array, no explanation.\n\nFirst, I'll go through each line one by one.\n\nLine 1: \"192.168.1.10 - - [10/Apr/2026:10:00:01] \\\"GET /index.html HTTP/1.1\\\" 200 1234\"\n\n- IP: 192.168.1.10\n- Method: GET\n- Path: /index.html\n- Status: 200\n- Bytes: 1234\n\nLine 2: \"10.0.0.5 - - [10/Apr/2026:10:00:02] \\\"POST /api/login HTTP/1.1\\\" 200 567\"\n\n- IP: 10.0.0.5\n- Method: POST\n- Path: /api/login\n- Status: 200\n- Bytes: 567\n\nLine 3: \"172.16.0.1 - - [10/Apr/2026:10:00:03] \\\"GET /about HTTP/1.1\\\" 304 0\"\n\n- IP: 172.16.0.1\n- Method: GET\n- Path: /about\n- Status: 304\n- Bytes: 0\n\nLine 4: \"10.1.2.3 - - [10/Apr/2026:10:00:04] \\\"GET /images/logo.png HTTP/1.1\\\" 200 8192\"\n\n- IP: 10.1.2.3\n- Method: GET\n- Path: /images/logo.png\n- Status: 200\n- Bytes: 8192\n\nLine 5: \"192.168.1.20 - - [10/Apr/2026:10:00:05] \\\"DELETE /api/session HTTP/1.1\\\" 204 0\"\n\n- IP: 192.168.1.20\n- Method: DELETE\n- Path: /api/session\n- Status: 204\n- Bytes: 0\n\nLine 6: \"10.0.0.7 - - [10/Apr/2026:10:00:06] \\\"GET /api/users HTTP/1.1\\\" 401 89\"\n\n- IP: 10.0.0.7\n- Method: GET\n- Path: /api/users\n- Status: 401\n- Bytes: 89\n\nLine 7: \"172.16.0.2 - - [10/Apr/2026:10:00:07] \\\"PUT /api/profile HTTP/1.1\\\" 200 312\"\n\n- IP: 172.16.0.2\n- Method: PUT\n- Path: /api/profile\n- Status: 200\n- Bytes: 312\n\nLine 8: \"192.168.1.11 - - [10/Apr/2026:10:00:08] \\\"GET /favicon.ico HTTP/1.1\\\" 404 152\"\n\n- IP: 192.168.1.11\n- Method: GET\n- Path: /favicon.ico\n- Status: 404\n- Bytes: 152\n\nLine 9: \"10.0.0.9 - - [10/Apr/2026:10:00:09] \\\"GET /health HTTP/1.1\\\" 200 18\"\n\n- IP: 10.0.0.9\n- Method: GET\n- Path: /health\n- Status: 200\n- Bytes: 18\n\nLine 10: \"172.16.0.3 - - [10/Apr/2026:10:00:10] \\\"POST /api/upload HTTP/1.1\\\" 413 201\"\n\n- IP: 172.16.0.",
+      "notes": null
+    },
+    {
+      "id": "struct-tool-array-arg",
+      "name": "Function Call with Array and Boolean Arguments",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 103,
+      "completion_tokens": 113,
+      "elapsed_ms": 7405,
+      "tok_per_sec": 15.26,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "function": "delete_files",
+          "arguments": {
+            "paths": [
+              "/tmp/a.txt",
+              "/tmp/b.txt",
+              "/tmp/c.txt"
+            ],
+            "dry_run": true
+          }
+        },
+        "schema_errors": [],
+        "schema_score": 1.0,
+        "content_matches": {
+          "function": true,
+          "arguments.dry_run": true
+        },
+        "content_score": 1.0
+      },
+      "judge": null,
+      "raw_response": "{\n  \"function\": \"delete_files\",\n  \"arguments\": {\n    \"paths\": [\n      \"/tmp/a.txt\",\n      \"/tmp/b.txt\",\n      \"/tmp/c.txt\"\n    ],\n    \"dry_run\": true\n  }\n}",
+      "notes": null
+    },
+    {
+      "id": "struct-tool-enum-arg",
+      "name": "Function Call with Enum Argument",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 112,
+      "completion_tokens": 81,
+      "elapsed_ms": 6180,
+      "tok_per_sec": 13.11,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "function": "create_ticket",
+          "arguments": {
+            "title": "Fix login bug",
+            "priority": "high",
+            "assignee": "alice"
+          }
+        },
+        "schema_errors": [],
+        "schema_score": 1.0,
+        "content_matches": {
+          "function": true,
+          "arguments.priority": true
+        },
+        "content_score": 1.0
+      },
+      "judge": null,
+      "raw_response": "{\n  \"function\": \"create_ticket\",\n  \"arguments\": {\n    \"title\": \"Fix login bug\",\n    \"priority\": \"high\",\n    \"assignee\": \"alice\"\n  }\n}",
+      "notes": null
+    },
+    {
+      "id": "struct-tool-nested-args",
+      "name": "Function Call with Nested Object Arguments",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 120,
+      "completion_tokens": 109,
+      "elapsed_ms": 7644,
+      "tok_per_sec": 14.26,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "function": "send_mail",
+          "arguments": {
+            "to": {
+              "name": "Alice",
+              "email": "alice@example.com"
+            },
+            "subject": "Meeting",
+            "body": "See you at 3pm"
+          }
+        },
+        "schema_errors": [],
+        "schema_score": 1.0,
+        "content_matches": {
+          "function": true,
+          "arguments.to.name": true
+        },
+        "content_score": 1.0
+      },
+      "judge": null,
+      "raw_response": "{\n  \"function\": \"send_mail\",\n  \"arguments\": {\n    \"to\": {\n      \"name\": \"Alice\",\n      \"email\": \"alice@example.com\"\n    },\n    \"subject\": \"Meeting\",\n    \"body\": \"See you at 3pm\"\n  }\n}",
+      "notes": null
+    },
+    {
+      "id": "inst-forbidden-words",
+      "name": "Forbidden words \u2014 sunset",
+      "category": "instruction",
+      "grader": "contains",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 63,
+      "completion_tokens": 175,
+      "elapsed_ms": 10352,
+      "tok_per_sec": 16.9,
+      "details": {
+        "missing": [],
+        "forbidden": []
+      },
+      "judge": null,
+      "raw_response": "The sun dips below the horizon, casting a wash of amber light over the water. The sky transforms into a deep violet, its silhouette echoing the fading glow.",
+      "notes": null
+    },
+    {
+      "id": "inst-json-only",
+      "name": "JSON-only output",
+      "category": "instruction",
+      "grader": "regex",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 78,
+      "completion_tokens": 58,
+      "elapsed_ms": 4410,
+      "tok_per_sec": 13.15,
+      "details": {
+        "pattern": "\\{[^{}]*\"name\"\\s*:\\s*\"alice\"[^{}]*\"age\"\\s*:\\s*30[^{}]*\\}",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "{\"name\":\"alice\",\"age\":30}",
+      "notes": null
+    },
+    {
+      "id": "inst-markdown-structure",
+      "name": "Markdown structure",
+      "category": "instruction",
+      "grader": "regex",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 57,
+      "completion_tokens": 236,
+      "elapsed_ms": 13183,
+      "tok_per_sec": 17.9,
+      "details": {
+        "pattern": "^##\\s.*##\\s.*[-*]\\s",
+        "matched": false
+      },
+      "judge": null,
+      "raw_response": "## Project Overview\nThis is a brief description of the project.\n\n- Task A\n- Task B  \n\n## Next Steps\nOutline the next steps to complete the project.",
+      "notes": null
+    },
+    {
+      "id": "inst-word-count",
+      "name": "Word count \u2014 20 words",
+      "category": "instruction",
+      "grader": "regex",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 49,
+      "completion_tokens": 416,
+      "elapsed_ms": 21917,
+      "tok_per_sec": 18.98,
+      "details": {
+        "pattern": "^(\\S+\\s+){19}\\S+$",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Coffee, a rich, aromatic brew worldwide sipping comfort, stimulates mind, fuels productivity, and shares cultural rituals in social settings daily.",
+      "notes": null
+    },
+    {
+      "id": "file-create",
+      "name": "Create haiku file",
+      "category": "file_ops",
+      "grader": "file_check",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": null,
+      "prompt_tokens": 71,
+      "completion_tokens": 599,
+      "elapsed_ms": 30483,
+      "tok_per_sec": 19.65,
+      "details": {
+        "checks": [
+          {
+            "path": "haiku.txt",
+            "passed": false,
+            "reasons": [
+              "missing: 'autumn'"
+            ]
+          }
+        ],
+        "passed": 0,
+        "total": 1,
+        "budget_ms": 30000,
+        "overrun_ms": 483,
+        "original_score": 0.0,
+        "overrun_reason": "completed but exceeded usability budget"
+      },
+      "judge": null,
+      "raw_response": "Autumn leaves fall bright  \nCrisp wind whispers softly through  \nColors fade gently",
+      "notes": null
+    },
+    {
+      "id": "file-python",
+      "name": "Write Python function file",
+      "category": "file_ops",
+      "grader": "file_check",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 58,
+      "completion_tokens": 44,
+      "elapsed_ms": 3166,
+      "tok_per_sec": 13.9,
+      "details": {
+        "checks": [
+          {
+            "path": "add.py",
+            "passed": true,
+            "reasons": []
+          }
+        ],
+        "passed": 1,
+        "total": 1
+      },
+      "judge": null,
+      "raw_response": "def add(a, b):\n    return a + b",
+      "notes": null
+    },
+    {
+      "id": "file-structured",
+      "name": "Write CSV file",
+      "category": "file_ops",
+      "grader": "file_check",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 56,
+      "completion_tokens": 73,
+      "elapsed_ms": 4322,
+      "tok_per_sec": 16.89,
+      "details": {
+        "checks": [
+          {
+            "path": "data.csv",
+            "passed": true,
+            "reasons": []
+          }
+        ],
+        "passed": 1,
+        "total": 1
+      },
+      "judge": null,
+      "raw_response": "name,age,city\nAlice,30,New York\nBob,25,Los Angeles",
+      "notes": null
+    },
+    {
+      "id": "coding-bash-log-parser",
+      "name": "Bash parse log for unique IPs",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 151,
+      "completion_tokens": 294,
+      "elapsed_ms": 16137,
+      "tok_per_sec": 18.22,
+      "details": {
+        "language": "bash",
+        "passed": 3,
+        "total": 3,
+        "per_test": [
+          {
+            "input": [
+              "192.168.1.10 x\n10.0.0.5 x\n192.168.1.10 x\n172.16.0.1 x"
+            ],
+            "ok": true,
+            "got": "3"
+          },
+          {
+            "input": [
+              "1.1.1.1 x"
+            ],
+            "ok": true,
+            "got": "1"
+          },
+          {
+            "input": [
+              "1.1.1.1 x\n1.1.1.1 x\n1.1.1.1 x"
+            ],
+            "ok": true,
+            "got": "1"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```bash\n#!/bin/bash\necho -e \"$1\" | awk '{print $1}' | sort -u | wc -l\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-bash-wc",
+      "name": "Bash line count",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 129,
+      "completion_tokens": 129,
+      "elapsed_ms": 7802,
+      "tok_per_sec": 16.53,
+      "details": {
+        "language": "bash",
+        "passed": 0,
+        "total": 1,
+        "per_test": [
+          {
+            "input": [
+              "/etc/hostname"
+            ],
+            "ok": false,
+            "got": ""
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```bash\n#!/bin/bash\nwc -l < \"$1\"\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-js-debounce",
+      "name": "JavaScript sumArr",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 62,
+      "completion_tokens": 146,
+      "elapsed_ms": 7971,
+      "tok_per_sec": 18.32,
+      "details": {
+        "language": "javascript",
+        "passed": 3,
+        "total": 3,
+        "per_test": [
+          {
+            "input": [
+              [
+                1,
+                2,
+                3
+              ]
+            ],
+            "ok": true,
+            "got": "6"
+          },
+          {
+            "input": [
+              []
+            ],
+            "ok": true,
+            "got": "0"
+          },
+          {
+            "input": [
+              [
+                -1,
+                1
+              ]
+            ],
+            "ok": true,
+            "got": "0"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "module.exports = function sumArr(arr) {\n  return arr.reduce((a, b) => a + b, 0);\n};",
+      "notes": null
+    },
+    {
+      "id": "coding-py-algorithm",
+      "name": "Merge two sorted lists",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 99,
+      "completion_tokens": 221,
+      "elapsed_ms": 12296,
+      "tok_per_sec": 17.97,
+      "details": {
+        "language": "python",
+        "passed": 5,
+        "total": 5,
+        "per_test": [
+          {
+            "input": [
+              [
+                1,
+                3,
+                5
+              ],
+              [
+                2,
+                4,
+                6
+              ]
+            ],
+            "ok": true,
+            "got": "[1, 2, 3, 4, 5, 6]"
+          },
+          {
+            "input": [
+              [],
+              [
+                1,
+                2,
+                3
+              ]
+            ],
+            "ok": true,
+            "got": "[1, 2, 3]"
+          },
+          {
+            "input": [
+              [
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "ok": true,
+            "got": "[1, 1, 1, 1, 1]"
+          },
+          {
+            "input": [
+              [
+                10
+              ],
+              [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            ],
+            "ok": true,
+            "got": "[1, 2, 3, 4, 5, 10]"
+          },
+          {
+            "input": [
+              [],
+              []
+            ],
+            "ok": true,
+            "got": "[]"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```python\ndef merge_sorted(a, b):\n    i = j = 0\n    merged = []\n    while i < len(a) and j < len(b):\n        if a[i] <= b[j]:\n            merged.append(a[i])\n            i += 1\n        else:\n            merged.append(b[j])\n            j += 1\n    merged.extend(a[i:])\n    merged.extend(b[j:])\n    return merged\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-py-fizzbuzz",
+      "name": "Python fizzbuzz",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 83,
+      "completion_tokens": 258,
+      "elapsed_ms": 13653,
+      "tok_per_sec": 18.9,
+      "details": {
+        "language": "python",
+        "passed": 4,
+        "total": 4,
+        "per_test": [
+          {
+            "input": [
+              5
+            ],
+            "ok": true,
+            "got": "['1', '2', 'Fizz', '4', 'Buzz']"
+          },
+          {
+            "input": [
+              15
+            ],
+            "ok": true,
+            "got": "['1', '2', 'Fizz', '4', 'Buzz', 'Fizz', '7', '8', 'Fizz', 'Buzz', '11', 'Fizz', '13', '14', 'FizzBuz"
+          },
+          {
+            "input": [
+              0
+            ],
+            "ok": true,
+            "got": "[]"
+          },
+          {
+            "input": [
+              3
+            ],
+            "ok": true,
+            "got": "['1', '2', 'Fizz']"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```python\ndef fizzbuzz(n):\n    return [\"FizzBuzz\" if i % 3 == 0 and i % 5 == 0 else \"Fizz\" if i % 3 == 0 else \"Buzz\" if i % 5 == 0 else str(i) for i in range(1, n+1)]\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-py-palindrome",
+      "name": "Python palindrome",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 69,
+      "completion_tokens": 70,
+      "elapsed_ms": 4662,
+      "tok_per_sec": 15.02,
+      "details": {
+        "language": "python",
+        "passed": 3,
+        "total": 3,
+        "per_test": [
+          {
+            "input": [
+              "racecar"
+            ],
+            "ok": true,
+            "got": "True"
+          },
+          {
+            "input": [
+              "hello"
+            ],
+            "ok": true,
+            "got": "False"
+          },
+          {
+            "input": [
+              "A man a plan a canal Panama"
+            ],
+            "ok": true,
+            "got": "True"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```python\ndef is_palindrome(s):\n    s = ''.join(s.lower().split())\n    return s == s[::-1]\n```",
+      "notes": null
+    },
+    {
+      "id": "coding-sql-topn",
+      "name": "SQL top-N recent users",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 74,
+      "completion_tokens": 41,
+      "elapsed_ms": 2991,
+      "tok_per_sec": 13.71,
+      "details": {
+        "language": "sql",
+        "passed": 1,
+        "total": 1,
+        "per_test": [
+          {
+            "ok": true,
+            "got": [
+              [
+                "d"
+              ],
+              [
+                "b"
+              ],
+              [
+                "c"
+              ]
+            ]
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "SELECT name FROM users ORDER BY signup_date DESC LIMIT 3;",
+      "notes": null
+    },
+    {
+      "id": "debug-js-async",
+      "name": "Fix missing return in JS map callback",
+      "category": "debugging",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 216,
+      "completion_tokens": 119,
+      "elapsed_ms": 8657,
+      "tok_per_sec": 13.75,
+      "details": {
+        "language": "javascript",
+        "passed": 3,
+        "total": 3,
+        "per_test": [
+          {
+            "input": [
+              [
+                1,
+                2,
+                3
+              ]
+            ],
+            "ok": true,
+            "got": "[2,4,6]"
+          },
+          {
+            "input": [
+              []
+            ],
+            "ok": true,
+            "got": "[]"
+          },
+          {
+            "input": [
+              [
+                0
+              ]
+            ],
+            "ok": true,
+            "got": "[0]"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```javascript\nfunction doubleAll(arr) {\n  return arr.map(x => x * 2);\n}\nmodule.exports = { doubleAll };\n```",
+      "notes": null
+    },
+    {
+      "id": "debug-py-logic-error",
+      "name": "Fix logic error in is_valid_age",
+      "category": "debugging",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 149,
+      "completion_tokens": 76,
+      "elapsed_ms": 5502,
+      "tok_per_sec": 13.81,
+      "details": {
+        "language": "python",
+        "passed": 5,
+        "total": 5,
+        "per_test": [
+          {
+            "input": [
+              25
+            ],
+            "ok": true,
+            "got": "True"
+          },
+          {
+            "input": [
+              -1
+            ],
+            "ok": true,
+            "got": "False"
+          },
+          {
+            "input": [
+              121
+            ],
+            "ok": true,
+            "got": "False"
+          },
+          {
+            "input": [
+              0
+            ],
+            "ok": true,
+            "got": "True"
+          },
+          {
+            "input": [
+              120
+            ],
+            "ok": true,
+            "got": "True"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```python\ndef is_valid_age(age):\n    return 0 <= age <= 120\n```",
+      "notes": null
+    },
+    {
+      "id": "debug-py-mutation",
+      "name": "Fix mutable default argument in append_item",
+      "category": "debugging",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 194,
+      "completion_tokens": 78,
+      "elapsed_ms": 6115,
+      "tok_per_sec": 12.76,
+      "details": {
+        "language": "python",
+        "passed": 3,
+        "total": 3,
+        "per_test": [
+          {
+            "input": [
+              1
+            ],
+            "ok": true,
+            "got": "[1]"
+          },
+          {
+            "input": [
+              2
+            ],
+            "ok": true,
+            "got": "[2]"
+          },
+          {
+            "input": [
+              3,
+              [
+                10,
+                3
+              ]
+            ],
+            "ok": true,
+            "got": "[10, 3]"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```python\ndef append_item(item, lst=None):\n    if lst is None:\n        lst = []\n    lst.append(item)\n    return lst\n```",
+      "notes": null
+    },
+    {
+      "id": "debug-py-off-by-one",
+      "name": "Fix off-by-one in find_max_index",
+      "category": "debugging",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 162,
+      "completion_tokens": 174,
+      "elapsed_ms": 10220,
+      "tok_per_sec": 17.03,
+      "details": {
+        "language": "python",
+        "passed": 3,
+        "total": 3,
+        "per_test": [
+          {
+            "input": [
+              [
+                1,
+                5,
+                3
+              ]
+            ],
+            "ok": true,
+            "got": "1"
+          },
+          {
+            "input": [
+              [
+                10
+              ]
+            ],
+            "ok": true,
+            "got": "0"
+          },
+          {
+            "input": [
+              [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            ],
+            "ok": true,
+            "got": "4"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```python\ndef find_max_index(lst):\n    max_idx = 0\n    for i in range(len(lst)):\n        if lst[i] > lst[max_idx]:\n            max_idx = i\n    return max_idx\n```",
+      "notes": null
+    },
+    {
+      "id": "debug-py-wrong-return",
+      "name": "Fix wrong return type in count_vowels",
+      "category": "debugging",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 162,
+      "completion_tokens": 74,
+      "elapsed_ms": 5432,
+      "tok_per_sec": 13.62,
+      "details": {
+        "language": "python",
+        "passed": 4,
+        "total": 4,
+        "per_test": [
+          {
+            "input": [
+              "hello"
+            ],
+            "ok": true,
+            "got": "2"
+          },
+          {
+            "input": [
+              "xyz"
+            ],
+            "ok": true,
+            "got": "0"
+          },
+          {
+            "input": [
+              "aeiou"
+            ],
+            "ok": true,
+            "got": "5"
+          },
+          {
+            "input": [
+              ""
+            ],
+            "ok": true,
+            "got": "0"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```python\ndef count_vowels(s):\n    count = 0\n    for ch in s.lower():\n        if ch in 'aeiou':\n            count += 1\n    return count\n```",
+      "notes": null
+    },
+    {
+      "id": "debug-sql-join",
+      "name": "Fix INNER JOIN dropping customers with no orders",
+      "category": "debugging",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 158,
+      "completion_tokens": 127,
+      "elapsed_ms": 8126,
+      "tok_per_sec": 15.63,
+      "details": {
+        "language": "sql",
+        "passed": 1,
+        "total": 1,
+        "per_test": [
+          {
+            "ok": true,
+            "got": [
+              [
+                "Alice",
+                "2"
+              ],
+              [
+                "Bob",
+                "0"
+              ],
+              [
+                "Carol",
+                "1"
+              ]
+            ]
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "```sql\nSELECT c.name, COUNT(o.id) as order_count\nFROM customers c\nLEFT JOIN orders o ON c.id = o.customer_id\nGROUP BY c.name\n```",
+      "notes": null
+    },
+    {
+      "id": "needle-16k",
+      "name": "Needle-in-haystack 16K",
+      "category": "long_context",
+      "grader": "needle",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": null,
+      "prompt_tokens": 8397,
+      "completion_tokens": 84,
+      "elapsed_ms": 173076,
+      "tok_per_sec": 0.49,
+      "details": {
+        "haystack_chars": 16005,
+        "depth": 0.5,
+        "needle": "ROOM 16K code is BRAVO-EIGHT-FOUR.",
+        "matched": true,
+        "budget_ms": 120000,
+        "overrun_ms": 53076,
+        "original_score": 1.0,
+        "overrun_reason": "completed but exceeded usability budget"
+      },
+      "judge": null,
+      "raw_response": "The code for room\u202f16K is **BRAVO\u2011EIGHT\u2011FOUR**.",
+      "notes": null
+    },
+    {
+      "id": "needle-4k",
+      "name": "Needle-in-haystack 4K",
+      "category": "long_context",
+      "grader": "needle",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 2153,
+      "completion_tokens": 77,
+      "elapsed_ms": 39502,
+      "tok_per_sec": 1.95,
+      "details": {
+        "haystack_chars": 3999,
+        "depth": 0.5,
+        "needle": "The secret code for room 4K is ALPHA-SEVEN-NINE-TWO.",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "The secret code for room\u202f4K is ALPHA\u2011SEVEN\u2011NINE\u2011TWO.",
+      "notes": null
+    },
+    {
+      "id": "needle-64k",
+      "name": "Needle-in-haystack 64K",
+      "category": "long_context",
+      "grader": "needle",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": null,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 360004,
+      "tok_per_sec": null,
+      "details": {
+        "haystack_chars": 64001,
+        "depth": 0.5,
+        "needle": "ROOM 64K code is CHARLIE-TWO-ONE.",
+        "matched": false,
+        "budget_ms": 120000,
+        "overrun_ms": 240004,
+        "original_score": 0.0,
+        "overrun_reason": "completed but exceeded usability budget"
+      },
+      "judge": null,
+      "raw_response": "ERROR: TimeoutError: hard kill after 360s",
+      "notes": null
+    },
+    {
+      "id": "mt-context-contradictions",
+      "name": "Context carryover \u2014 follow most recent contradictory claim",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": null,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 1380040,
+      "tok_per_sec": null,
+      "details": {
+        "turns": [
+          {
+            "user": "The capital of France is Paris.\n",
+            "response": "ERROR: TimeoutError: hard kill after 180s",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "Paris",
+                "passed": false
+              }
+            ],
+            "passed": 0,
+            "total": 1
+          },
+          {
+            "user": "Actually, I was wrong. The capital of France is Lyon.\n",
+            "response": "ERROR: timeout: timed out",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "Lyon",
+                "passed": false
+              }
+            ],
+            "passed": 0,
+            "total": 1
+          },
+          {
+            "user": "What did I most recently say is the capital of France?\n",
+            "response": "ERROR: timeout: timed out",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "Lyon",
+                "passed": false
+              },
+              {
+                "type": "not_contains",
+                "value": "Paris",
+                "passed": true
+              }
+            ],
+            "passed": 1,
+            "total": 2
+          }
+        ],
+        "total_passed": 1,
+        "total_checks": 4,
+        "budget_ms": 60000,
+        "overrun_ms": 1320040,
+        "original_score": 0.25,
+        "overrun_reason": "completed but exceeded usability budget"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-context-names",
+      "name": "Context carryover \u2014 job recall after topic shift",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": null,
+      "prompt_tokens": 110,
+      "completion_tokens": 15,
+      "elapsed_ms": 206069,
+      "tok_per_sec": 0.07,
+      "details": {
+        "turns": [
+          {
+            "user": "Alice works as a software engineer.\n",
+            "response": "ERROR: TimeoutError: hard kill after 180s",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "Alice",
+                "passed": false
+              }
+            ],
+            "passed": 0,
+            "total": 1
+          },
+          {
+            "user": "Bob enjoys painting on weekends.\n",
+            "response": "Alice is a software engineer, and Bob enjoys painting on weekends.",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "Bob",
+                "passed": true
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "What does she do for a living?\n",
+            "response": "Alice is a software engineer.",
+            "checks": [
+              {
+                "type": "any_contains",
+                "value": [
+                  "software",
+                  "engineer",
+                  "programming",
+                  "developer"
+                ],
+                "passed": true,
+                "matched": [
+                  "software",
+                  "engineer"
+                ]
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          }
+        ],
+        "total_passed": 2,
+        "total_checks": 3,
+        "budget_ms": 60000,
+        "overrun_ms": 146069,
+        "original_score": 0.6667,
+        "overrun_reason": "completed but exceeded usability budget"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-context-numbers",
+      "name": "Context carryover \u2014 number recall after distraction",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 148,
+      "completion_tokens": 32,
+      "elapsed_ms": 11698,
+      "tok_per_sec": 2.74,
+      "details": {
+        "turns": [
+          {
+            "user": "Remember these numbers: 7, 13, 25.\n",
+            "response": "The numbers you listed are 7, 13, and 25. I've remembered them.",
+            "checks": [
+              {
+                "type": "any_contains",
+                "value": [
+                  "7",
+                  "13",
+                  "25"
+                ],
+                "passed": true,
+                "matched": [
+                  "7",
+                  "13",
+                  "25"
+                ]
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "Tell me a fun fact about penguins.\n",
+            "response": "A fun fact is that penguins can't fly, but they swim really fast and use flippers like wings to stay afloat.",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "penguin",
+                "passed": true
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "What is the sum of the three numbers I gave you?\n",
+            "response": "The sum is 45.",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "45",
+                "passed": true
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          }
+        ],
+        "total_passed": 3,
+        "total_checks": 3
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-refine-code",
+      "name": "Iterative code refinement (greet function \u2192 error handling \u2192 docstring)",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 159,
+      "completion_tokens": 152,
+      "elapsed_ms": 19672,
+      "tok_per_sec": 7.73,
+      "details": {
+        "turns": [
+          {
+            "user": "Write a Python function called greet(name) that returns \"Hello, <name>!\".\n",
+            "response": "```python\ndef greet(name):\n    return f\"Hello, {name}!\"\n```",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "def greet",
+                "passed": true
+              },
+              {
+                "type": "contains",
+                "value": "return",
+                "passed": true
+              }
+            ],
+            "passed": 2,
+            "total": 2
+          },
+          {
+            "user": "Add error handling so it raises a TypeError if name is None.\n",
+            "response": "```python\ndef greet(name):\n    if name is None:\n        raise TypeError(\"Name cannot be None\")\n    return f\"Hello, {name}!\"\n```",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "None",
+                "passed": true
+              },
+              {
+                "type": "any_contains",
+                "value": [
+                  "raise",
+                  "if",
+                  "TypeError"
+                ],
+                "passed": true,
+                "matched": [
+                  "raise",
+                  "if",
+                  "TypeError"
+                ]
+              }
+            ],
+            "passed": 2,
+            "total": 2
+          },
+          {
+            "user": "Add a docstring to the function explaining what it does.\n",
+            "response": "```python\ndef greet(name):\n    \"\"\"Return a greeting string.\n\n    Parameters\n    ----------\n    name : str\n        The name to include in the greeting.\n\n    Returns\n    -------\n    str\n        A greeting formatted as ``Hello, <name>!``.\n\n    Raises\n    ------\n    TypeError\n        If ``name`` is ``No",
+            "checks": [
+              {
+                "type": "regex",
+                "value": "\"\"\".*\"\"\"",
+                "passed": true
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          }
+        ],
+        "total_passed": 5,
+        "total_checks": 5
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-refine-email",
+      "name": "Iterative email refinement (apologetic + deadline + shorten)",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": null,
+      "prompt_tokens": 1106,
+      "completion_tokens": 1024,
+      "elapsed_ms": 179996,
+      "tok_per_sec": 5.69,
+      "details": {
+        "turns": [
+          {
+            "user": "Write a short email to Sarah explaining that a project delivery will be delayed.\n",
+            "response": "Okay, the user wants a short email to Sarah about a project delay. Let me start by understanding the key points. The main task is to inform Sarah that the project delivery will be delayed. The email needs to be concise, so I should keep it straightforward.\n\nFirst, the subject line should grab attent",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "Sarah",
+                "passed": true
+              },
+              {
+                "type": "contains",
+                "value": "delay",
+                "passed": true
+              },
+              {
+                "type": "length_max",
+                "value": 120,
+                "passed": false,
+                "actual": 769
+              }
+            ],
+            "passed": 2,
+            "total": 3
+          },
+          {
+            "user": "Make it more apologetic and add that the new deadline is April 25.\n",
+            "response": "Okay, the user wants me to make the email more apologetic and specify the new deadline as April 25. Let me check the previous email I created. The user is asking for a revision.\n\nFirst, I need to adjust the tone to be more apologetic. The original said \"We apologize for the inconvenience,\" which is ",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "April 25",
+                "passed": true
+              },
+              {
+                "type": "any_contains",
+                "value": [
+                  "sorry",
+                  "apologize",
+                  "apolog"
+                ],
+                "passed": true,
+                "matched": [
+                  "sorry",
+                  "apologize",
+                  "apolog"
+                ]
+              }
+            ],
+            "passed": 2,
+            "total": 2
+          },
+          {
+            "user": "Shorten it to under 50 words while keeping the April 25 deadline.\n",
+            "response": "ERROR: TimeoutError: hard kill after 180s",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "April 25",
+                "passed": false
+              },
+              {
+                "type": "length_max",
+                "value": 60,
+                "passed": true,
+                "actual": 6
+              }
+            ],
+            "passed": 1,
+            "total": 2
+          }
+        ],
+        "total_passed": 5,
+        "total_checks": 7,
+        "budget_ms": 60000,
+        "overrun_ms": 119996,
+        "original_score": 0.7143,
+        "overrun_reason": "completed but exceeded usability budget"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-refine-summary",
+      "name": "Iterative summary refinement (summarize \u2192 shorten \u2192 bullet points)",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 131,
+      "completion_tokens": 131,
+      "elapsed_ms": 14489,
+      "tok_per_sec": 9.04,
+      "details": {
+        "turns": [
+          {
+            "user": "Summarize this: \"The quick brown fox jumps over the lazy dog near the river bank on a sunny afternoon.\"\n",
+            "response": "A quick brown fox leaps over a lazy dog at a riverbank on a sunny afternoon.",
+            "checks": [
+              {
+                "type": "any_contains",
+                "value": [
+                  "fox",
+                  "dog",
+                  "river"
+                ],
+                "passed": true,
+                "matched": [
+                  "fox",
+                  "dog",
+                  "river"
+                ]
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "Make it even shorter \u2014 one sentence only.\n",
+            "response": "Fox leaps over dog by river.",
+            "checks": [
+              {
+                "type": "length_max",
+                "value": 25,
+                "passed": true,
+                "actual": 6
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "Convert it to 3 bullet points.\n",
+            "response": "- A fox leaps  \n- Over a dog  \n- By a river",
+            "checks": [
+              {
+                "type": "any_contains",
+                "value": [
+                  "- ",
+                  "* ",
+                  "\u2022 "
+                ],
+                "passed": true,
+                "matched": [
+                  "- "
+                ]
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          }
+        ],
+        "total_passed": 3,
+        "total_checks": 3
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-tool-chain",
+      "name": "Multi-step tool use \u2014 weather query then umbrella advice",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 152,
+      "completion_tokens": 47,
+      "elapsed_ms": 11777,
+      "tok_per_sec": 3.99,
+      "details": {
+        "turns": [
+          {
+            "user": "What's the weather in Paris?\n",
+            "response": "The user is asking for the weather in Paris. I can use the get_weather function to fetch this information. The function requires a location parameter, which is \"Paris\". I'll call the function and then provide the answer.",
+            "checks": [
+              {
+                "type": "tool_called",
+                "value": "get_weather",
+                "passed": true,
+                "called": [
+                  "get_weather"
+                ]
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "Should I bring an umbrella?\n",
+            "response": "Yes, it's raining in Paris at 18\u00b0C, so you should bring an umbrella.",
+            "checks": [
+              {
+                "type": "any_contains",
+                "value": [
+                  "umbrella",
+                  "rain",
+                  "yes"
+                ],
+                "passed": true,
+                "matched": [
+                  "umbrella",
+                  "rain",
+                  "yes"
+                ]
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          }
+        ],
+        "total_passed": 2,
+        "total_checks": 2
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-tool-sequential",
+      "name": "Multi-step tool use \u2014 read file then extract port",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 140,
+      "completion_tokens": 43,
+      "elapsed_ms": 10470,
+      "tok_per_sec": 4.11,
+      "details": {
+        "turns": [
+          {
+            "user": "Read the file config.yaml.\n",
+            "response": "The user asks to read the file config.yaml. I need to call read_file with path \"config.yaml\". Let's do that.",
+            "checks": [
+              {
+                "type": "tool_called",
+                "value": "read_file",
+                "passed": true,
+                "called": [
+                  "read_file"
+                ]
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "What port is the server running on?\n",
+            "response": "The server is running on port 8080.",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "8080",
+                "passed": true
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          }
+        ],
+        "total_passed": 2,
+        "total_checks": 2
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "reasoning-cause-effect",
+      "name": "Causal reasoning \u2014 root cause of extended shutdown",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 0.9,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 526,
+      "completion_tokens": 83,
+      "elapsed_ms": 13718,
+      "tok_per_sec": 6.05,
+      "details": {
+        "judge": {
+          "model_response": "The 14\u2011day shutdown was prolonged because Northgate failed to reconcile name discrepancies between its inventory and insurance policies before the renewal deadline, causing a policy lapse that blocked replacement inventory.",
+          "rubric_scores": {
+            "factual_correctness": 0.8,
+            "completeness": 1.0
+          },
+          "rationale": "The answer correctly identifies the root cause (failure to reconcile name discrepancies) and the mechanism (insurance lapse blocking replacement inventory) that extended the shutdown. However, it contains a minor factual inaccuracy by stating the discrepancies were between 'inventory and insurance policies.' The document specifies the discrepancy was between the corporate entity name (due to rebranding) and the insurer's records, not the inventory itself. Despite this slight imprecision, the core causal chain is accurately described.",
+          "judge_raw": "{\n\"factual_correctness\": 0.8,\n\"completeness\": 1.0,\n\"rationale\": \"The answer correctly identifies the root cause (failure to reconcile name discrepancies) and the mechanism (insurance lapse blocking replacement inventory) that extended the shutdown. However, it contains a minor factual inaccuracy by stating the discrepancies were between 'inventory and insurance policies.' The document specifies the discrepancy was between the corporate entity name (due to rebranding) and the insurer's records, n"
+        }
+      },
+      "judge": {
+        "model_response": "The 14\u2011day shutdown was prolonged because Northgate failed to reconcile name discrepancies between its inventory and insurance policies before the renewal deadline, causing a policy lapse that blocked replacement inventory.",
+        "rubric_scores": {
+          "factual_correctness": 0.8,
+          "completeness": 1.0
+        },
+        "rationale": "The answer correctly identifies the root cause (failure to reconcile name discrepancies) and the mechanism (insurance lapse blocking replacement inventory) that extended the shutdown. However, it contains a minor factual inaccuracy by stating the discrepancies were between 'inventory and insurance policies.' The document specifies the discrepancy was between the corporate entity name (due to rebranding) and the insurer's records, not the inventory itself. Despite this slight imprecision, the core causal chain is accurately described.",
+        "judge_raw": "{\n\"factual_correctness\": 0.8,\n\"completeness\": 1.0,\n\"rationale\": \"The answer correctly identifies the root cause (failure to reconcile name discrepancies) and the mechanism (insurance lapse blocking replacement inventory) that extended the shutdown. However, it contains a minor factual inaccuracy by stating the discrepancies were between 'inventory and insurance policies.' The document specifies the discrepancy was between the corporate entity name (due to rebranding) and the insurer's records, n"
+      },
+      "raw_response": "The 14\u2011day shutdown was prolonged because Northgate failed to reconcile name discrepancies between its inventory and insurance policies before the renewal deadline, causing a policy lapse that blocked replacement inventory.",
+      "notes": null
+    },
+    {
+      "id": "reasoning-multihop-1",
+      "name": "Multi-hop reasoning \u2014 biography dates and places",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 588,
+      "completion_tokens": 78,
+      "elapsed_ms": 12792,
+      "tok_per_sec": 6.1,
+      "details": {
+        "judge": {
+          "model_response": "Dr\u202fCarla\u202fMendes moved to Boston in\u202f1997, taking a research\u2011scientist position at Meridian\u202fApplied\u202fScience.",
+          "rubric_scores": {
+            "factual_correctness": 1.0,
+            "completeness": 1.0
+          },
+          "rationale": "The candidate response correctly identifies the year (1997) and the job title (research scientist) as stated in the document. It addresses both parts of the question fully.",
+          "judge_raw": "{\"factual_correctness\": 1.0, \"completeness\": 1.0, \"rationale\": \"The candidate response correctly identifies the year (1997) and the job title (research scientist) as stated in the document. It addresses both parts of the question fully.\"}"
+        }
+      },
+      "judge": {
+        "model_response": "Dr\u202fCarla\u202fMendes moved to Boston in\u202f1997, taking a research\u2011scientist position at Meridian\u202fApplied\u202fScience.",
+        "rubric_scores": {
+          "factual_correctness": 1.0,
+          "completeness": 1.0
+        },
+        "rationale": "The candidate response correctly identifies the year (1997) and the job title (research scientist) as stated in the document. It addresses both parts of the question fully.",
+        "judge_raw": "{\"factual_correctness\": 1.0, \"completeness\": 1.0, \"rationale\": \"The candidate response correctly identifies the year (1997) and the job title (research scientist) as stated in the document. It addresses both parts of the question fully.\"}"
+      },
+      "raw_response": "Dr\u202fCarla\u202fMendes moved to Boston in\u202f1997, taking a research\u2011scientist position at Meridian\u202fApplied\u202fScience.",
+      "notes": null
+    },
+    {
+      "id": "reasoning-multihop-2",
+      "name": "Multi-hop reasoning \u2014 org chart before and after reorganization",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 0.95,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 638,
+      "completion_tokens": 335,
+      "elapsed_ms": 28843,
+      "tok_per_sec": 11.61,
+      "details": {
+        "judge": {
+          "model_response": "Before the 2024 shuffle, the three engineering VPs\u2014Matt\u202fWebb, Priya\u202fNakamura, and Tom\u202fObasi\u2014reported directly to CTO\u202fReza\u202fShirazi. After the 2024 reorg, Obasi\u2019s team was split:\u202f20 engineers joined Webb\u2019s Platform group,\u202f14 joined Nakamura\u2019s Data Science group, and Obasi himself was offered (and accepted) a principal\u2011engineer role within Webb\u2019s organization.",
+          "rubric_scores": {
+            "factual_correctness": 0.9,
+            "completeness": 1.0
+          },
+          "rationale": "The answer correctly identifies the three VPs who reported to the CTO and accurately describes the fate of Obasi's team (split between Webb and Nakamura, and Obasi's new role). However, it contains a minor factual error regarding the first name of Marcus Webb, referring to him as 'Matt Webb' instead of 'Marcus Webb' as stated in the document.",
+          "judge_raw": "{\n\"factual_correctness\": 0.9,\n\"completeness\": 1.0,\n\"rationale\": \"The answer correctly identifies the three VPs who reported to the CTO and accurately describes the fate of Obasi's team (split between Webb and Nakamura, and Obasi's new role). However, it contains a minor factual error regarding the first name of Marcus Webb, referring to him as 'Matt Webb' instead of 'Marcus Webb' as stated in the document.\"\n}"
+        }
+      },
+      "judge": {
+        "model_response": "Before the 2024 shuffle, the three engineering VPs\u2014Matt\u202fWebb, Priya\u202fNakamura, and Tom\u202fObasi\u2014reported directly to CTO\u202fReza\u202fShirazi. After the 2024 reorg, Obasi\u2019s team was split:\u202f20 engineers joined Webb\u2019s Platform group,\u202f14 joined Nakamura\u2019s Data Science group, and Obasi himself was offered (and accepted) a principal\u2011engineer role within Webb\u2019s organization.",
+        "rubric_scores": {
+          "factual_correctness": 0.9,
+          "completeness": 1.0
+        },
+        "rationale": "The answer correctly identifies the three VPs who reported to the CTO and accurately describes the fate of Obasi's team (split between Webb and Nakamura, and Obasi's new role). However, it contains a minor factual error regarding the first name of Marcus Webb, referring to him as 'Matt Webb' instead of 'Marcus Webb' as stated in the document.",
+        "judge_raw": "{\n\"factual_correctness\": 0.9,\n\"completeness\": 1.0,\n\"rationale\": \"The answer correctly identifies the three VPs who reported to the CTO and accurately describes the fate of Obasi's team (split between Webb and Nakamura, and Obasi's new role). However, it contains a minor factual error regarding the first name of Marcus Webb, referring to him as 'Matt Webb' instead of 'Marcus Webb' as stated in the document.\"\n}"
+      },
+      "raw_response": "Before the 2024 shuffle, the three engineering VPs\u2014Matt\u202fWebb, Priya\u202fNakamura, and Tom\u202fObasi\u2014reported directly to CTO\u202fReza\u202fShirazi. After the 2024 reorg, Obasi\u2019s team was split:\u202f20 engineers joined Webb\u2019s Platform group,\u202f14 joined Nakamura\u2019s Data Science group, and Obasi himself was offered (and accepted) a principal\u2011engineer role within Webb\u2019s organization.",
+      "notes": null
+    },
+    {
+      "id": "reasoning-timeline",
+      "name": "Timeline ordering \u2014 Project Helios events",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 432,
+      "completion_tokens": 90,
+      "elapsed_ms": 12665,
+      "tok_per_sec": 7.11,
+      "details": {
+        "judge": {
+          "model_response": "B, A, C",
+          "rubric_scores": {
+            "factual_correctness": 1.0,
+            "completeness": 1.0
+          },
+          "rationale": "The document lists the events in the following order: (B) First engineering prototype demonstrated on 2019-07-22, (A) Security vulnerability discovered on 2021-08-03, and (C) Helios v1.0 released on 2022-04-28. The candidate response 'B, A, C' correctly reflects this chronological sequence and addresses all parts of the question.",
+          "judge_raw": "{\n\"factual_correctness\": 1.0,\n\"completeness\": 1.0,\n\"rationale\": \"The document lists the events in the following order: (B) First engineering prototype demonstrated on 2019-07-22, (A) Security vulnerability discovered on 2021-08-03, and (C) Helios v1.0 released on 2022-04-28. The candidate response 'B, A, C' correctly reflects this chronological sequence and addresses all parts of the question.\"\n}"
+        }
+      },
+      "judge": {
+        "model_response": "B, A, C",
+        "rubric_scores": {
+          "factual_correctness": 1.0,
+          "completeness": 1.0
+        },
+        "rationale": "The document lists the events in the following order: (B) First engineering prototype demonstrated on 2019-07-22, (A) Security vulnerability discovered on 2021-08-03, and (C) Helios v1.0 released on 2022-04-28. The candidate response 'B, A, C' correctly reflects this chronological sequence and addresses all parts of the question.",
+        "judge_raw": "{\n\"factual_correctness\": 1.0,\n\"completeness\": 1.0,\n\"rationale\": \"The document lists the events in the following order: (B) First engineering prototype demonstrated on 2019-07-22, (A) Security vulnerability discovered on 2021-08-03, and (C) Helios v1.0 released on 2022-04-28. The candidate response 'B, A, C' correctly reflects this chronological sequence and addresses all parts of the question.\"\n}"
+      },
+      "raw_response": "B, A, C",
+      "notes": null
+    },
+    {
+      "id": "writing-email-draft",
+      "name": "Writing \u2014 professional meeting reschedule email",
+      "category": "writing",
+      "grader": "llm_judge",
+      "score": 0.8,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 124,
+      "completion_tokens": 535,
+      "elapsed_ms": 31725,
+      "tok_per_sec": 16.86,
+      "details": {
+        "judge": {
+          "model_response": "Dear Attendees,  \n\nThis is to inform you that our quarterly planning meeting, originally set for Thursday, April\u202f10 at\u202f2:00\u202fPM, has been rescheduled to Monday, April\u202f14 at\u202f10:00\u202fAM in Conference Room\u202fB. The agenda remains unchanged. We apologize briefly for any inconvenience this change may cause. Please confirm your availability for the new time by end of business Friday.  \n\nThank you.",
+          "rubric_scores": {
+            "clarity": 1.0,
+            "accuracy": 1.0,
+            "follows_constraints": 0.4
+          },
+          "rationale": "The email is clear and accurately conveys all required details (dates, times, location, agenda status, apology, and confirmation request). However, it fails the 'approximately 120 words' constraint significantly, as the response is only about 75 words, falling short by nearly 40%.",
+          "judge_raw": "{\n\"clarity\": 1.0,\n\"accuracy\": 1.0,\n\"follows_constraints\": 0.4,\n\"rationale\": \"The email is clear and accurately conveys all required details (dates, times, location, agenda status, apology, and confirmation request). However, it fails the 'approximately 120 words' constraint significantly, as the response is only about 75 words, falling short by nearly 40%.\"\n}"
+        }
+      },
+      "judge": {
+        "model_response": "Dear Attendees,  \n\nThis is to inform you that our quarterly planning meeting, originally set for Thursday, April\u202f10 at\u202f2:00\u202fPM, has been rescheduled to Monday, April\u202f14 at\u202f10:00\u202fAM in Conference Room\u202fB. The agenda remains unchanged. We apologize briefly for any inconvenience this change may cause. Please confirm your availability for the new time by end of business Friday.  \n\nThank you.",
+        "rubric_scores": {
+          "clarity": 1.0,
+          "accuracy": 1.0,
+          "follows_constraints": 0.4
+        },
+        "rationale": "The email is clear and accurately conveys all required details (dates, times, location, agenda status, apology, and confirmation request). However, it fails the 'approximately 120 words' constraint significantly, as the response is only about 75 words, falling short by nearly 40%.",
+        "judge_raw": "{\n\"clarity\": 1.0,\n\"accuracy\": 1.0,\n\"follows_constraints\": 0.4,\n\"rationale\": \"The email is clear and accurately conveys all required details (dates, times, location, agenda status, apology, and confirmation request). However, it fails the 'approximately 120 words' constraint significantly, as the response is only about 75 words, falling short by nearly 40%.\"\n}"
+      },
+      "raw_response": "Dear Attendees,  \n\nThis is to inform you that our quarterly planning meeting, originally set for Thursday, April\u202f10 at\u202f2:00\u202fPM, has been rescheduled to Monday, April\u202f14 at\u202f10:00\u202fAM in Conference Room\u202fB. The agenda remains unchanged. We apologize briefly for any inconvenience this change may cause. Please confirm your availability for the new time by end of business Friday.  \n\nThank you.",
+      "notes": null
+    },
+    {
+      "id": "writing-summary-news",
+      "name": "Writing \u2014 summarize news article in 3 sentences",
+      "category": "writing",
+      "grader": "llm_judge",
+      "score": 0.8,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 741,
+      "completion_tokens": 647,
+      "elapsed_ms": 46522,
+      "tok_per_sec": 13.91,
+      "details": {
+        "judge": {
+          "model_response": "The Riverdale City Council approved rezoning of a 1.4\u2011acre harbor\u2011blues parcel to mixed\u2011use, allowing a 12\u2011story tower with 200 residential units and 18,000\u202fsq\u202fft ground\u2011floor retail, requiring 40 units below market. The project, sold to Coastal Heights Development Group for $8.4\u202fmillion, includes a $350,000 park renewal fund and discounted ground\u2011floor lease for local businesses, though 1,200 residents and Riverdale Neighbors First raised concerns about views, sewer and gentrification. Traffic ",
+          "rubric_scores": {
+            "clarity": 0.8,
+            "accuracy": 0.6,
+            "follows_constraints": 1.0
+          },
+          "rationale": "The response meets the sentence count constraint (3 sentences) and avoids opinions. However, accuracy is compromised by factual errors: the location is misidentified as 'harbor-blues' instead of 'Harbor Boulevard', and the traffic engineer's name is misspelled as 'Marco' instead of 'Marcus'. These errors violate the requirement that every claim be supported by the source.",
+          "judge_raw": "{\n\"clarity\": 0.8,\n\"accuracy\": 0.6,\n\"follows_constraints\": 1.0,\n\"rationale\": \"The response meets the sentence count constraint (3 sentences) and avoids opinions. However, accuracy is compromised by factual errors: the location is misidentified as 'harbor-blues' instead of 'Harbor Boulevard', and the traffic engineer's name is misspelled as 'Marco' instead of 'Marcus'. These errors violate the requirement that every claim be supported by the source.\"\n}"
+        }
+      },
+      "judge": {
+        "model_response": "The Riverdale City Council approved rezoning of a 1.4\u2011acre harbor\u2011blues parcel to mixed\u2011use, allowing a 12\u2011story tower with 200 residential units and 18,000\u202fsq\u202fft ground\u2011floor retail, requiring 40 units below market. The project, sold to Coastal Heights Development Group for $8.4\u202fmillion, includes a $350,000 park renewal fund and discounted ground\u2011floor lease for local businesses, though 1,200 residents and Riverdale Neighbors First raised concerns about views, sewer and gentrification. Traffic ",
+        "rubric_scores": {
+          "clarity": 0.8,
+          "accuracy": 0.6,
+          "follows_constraints": 1.0
+        },
+        "rationale": "The response meets the sentence count constraint (3 sentences) and avoids opinions. However, accuracy is compromised by factual errors: the location is misidentified as 'harbor-blues' instead of 'Harbor Boulevard', and the traffic engineer's name is misspelled as 'Marco' instead of 'Marcus'. These errors violate the requirement that every claim be supported by the source.",
+        "judge_raw": "{\n\"clarity\": 0.8,\n\"accuracy\": 0.6,\n\"follows_constraints\": 1.0,\n\"rationale\": \"The response meets the sentence count constraint (3 sentences) and avoids opinions. However, accuracy is compromised by factual errors: the location is misidentified as 'harbor-blues' instead of 'Harbor Boulevard', and the traffic engineer's name is misspelled as 'Marco' instead of 'Marcus'. These errors violate the requirement that every claim be supported by the source.\"\n}"
+      },
+      "raw_response": "The Riverdale City Council approved rezoning of a 1.4\u2011acre harbor\u2011blues parcel to mixed\u2011use, allowing a 12\u2011story tower with 200 residential units and 18,000\u202fsq\u202fft ground\u2011floor retail, requiring 40 units below market. The project, sold to Coastal Heights Development Group for $8.4\u202fmillion, includes a $350,000 park renewal fund and discounted ground\u2011floor lease for local businesses, though 1,200 residents and Riverdale Neighbors First raised concerns about views, sewer and gentrification. Traffic engineer Marco. Webb noted road traffic has recovered to 78\u202f% of 2019 levels, and construction could start early 2027 pending environmental clearance.",
+      "notes": null
+    },
+    {
+      "id": "writing-tech-explainer",
+      "name": "Writing \u2014 explain HTTP caching for non-technical readers",
+      "category": "writing",
+      "grader": "llm_judge",
+      "score": 0.1,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 78,
+      "completion_tokens": 1024,
+      "elapsed_ms": 59123,
+      "tok_per_sec": 17.32,
+      "details": {
+        "judge": {
+          "model_response": "We need to write 200-word explanation (or up to 250). Non-technical, analogical, avoid jargon. Provide concise. Let's output 200 words exactly? Probably okay. Let's aim ~200 words. Let's produce ~200 words. Provide analogy: like library with a shelf: you take books you need, later restock. Avoid jargon. Write 200 words. Let's count roughly: 200 words. Use simple language.\n\nLet's draft: \"Imagine you are reading a story you\u2019ve read many times. When you first read it, a librarian (the website\u2019s cod",
+          "rubric_scores": {
+            "clarity": 0.1,
+            "accuracy": 0.2,
+            "follows_constraints": 0.0
+          },
+          "rationale": "The response fails completely as it consists of the model's internal thought process and drafting notes rather than the requested explanation. It includes meta-commentary like 'Let's draft' and 'Count words', which is inappropriate for the final output. The text is fragmented, incoherent, and does not form a complete explanation. It significantly under-delivers on the word count (approx. 174 words of draft text vs. 200 required) and fails to provide a polished, non-technical explanation as instructed.",
+          "judge_raw": "{\n\"clarity\": 0.1,\n\"accuracy\": 0.2,\n\"follows_constraints\": 0.0,\n\"rationale\": \"The response fails completely as it consists of the model's internal thought process and drafting notes rather than the requested explanation. It includes meta-commentary like 'Let's draft' and 'Count words', which is inappropriate for the final output. The text is fragmented, incoherent, and does not form a complete explanation. It significantly under-delivers on the word count (approx. 174 words of draft text vs. 200 "
+        }
+      },
+      "judge": {
+        "model_response": "We need to write 200-word explanation (or up to 250). Non-technical, analogical, avoid jargon. Provide concise. Let's output 200 words exactly? Probably okay. Let's aim ~200 words. Let's produce ~200 words. Provide analogy: like library with a shelf: you take books you need, later restock. Avoid jargon. Write 200 words. Let's count roughly: 200 words. Use simple language.\n\nLet's draft: \"Imagine you are reading a story you\u2019ve read many times. When you first read it, a librarian (the website\u2019s cod",
+        "rubric_scores": {
+          "clarity": 0.1,
+          "accuracy": 0.2,
+          "follows_constraints": 0.0
+        },
+        "rationale": "The response fails completely as it consists of the model's internal thought process and drafting notes rather than the requested explanation. It includes meta-commentary like 'Let's draft' and 'Count words', which is inappropriate for the final output. The text is fragmented, incoherent, and does not form a complete explanation. It significantly under-delivers on the word count (approx. 174 words of draft text vs. 200 required) and fails to provide a polished, non-technical explanation as instructed.",
+        "judge_raw": "{\n\"clarity\": 0.1,\n\"accuracy\": 0.2,\n\"follows_constraints\": 0.0,\n\"rationale\": \"The response fails completely as it consists of the model's internal thought process and drafting notes rather than the requested explanation. It includes meta-commentary like 'Let's draft' and 'Count words', which is inappropriate for the final output. The text is fragmented, incoherent, and does not form a complete explanation. It significantly under-delivers on the word count (approx. 174 words of draft text vs. 200 "
+      },
+      "raw_response": "We need to write 200-word explanation (or up to 250). Non-technical, analogical, avoid jargon. Provide concise. Let's output 200 words exactly? Probably okay. Let's aim ~200 words. Let's produce ~200 words. Provide analogy: like library with a shelf: you take books you need, later restock. Avoid jargon. Write 200 words. Let's count roughly: 200 words. Use simple language.\n\nLet's draft: \"Imagine you are reading a story you\u2019ve read many times. When you first read it, a librarian (the website\u2019s code) writes a copy of the story on a special folder for you, called a cache. The next time you ask the librarian for the story, the librarian checks the folder first. If the book is still there, the librarian hands you the copy without making a new request, so you don\u2019t have to wait. Over time, if the story changes, the librarian replaces the old copy. This keeps you reading smoothly without the librarian having to rewrite the whole book each time.\" Need around 200 words. Let's count words.\n\nCount: Imagine(1) you2 are3 reading4 a5 story6 you\u2019ve7 read8 many9 times.10 When11 you12 first13 read14 it,15 a16 librarian (17\u2019s18 website\u2019s19 code)20 writes21 a22 copy23 of24 the25 story26 on27 a28 special29 folder30 for31 you,32 called33 a34 cache.35 The36 next37 time38 you39 ask40 the41 librarian42 for43 the44 story,45 the46 librarian47 checks48 the49 folder50 first.51 If52 the53 book54 is55 still56 there,57 the58 librarian59 hands60 you61 the62 copy63 without64 making65 a66 new67 request,68 so69 you70 don\u2019t71 have72 to73 wait.74 Over75 time,76 if77 the78 story79 changes,80 the81 librarian82 replaces83 the84 old85 copy.86 This87 keeps88 you89 reading90 smoothly91 without92 the93 librarian94 having95 to96 rewrite97 the98 whole99 book100 each101 time102.\n\n102 words. Need about 200. Need add more. Continue: \"You also never have to ask the librarian to find it again, because the copy you have is always the most recent version you need.\" Continue.\n\nCount new: You1 also2 never3 have4 to5 ask6",
+      "notes": null
+    },
+    {
+      "id": "research-cited-answer",
+      "name": "Cited answer \u2014 source trust for policy decision",
+      "category": "research",
+      "grader": "llm_judge",
+      "score": 0.6667,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 1369,
+      "completion_tokens": 286,
+      "elapsed_ms": 36337,
+      "tok_per_sec": 7.87,
+      "details": {
+        "judge": {
+          "model_response": "The most directly applicable evidence for a startup\u2019s decision between remote\u2011first and hybrid policies comes from Source\u202fC\u202f[C]. This source tests a hybrid model (three days remote, two in\u2011office) versus a fully in\u2011office schedule among 1,600 knowledge workers and finds that, after six months, hybrid participants achieved productivity scores indistinguishable from the remote group while scoring higher on collaboration, innovation, and satisfaction, and had a 35\u202f% lower voluntary attrition rate. ",
+          "rubric_scores": {
+            "faithful": 1.0,
+            "cited": 0.0,
+            "non_contradictory": 1.0
+          },
+          "rationale": "The response is faithful to Source C and contains no contradictory claims. However, it fails the 'cited' criterion because the instructions explicitly require citing sources as [A], [B], [C] (implying all three must be referenced or at least the markers used for all relevant sources), and the response only cites [C]. The rubric requires using [A] [B] [C] markers at least once each, which was not done.",
+          "judge_raw": "{\n\"faithful\": 1.0,\n\"cited\": 0.0,\n\"non_contradictory\": 1.0,\n\"rationale\": \"The response is faithful to Source C and contains no contradictory claims. However, it fails the 'cited' criterion because the instructions explicitly require citing sources as [A], [B], [C] (implying all three must be referenced or at least the markers used for all relevant sources), and the response only cites [C]. The rubric requires using [A] [B] [C] markers at least once each, which was not done.\"\n}"
+        }
+      },
+      "judge": {
+        "model_response": "The most directly applicable evidence for a startup\u2019s decision between remote\u2011first and hybrid policies comes from Source\u202fC\u202f[C]. This source tests a hybrid model (three days remote, two in\u2011office) versus a fully in\u2011office schedule among 1,600 knowledge workers and finds that, after six months, hybrid participants achieved productivity scores indistinguishable from the remote group while scoring higher on collaboration, innovation, and satisfaction, and had a 35\u202f% lower voluntary attrition rate. ",
+        "rubric_scores": {
+          "faithful": 1.0,
+          "cited": 0.0,
+          "non_contradictory": 1.0
+        },
+        "rationale": "The response is faithful to Source C and contains no contradictory claims. However, it fails the 'cited' criterion because the instructions explicitly require citing sources as [A], [B], [C] (implying all three must be referenced or at least the markers used for all relevant sources), and the response only cites [C]. The rubric requires using [A] [B] [C] markers at least once each, which was not done.",
+        "judge_raw": "{\n\"faithful\": 1.0,\n\"cited\": 0.0,\n\"non_contradictory\": 1.0,\n\"rationale\": \"The response is faithful to Source C and contains no contradictory claims. However, it fails the 'cited' criterion because the instructions explicitly require citing sources as [A], [B], [C] (implying all three must be referenced or at least the markers used for all relevant sources), and the response only cites [C]. The rubric requires using [A] [B] [C] markers at least once each, which was not done.\"\n}"
+      },
+      "raw_response": "The most directly applicable evidence for a startup\u2019s decision between remote\u2011first and hybrid policies comes from Source\u202fC\u202f[C]. This source tests a hybrid model (three days remote, two in\u2011office) versus a fully in\u2011office schedule among 1,600 knowledge workers and finds that, after six months, hybrid participants achieved productivity scores indistinguishable from the remote group while scoring higher on collaboration, innovation, and satisfaction, and had a 35\u202f% lower voluntary attrition rate. The study concludes that hybrid policies \u201ccapture the measurable output advantages of remote work while preserving enough in\u2011person interaction to sustain collaboration and culture,\u201d recommending a two\u2011to\u2011three days per week office schedule and careful task alignment [C].",
+      "notes": null
+    },
+    {
+      "id": "research-synthesis-remote",
+      "name": "Synthesis with citations \u2014 remote work productivity",
+      "category": "research",
+      "grader": "llm_judge",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 1340,
+      "completion_tokens": 279,
+      "elapsed_ms": 35267,
+      "tok_per_sec": 7.91,
+      "details": {
+        "judge": {
+          "model_response": "The evidence collected in A shows individual output rises, with remote knowledge workers achieving 13.5\u202f% more calls and on average 5\u202f% more hourly output, especially for mid\u2011career staff ([A]). B cautions that these gains rest on measurable metrics that ignore collaboration, noting that remote work shrinks cross\u2011team networks and hampers mentorship, which drives innovation and long\u2011term performance ([B]). C\u2019s randomized trial corroborates this: hybrid workers matched remote teams on productivit",
+          "rubric_scores": {
+            "faithful": 1.0,
+            "cited": 1.0,
+            "non_contradictory": 1.0
+          },
+          "rationale": "The response accurately synthesizes the three sources without introducing external claims. It correctly attributes specific statistics (13.5%, 5%, 35%) and concepts (metrics vs. collaboration, hybrid benefits) to the correct sources [A], [B], and [C]. The argument logically balances the individual productivity gains from remote work with the collaboration benefits of hybrid models, avoiding any internal contradictions.",
+          "judge_raw": "{\n\"faithful\": 1.0,\n\"cited\": 1.0,\n\"non_contradictory\": 1.0,\n\"rationale\": \"The response accurately synthesizes the three sources without introducing external claims. It correctly attributes specific statistics (13.5%, 5%, 35%) and concepts (metrics vs. collaboration, hybrid benefits) to the correct sources [A], [B], and [C]. The argument logically balances the individual productivity gains from remote work with the collaboration benefits of hybrid models, avoiding any internal contradictions.\"\n}"
+        }
+      },
+      "judge": {
+        "model_response": "The evidence collected in A shows individual output rises, with remote knowledge workers achieving 13.5\u202f% more calls and on average 5\u202f% more hourly output, especially for mid\u2011career staff ([A]). B cautions that these gains rest on measurable metrics that ignore collaboration, noting that remote work shrinks cross\u2011team networks and hampers mentorship, which drives innovation and long\u2011term performance ([B]). C\u2019s randomized trial corroborates this: hybrid workers matched remote teams on productivit",
+        "rubric_scores": {
+          "faithful": 1.0,
+          "cited": 1.0,
+          "non_contradictory": 1.0
+        },
+        "rationale": "The response accurately synthesizes the three sources without introducing external claims. It correctly attributes specific statistics (13.5%, 5%, 35%) and concepts (metrics vs. collaboration, hybrid benefits) to the correct sources [A], [B], and [C]. The argument logically balances the individual productivity gains from remote work with the collaboration benefits of hybrid models, avoiding any internal contradictions.",
+        "judge_raw": "{\n\"faithful\": 1.0,\n\"cited\": 1.0,\n\"non_contradictory\": 1.0,\n\"rationale\": \"The response accurately synthesizes the three sources without introducing external claims. It correctly attributes specific statistics (13.5%, 5%, 35%) and concepts (metrics vs. collaboration, hybrid benefits) to the correct sources [A], [B], and [C]. The argument logically balances the individual productivity gains from remote work with the collaboration benefits of hybrid models, avoiding any internal contradictions.\"\n}"
+      },
+      "raw_response": "The evidence collected in A shows individual output rises, with remote knowledge workers achieving 13.5\u202f% more calls and on average 5\u202f% more hourly output, especially for mid\u2011career staff ([A]). B cautions that these gains rest on measurable metrics that ignore collaboration, noting that remote work shrinks cross\u2011team networks and hampers mentorship, which drives innovation and long\u2011term performance ([B]). C\u2019s randomized trial corroborates this: hybrid workers matched remote teams on productivity yet excelled in collaboration and satisfaction, and attrition dropped 35\u202f% in hybrids over in\u2011office controls ([C]). Thus, the data indicate individual productivity often improves remotely, but sustainable output depends on preserving collaboration, which hybrid schedules best balance.",
+      "notes": null
+    },
+    {
+      "id": "agentic-add-failing-test.opencode",
+      "name": "Add failing test then fix",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "error",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 359134,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "error",
+        "elapsed_sec": 359.13440012931824,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "",
+        "stderr_excerpt": "",
+        "error": "config swap failed: TimeoutError: hard kill after 360s"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-add-failing-test.aider",
+      "name": "Add failing test then fix",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 1219,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 1.2198069095611572,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "\nNewer aider version v0.86.2 is available.\n\n/Library/Developer/CommandLineTools/usr/bin/python3 -m pip install --upgrade \n--upgrade-strategy only-if-needed aider-chat\n\nInstalling: /Library/Developer/CommandLineTools/usr/bin/python3 -m pip install --upgrade --upgrade-strategy only-if-needed aider-chat\nInstallation complete.\n\nRe-run aider to use new version.\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-add-failing-test.custom",
+      "name": "Add failing test then fix",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 899997,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "timeout",
+        "elapsed_sec": 899.9972031116486,
+        "turns_completed": 4,
+        "last_tool_call": "write_file(path,content)",
+        "stdout_excerpt": "",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 1.0
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-add-feature-with-tests.opencode",
+      "name": "Add pagination to get_items",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 288943,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "scored",
+        "elapsed_sec": 288.94343304634094,
+        "turns_completed": 4,
+        "last_tool_call": null,
+        "stdout_excerpt": "tedError\\\"})\",\"time\":{\"start\":1775959752658,\"end\":1775959752663}}}}\n{\"type\":\"step_finish\",\"timestamp\":1775959752889,\"sessionID\":\"ses_280912507ffeCaQtxVOLXmkFVB\",\"part\":{\"id\":\"prt_d7f7340910018pa1Hi1zaVFQPc\",\"sessionID\":\"ses_280912507ffeCaQtxVOLXmkFVB\",\"messageID\":\"msg_d7f729b12001xqgyDbuspHYLVx\",\"type\":\"step-finish\",\"reason\":\"tool-calls\",\"snapshot\":\"b40007ed504078e5268fce9552aed74f015a9e68\",\"cost\":0,\"tokens\":{\"total\":12034,\"input\":11919,\"output\":115,\"reasoning\":0,\"cache\":{\"read\":0,\"write\":0}}}}\n",
+        "stderr_excerpt": "\u001b[93m\u001b[1m! \u001b[0mpermission requested: external_directory (/Users/nkuhn/claude/tanzubench/.bench-work/nemotron-3-nano-4b-2026-04-12T00-50-23Z/agentic-agentic-add-features-with-tests/opencode/tests/*); auto-rejecting\n",
+        "error": null,
+        "partial_credit_score": 0.0
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-add-feature-with-tests.aider",
+      "name": "Add pagination to get_items",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 46298,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 46.2980899810791,
+        "turns_completed": 1,
+        "last_tool_call": null,
+        "stdout_excerpt": "ms. We'll keep same style.\n\nNow produce final answer with file listing.\n\n------------\n\u25ba **ANSWER**\n\npath/to/app.py\n\n```diff\n@@ -1,10 +1,14 @@\n items = []\n \n \n-def get_items():\n-    return items\n+def get_items(page=1, per_page=None):\n+    if per_page is None:\n+        return items\n+    start = (page - 1) * per_page\n+    end = page * per_page\n+    return items[start:end]\n \n \n def add_item(item):\n     items.append(item)\n     return item\n```\n\n\nTokens: 1.3k sent, 534 received.\nApplied edit to app.py\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-add-feature-with-tests.custom",
+      "name": "Add pagination to get_items",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 22306,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 22.306292057037354,
+        "turns_completed": 2,
+        "last_tool_call": "read_file(path)",
+        "stdout_excerpt": "ERROR: TimeoutError: hard kill after 360s",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.0
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-cli-integration.opencode",
+      "name": "Write CLI passing integration tests",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "error",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 359413,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "error",
+        "elapsed_sec": 359.41380286216736,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "",
+        "stderr_excerpt": "",
+        "error": "config swap failed: TimeoutError: hard kill after 360s"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-cli-integration.aider",
+      "name": "Write CLI passing integration tests",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 29011,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 29.011274099349976,
+        "turns_completed": 1,
+        "last_tool_call": null,
+        "stdout_excerpt": " fine.\n\nNow produce file listing for cli.py.\n\nPath: cli.py\n\nContent:\n\nimport sys\n\nif len(sys.argv)< 2:\n    print(\"error: missing argument\", file=sys.stderr)\n    sys.exit(1)\nelse:\n    print(f\"hello, {sys.argv[1]}\")\n\nNow output file listing.\n\n------------\n\u25ba **ANSWER**\n\ncli.py\n\n```\nimport sys\n\n\n\nif len(sys.argv) < 2:\n\n    print(\"error: missing argument\", file=sys.stderr)\n\n    sys.exit(1)\n\nelse:\n\n    print(f\"hello, {sys.argv[1]}\")\n\n```\n\nTokens: 975 sent, 270 received.\n\ncli.py\nApplied edit to cli.py\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-cli-integration.custom",
+      "name": "Write CLI passing integration tests",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 63042,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 63.042388916015625,
+        "turns_completed": 4,
+        "last_tool_call": "run_bash(command)",
+        "stdout_excerpt": "In this environment maybe use py or python3. Use run_bash with /bin/sh? Use \"which python\" maybe. Let's use python3? Try 'python3'.\n{\n  \"command\": \"python3 cli.py alice\"\n}</parameter></function>\n</tool_call>",
+        "stderr_excerpt": "",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-debug-import-chain.opencode",
+      "name": "Debug bug buried in import chain",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "error",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 359413,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "error",
+        "elapsed_sec": 359.4139931201935,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "",
+        "stderr_excerpt": "",
+        "error": "config swap failed: TimeoutError: hard kill after 360s"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-debug-import-chain.aider",
+      "name": "Debug bug buried in import chain",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 60248,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 60.24860620498657,
+        "turns_completed": 1,
+        "last_tool_call": null,
+        "stdout_excerpt": "compute(5) = 10, \n+1 = 11. Good.\n\nThus only change compute.\n\nNow output file listing for pkg/helpers.py.\n\nAlso maybe need to update comment? Not needed.\n\nThus produce:\n\npkg/helpers.py\n```\ndef compute(x):\n    return x * 2\n```\n\nNow produce final answer with file listing.\n\n------------\n\u25ba **ANSWER**\n\npkg/helpers.py\n\n```diff\n@@ -1,2 +1,2 @@\n def compute(x):\n-    return str(x * 2)  # BUG: should return int, not str\n+    return x * 2\n```\n\n\nTokens: 994 sent, 321 received.\nApplied edit to pkg/helpers.py\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-debug-import-chain.custom",
+      "name": "Debug bug buried in import chain",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.5,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 35189,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 35.189948081970215,
+        "turns_completed": 4,
+        "last_tool_call": "read_file(path)",
+        "stdout_excerpt": "<function=read_file>\n<parameter=path>\npkg/helpers.py\n</parameter>\n</function>\n</tool_call>",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.5
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-null-deref.opencode",
+      "name": "Fix null deref bug",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.3,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 305308,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "scored",
+        "elapsed_sec": 305.3084065914154,
+        "turns_completed": 4,
+        "last_tool_call": null,
+        "stdout_excerpt": "ecursive\\\": true\\n}\",\"time\":{\"start\":1775961040494,\"end\":1775961040494}}}\n{\"type\":\"step_finish\",\"timestamp\":1775961040532,\"sessionID\":\"ses_2807dbf64ffe7gUIFszy9KWmbk\",\"part\":{\"id\":\"prt_d7f86e66f001QpoRw3oDXKHP8q\",\"sessionID\":\"ses_2807dbf64ffe7gUIFszy9KWmbk\",\"messageID\":\"msg_d7f863355001smpD9qwhge6QxS\",\"type\":\"step-finish\",\"reason\":\"stop\",\"snapshot\":\"855305dce79f6c9efc9d736a568902139a9a64fb\",\"cost\":0,\"tokens\":{\"total\":12056,\"input\":11878,\"output\":178,\"reasoning\":0,\"cache\":{\"read\":0,\"write\":0}}}}\n",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.3
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-null-deref.aider",
+      "name": "Fix null deref bug",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 25802,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 25.80214810371399,
+        "turns_completed": 1,
+        "last_tool_call": null,
+        "stdout_excerpt": "rs.py\n```\ndef greet(request):\n    user = request.get('user', 'guest')\n    return f\"Hello, {user.upper()}!\"\n```\n\nNow produce final answer with file listing.\n\n------------\n\u25ba **ANSWER**\n\napp/handlers.py\n\n```diff\n@@ -1,3 +1,3 @@\n def greet(request):\n-    # Bug: crashes if 'user' is missing from request.\n-    return f\"Hello, {request['user'].upper()}!\"\n+    user = request.get('user', 'guest')\n+    return f\"Hello, {user.upper()}!\"\n```\n\n\nTokens: 1.0k sent, 242 received.\nApplied edit to app/handlers.py\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-null-deref.custom",
+      "name": "Fix null deref bug",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.3,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 26482,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 26.48215413093567,
+        "turns_completed": 3,
+        "last_tool_call": "run_bash(command)",
+        "stdout_excerpt": "ERROR: TimeoutError: hard kill after 360s",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.3
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-test-not-code.opencode",
+      "name": "Fix the broken test, not the correct implementation",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "error",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 359415,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "error",
+        "elapsed_sec": 359.4155249595642,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "",
+        "stderr_excerpt": "",
+        "error": "config swap failed: TimeoutError: hard kill after 360s"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-test-not-code.aider",
+      "name": "Fix the broken test, not the correct implementation",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.6,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 100327,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 100.32757902145386,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "output limit!\nTotal tokens: ~885 of 0 -- possibly exhausted context window!\n\nTo reduce output tokens:\n- Ask for smaller changes in each request.\n- Break your code into smaller source files.\n- Use a stronger model that can return diffs.\n\nTo reduce input tokens:\n- Use /tokens to see token usage.\n- Use /drop to remove unneeded files from the chat session.\n- Use /clear to clear the chat history.\n- Break your code into smaller source files.\n\n\nhttps://aider.chat/docs/troubleshooting/token-limits.html\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "partial_credit_score": 0.6
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-test-not-code.custom",
+      "name": "Fix the broken test, not the correct implementation",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 338868,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 338.86805510520935,
+        "turns_completed": 6,
+        "last_tool_call": "done()",
+        "stdout_excerpt": "",
+        "stderr_excerpt": "",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-multi-language.opencode",
+      "name": "Align Python response key with JS frontend expectation",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "error",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 359343,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "error",
+        "elapsed_sec": 359.34394097328186,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "",
+        "stderr_excerpt": "",
+        "error": "config swap failed: TimeoutError: hard kill after 360s"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-multi-language.aider",
+      "name": "Align Python response key with JS frontend expectation",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 22171,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 22.171401977539062,
+        "turns_completed": 1,
+        "last_tool_call": null,
+        "stdout_excerpt": " {\"data\": 42}  # Fixed: JS frontend expects key \"data\", not \"result\"\n```\n\nThat's the only change needed. The other files don't need modification. I'll \noutput just the app.py file listing.\n\n------------\n\u25ba **ANSWER**\n\npath/to/app.py\n\n```diff\n@@ -1,2 +1,2 @@\n def get_response():\n-    return {\"result\": 42}  # BUG: JS frontend expects key \"data\", not \"result\"\n+    return {\"data\": 42}  # Fixed: JS frontend expects key \"data\", not \"result\"\n```\n\n\nTokens: 1.0k sent, 153 received.\nApplied edit to app.py\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-multi-language.custom",
+      "name": "Align Python response key with JS frontend expectation",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 62320,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 62.32093405723572,
+        "turns_completed": 7,
+        "last_tool_call": "done()",
+        "stdout_excerpt": "",
+        "stderr_excerpt": "",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-rename-function.opencode",
+      "name": "Rename function everywhere",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": null,
+      "tok_per_sec": null,
+      "details": {
+        "reason": "run_time_cap_exceeded"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-rename-function.aider",
+      "name": "Rename function everywhere",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": null,
+      "tok_per_sec": null,
+      "details": {
+        "reason": "run_time_cap_exceeded"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-rename-function.custom",
+      "name": "Rename function everywhere",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": null,
+      "tok_per_sec": null,
+      "details": {
+        "reason": "run_time_cap_exceeded"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    }
+  ],
+  "summary": {
+    "headline_metric": "composite_score",
+    "headline_value": 0.7528,
+    "headline_unit": null,
+    "composite_score": 0.7528,
+    "composite_max": 1.0,
+    "composite_over": 13,
+    "total_tokens": 12549,
+    "total_time_ms": 7300118,
+    "category_scores": [
+      {
+        "category": "basic",
+        "score": 1.0,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored",
+        "avg_tok_per_sec": 11.47,
+        "avg_elapsed_ms": 2407.0
+      },
+      {
+        "category": "tool_use",
+        "score": 1.0,
+        "max": 1.0,
+        "tasks": 6,
+        "status": "scored",
+        "avg_tok_per_sec": 6.76,
+        "avg_elapsed_ms": 12410.0
+      },
+      {
+        "category": "structured_output",
+        "score": 0.7037,
+        "max": 1.0,
+        "tasks": 10,
+        "status": "scored",
+        "avg_tok_per_sec": 15.93,
+        "avg_elapsed_ms": 21300.6
+      },
+      {
+        "category": "instruction",
+        "score": 0.75,
+        "max": 1.0,
+        "tasks": 4,
+        "status": "scored",
+        "avg_tok_per_sec": 16.73,
+        "avg_elapsed_ms": 12465.5
+      },
+      {
+        "category": "file_ops",
+        "score": 0.6667,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored",
+        "avg_tok_per_sec": 16.81,
+        "avg_elapsed_ms": 12657.0
+      },
+      {
+        "category": "coding",
+        "score": 0.8571,
+        "max": 1.0,
+        "tasks": 7,
+        "status": "scored",
+        "avg_tok_per_sec": 16.95,
+        "avg_elapsed_ms": 9358.9
+      },
+      {
+        "category": "debugging",
+        "score": 1.0,
+        "max": 1.0,
+        "tasks": 6,
+        "status": "scored",
+        "avg_tok_per_sec": 14.43,
+        "avg_elapsed_ms": 7342.0
+      },
+      {
+        "category": "long_context",
+        "score": 0.3333,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored",
+        "avg_tok_per_sec": 1.22,
+        "avg_elapsed_ms": 106289.0
+      },
+      {
+        "category": "multi_turn",
+        "score": 0.625,
+        "max": 1.0,
+        "tasks": 8,
+        "status": "scored",
+        "avg_tok_per_sec": 4.77,
+        "avg_elapsed_ms": 64881.6
+      },
+      {
+        "category": "reasoning",
+        "score": 0.9625,
+        "max": 1.0,
+        "tasks": 4,
+        "status": "scored",
+        "avg_tok_per_sec": 7.72,
+        "avg_elapsed_ms": 17004.5
+      },
+      {
+        "category": "writing",
+        "score": 0.5667,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored",
+        "avg_tok_per_sec": 16.03,
+        "avg_elapsed_ms": 45790.0
+      },
+      {
+        "category": "research",
+        "score": 0.8334,
+        "max": 1.0,
+        "tasks": 2,
+        "status": "scored",
+        "avg_tok_per_sec": 7.89,
+        "avg_elapsed_ms": 35802.0
+      },
+      {
+        "category": "agentic",
+        "score": 0.4875,
+        "max": 1.0,
+        "tasks": 24,
+        "status": "scored",
+        "avg_tok_per_sec": null,
+        "avg_elapsed_ms": null
+      }
+    ],
+    "agent_framework_scores": [
+      {
+        "framework": "opencode",
+        "score": 0.0375,
+        "tasks": 8
+      },
+      {
+        "framework": "aider",
+        "score": 0.825,
+        "tasks": 8
+      },
+      {
+        "framework": "custom",
+        "score": 0.6,
+        "tasks": 8
+      }
+    ]
+  }
+}

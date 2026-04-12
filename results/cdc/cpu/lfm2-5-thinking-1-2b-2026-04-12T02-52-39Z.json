@@ -1,0 +1,3049 @@
+{
+  "schema_version": "2.0.0",
+  "result_type": "suite",
+  "meta": {
+    "timestamp": "2026-04-12T04:12:30Z",
+    "foundation": "cdc",
+    "tile_version": null,
+    "tag": "tanzubench-v2-cpu-lfm25-1b",
+    "notes": null,
+    "source_file": null
+  },
+  "target": {
+    "name": "lfm2.5-thinking:1.2b",
+    "display_name": null,
+    "family": null,
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "architecture": null,
+    "quant": null,
+    "size_gb": null
+  },
+  "engine": {
+    "name": "ollama",
+    "version": null,
+    "config": {
+      "_source": "ollama:/api/show",
+      "model": "lfm2.5-thinking:1.2b",
+      "format": "gguf",
+      "family": "lfm2",
+      "parameter_size": "1.2B",
+      "quantization_level": "Q4_K_M",
+      "param_num_thread": "16",
+      "param_temperature": "0.1",
+      "param_top_k": "50",
+      "param_num_predict": "1024"
+    }
+  },
+  "hardware": {
+    "vm_type": null,
+    "cpu": null,
+    "cpu_cores": null,
+    "ram_gb": null,
+    "gpu_count": 0,
+    "gpu_model": null,
+    "gpu_memory_gb": null,
+    "power_limit_watts": null
+  },
+  "grading": {
+    "judge_configured": true,
+    "judge_model": "Qwen/Qwen3.5-27B-GPTQ-Int4",
+    "judge_endpoint": "http://127.0.0.1:5000",
+    "judge_fingerprint": "sha256:f9413619c3096789",
+    "judge_run_date": "2026-04-12T04:12:30Z",
+    "skipped_categories": []
+  },
+  "tests": [
+    {
+      "id": "basic-boiling-point",
+      "name": "Boiling point of water",
+      "category": "basic",
+      "grader": "exact_match",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 51,
+      "completion_tokens": 190,
+      "elapsed_ms": 5048,
+      "tok_per_sec": 37.64,
+      "details": {
+        "expected": "100",
+        "got": "100",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "100",
+      "notes": null
+    },
+    {
+      "id": "basic-fact-capital",
+      "name": "Capital of France",
+      "category": "basic",
+      "grader": "exact_match",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 48,
+      "completion_tokens": 116,
+      "elapsed_ms": 3077,
+      "tok_per_sec": 37.7,
+      "details": {
+        "expected": "Paris",
+        "got": "Paris",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Paris",
+      "notes": null
+    },
+    {
+      "id": "basic-math-multiply",
+      "name": "15 times 23",
+      "category": "basic",
+      "grader": "exact_match",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 52,
+      "completion_tokens": 172,
+      "elapsed_ms": 4536,
+      "tok_per_sec": 37.92,
+      "details": {
+        "expected": "345",
+        "got": "345",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "345",
+      "notes": null
+    },
+    {
+      "id": "tool-dual-call",
+      "name": "Dual tool call",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 256,
+      "completion_tokens": 445,
+      "elapsed_ms": 12329,
+      "tok_per_sec": 36.09,
+      "details": {
+        "mode": "dual",
+        "tool_calls": [
+          "get_weather",
+          "get_time"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Okay, let's tackle the user's question. They want to know the weather in San Francisco and the time in Tokyo. \n\nFirst, I need to figure out which tools to use. The user provided four functions: get_weather, get_time, read_file, and search_code. \n\nFor the weather in San Francisco, the get_weather function seems appropriate. It requires the location parameter. Since San Francisco is the location, I'll call get_weather with location \"San Francisco\".\n\nNext, the user also asks for the time in Tokyo. The get_time function gives the current time in a specific timezone. Tokyo's timezone is likely \"Asia/Tokyo\", but maybe the function expects a shorter name. Alternatively, perhaps just \"Asia/Tokyo\". The parameter for get_time is timezone, so I'll use \"Asia/Tokyo\" to be precise.\n\nWait, but the user might just need the current time in Tokyo's timezone. So I need to make sure the timezone parameter is correctly specified. Since the function requires timezone, I have to input that. \n\nSo two separate function calls: get_weather for San Francisco's weather and get_time for Tokyo's time. The user wants both answers. \n\nI should check if there are any dependencies. The weather function only needs location, which is provided. The time function needs the timezone, which I can infer as Asia/Tokyo. \n\nTherefore, I'll generate two tool calls: one for get_weather with location San Francisco, and another for get_time with timezone Asia/Tokyo. \n\nWait, maybe the user wants the time in Tokyo's local time, so using the correct timezone identifier is important. Since the function's parameters take a string, I'll use \"Asia/Tokyo\" as the timezone. \n\nSo final tool calls: first get_weather with San Francisco, second get_time with Asia/Tokyo. Then, once those are executed, the results can be presented to the user.",
+      "notes": null
+    },
+    {
+      "id": "tool-nested-schema",
+      "name": "Nested args",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 252,
+      "completion_tokens": 326,
+      "elapsed_ms": 10584,
+      "tok_per_sec": 30.8,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "search_code"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Okay, let me tackle this user query. The user said: \"Search for 'auth' in the src/ directory.\" \n\nFirst, I need to figure out which tool to use. The available tools are get_weather, get_time, read_file, and search_code. The task is about searching within a directory for a pattern, which sounds more like a file system operation. \n\nLooking at the tools, there's search_code which is for searching code patterns. The parameters are pattern and path. The user wants to search for 'auth' in src directory. The path here would be \"src/\", and the pattern is \"auth\". \n\nWait, but the get_weather and others don't fit. The search_code function requires a pattern and a path. So the correct tool here is search_code with pattern \"auth\" and path \"src/\". \n\nI should make sure the parameters are correctly mapped. The user specified the directory as src/, so path is \"src/\". The pattern is \"auth\". \n\nSo the function call should be search_code with those parameters. The user didn't mention anything else, so I don't need other tools. Since the user wants to search for 'auth' in that directory, using search_code makes sense. \n\nI think that's the right approach. Let me confirm again: the user wants to find all instances of 'auth' in the src directory. Since search_code is designed for searching code patterns, this should work.",
+      "notes": null
+    },
+    {
+      "id": "tool-read-file",
+      "name": "Read file",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 249,
+      "completion_tokens": 192,
+      "elapsed_ms": 7465,
+      "tok_per_sec": 25.72,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "read_file"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Okay, let's see what the user wants here. They said \"Read the file at src/main.py\". Wait, but looking at the available tools, there's a function called read_file which requires a path parameter. The user mentioned src/main.py, so the path here should be \"src/main.py\". But wait, do I need to confirm if that's the correct path? The user didn't provide any other info, so maybe I just proceed. The tool read_file expects the path, which is \"src/main.py\". So I should call read_file with path=\"src/main.py\". I don't need any other tools here. The user just wants that file read, so the response should be the tool call for read_file with that path. Let me make sure I didn't miss any other steps. The answer should be the tool call for read_file.",
+      "notes": null
+    },
+    {
+      "id": "tool-restraint",
+      "name": "Restraint \u2014 no tool",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 248,
+      "completion_tokens": 505,
+      "elapsed_ms": 15535,
+      "tok_per_sec": 32.51,
+      "details": {
+        "mode": "restraint",
+        "tool_calls": [],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "2 + 2 = 4.",
+      "notes": null
+    },
+    {
+      "id": "tool-search-code",
+      "name": "Search code",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 254,
+      "completion_tokens": 526,
+      "elapsed_ms": 16910,
+      "tok_per_sec": 31.11,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "search_code"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Okay, let's see what the user is asking here. They want to search for the word 'login' in the codebase. Looking at the available tools, there's a function called search_code which searches for code patterns. The parameters are a pattern and a path. The user specified the pattern as 'login', but the path isn't provided. Hmm, the function requires both pattern and path. Since the path isn't mentioned, maybe I need to ask for clarification. Wait, but maybe the path refers to a specific location in the code? Or perhaps the user expects a general search. Since the user just said \"in the codebase\", maybe the path is a default or the root directory? Wait, the tool's description says \"Search for code patterns\", so maybe the path is the directory where the search should happen. Since the user didn't specify, perhaps I should assume a standard path like the project root or ask for more info. But the user wants me to respond directly without extra steps. Wait, the user might expect me to use search_code with pattern 'login' and maybe the path as 'codebase' or similar. Alternatively, since the path is required, maybe I have to make an assumption here. Wait, but looking back at the tools: the search_code function requires both pattern and path. Since the user hasn't provided a path, perhaps I need to ask for it. However, the user instructed to respond directly without extended reasoning. Wait, the user might be expecting me to use the available info. Alternatively, perhaps the path is implied as 'codebase' or another standard path. Since the user said \"in the codebase\", maybe the path is the entire codebase directory. Alternatively, maybe the user expects that the path is optional? No, the function requires path. Since I must use the tools, perhaps I need to proceed with what's given. Since the user says to respond directly, maybe I should pick a safe path. Alternatively, maybe I can proceed with a placeholder. Wait, but I can't ask the user for clarification because the user sa",
+      "notes": null
+    },
+    {
+      "id": "tool-weather-single",
+      "name": "Weather single-call",
+      "category": "tool_use",
+      "grader": "tool_call",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 248,
+      "completion_tokens": 92,
+      "elapsed_ms": 4007,
+      "tok_per_sec": 22.96,
+      "details": {
+        "mode": "single",
+        "tool_calls": [
+          "get_weather"
+        ],
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "Okay, the user is asking for the weather in Paris. Let me check the available tools. There's a get_weather function that requires a location. The parameters need the location string. Since the user mentioned Paris, I should call get_weather with location set to \"Paris\". No other tools are needed here. I'll make sure to structure the tool call correctly.",
+      "notes": null
+    },
+    {
+      "id": "struct-api-response",
+      "name": "REST API Paginated Response JSON",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 101,
+      "completion_tokens": 467,
+      "elapsed_ms": 14126,
+      "tok_per_sec": 33.06,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "status": "ok",
+          "data": [
+            {
+              "id": 1,
+              "name": "Alice",
+              "email": "alice@example.com"
+            },
+            {
+              "id": 2,
+              "name": "Bob",
+              "email": "bob@example.com"
+            }
+          ],
+          "pagination": {
+            "page": 1,
+            "per_page": 2,
+            "total": 2
+          },
+          "errors": []
+        },
+        "schema_errors": [],
+        "schema_score": 1.0,
+        "content_matches": {
+          "status": true
+        },
+        "content_score": 1.0
+      },
+      "judge": null,
+      "raw_response": "{\n  \"status\": \"ok\",\n  \"data\": [\n    {\"id\": 1, \"name\": \"Alice\", \"email\": \"alice@example.com\"},\n    {\"id\": 2, \"name\": \"Bob\", \"email\": \"bob@example.com\"}\n  ],\n  \"pagination\": {\n    \"page\": 1,\n    \"per_page\": 2,\n    \"total\": 2\n  },\n  \"errors\": []\n}",
+      "notes": null
+    },
+    {
+      "id": "struct-cf-manifest",
+      "name": "Cloud Foundry App Manifest JSON",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 82,
+      "completion_tokens": 426,
+      "elapsed_ms": 12299,
+      "tok_per_sec": 34.64,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "name": "my-app",
+          "memory": "256M",
+          "instances": 2,
+          "buildpacks": [
+            "staticfile_buildpack"
+          ]
+        },
+        "schema_errors": [],
+        "schema_score": 1.0,
+        "content_matches": {
+          "name": true,
+          "instances": true
+        },
+        "content_score": 1.0
+      },
+      "judge": null,
+      "raw_response": "{\"name\": \"my-app\", \"memory\": \"256M\", \"instances\": 2, \"buildpacks\": [\"staticfile_buildpack\"]}",
+      "notes": null
+    },
+    {
+      "id": "struct-csv-to-json",
+      "name": "Convert CSV to JSON Array",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 0.3,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 123,
+      "completion_tokens": 729,
+      "elapsed_ms": 19900,
+      "tok_per_sec": 36.63,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "name": "Alice",
+          "age": 30,
+          "city": "Boston"
+        },
+        "schema_errors": [
+          "<root>: {'name': 'Alice', 'age': 30, 'city': 'Boston'} is not of type 'array'"
+        ],
+        "schema_score": 0.0,
+        "content_matches": {
+          "[0].name": false,
+          "[0].age": false
+        },
+        "content_score": 0.0
+      },
+      "judge": null,
+      "raw_response": "[{\"name\": \"Alice\", \"age\": 30, \"city\": \"Boston\"}, {\"name\": \"Bob\", \"age\": 25, \"city\": \"NYC\"}, {\"name\": \"Carol\", \"age\": 35, \"city\": \"Chicago\"}, {\"name\": \"Dave\", \"age\": 28, \"city\": \"Denver\"}, {\"name\": \"Eve\", \"age\": 32, \"city\": \"Seattle\"}]",
+      "notes": null
+    },
+    {
+      "id": "struct-extract-receipt",
+      "name": "Extract Receipt Data to JSON",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 0.9,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 196,
+      "completion_tokens": 642,
+      "elapsed_ms": 19731,
+      "tok_per_sec": 32.54,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "store": "ACME STORE #42",
+          "date": "2026-04-10",
+          "items": [
+            {
+              "name": "Widget",
+              "qty": 2,
+              "price": 4.99
+            },
+            {
+              "name": "Gadget",
+              "qty": 1,
+              "price": 12.5
+            },
+            {
+              "name": "Cable",
+              "qty": 3,
+              "price": 3
+            }
+          ],
+          "total": 34.0
+        },
+        "schema_errors": [],
+        "schema_score": 1.0,
+        "content_matches": {
+          "store": false,
+          "total": true
+        },
+        "content_score": 0.5
+      },
+      "judge": null,
+      "raw_response": "{\n  \"store\": \"ACME STORE #42\",\n  \"date\": \"2026-04-10\",\n  \"items\": [\n    {\"name\": \"Widget\", \"qty\": 2, \"price\": 4.99},\n    {\"name\": \"Gadget\", \"qty\": 1, \"price\": 12.5},\n    {\"name\": \"Cable\", \"qty\": 3, \"price\": 3}\n  ],\n  \"total\": 34.0\n}",
+      "notes": null
+    },
+    {
+      "id": "struct-k8s-pod",
+      "name": "Kubernetes Pod Manifest JSON",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 82,
+      "completion_tokens": 596,
+      "elapsed_ms": 17983,
+      "tok_per_sec": 33.14,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "apiVersion": "v1",
+          "kind": "Pod",
+          "metadata": {
+            "name": "my-pod"
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "nginx",
+                "image": "nginx:latest",
+                "ports": [
+                  {
+                    "port": 80
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "schema_errors": [],
+        "schema_score": 1.0,
+        "content_matches": {
+          "kind": true,
+          "apiVersion": true
+        },
+        "content_score": 1.0
+      },
+      "judge": null,
+      "raw_response": "{\n  \"apiVersion\": \"v1\",\n  \"kind\": \"Pod\",\n  \"metadata\": {\n    \"name\": \"my-pod\"\n  },\n  \"spec\": {\n    \"containers\": [\n      {\n        \"name\": \"nginx\",\n        \"image\": \"nginx:latest\",\n        \"ports\": [{\"port\": 80}]\n      }\n    ]\n  }\n}",
+      "notes": null
+    },
+    {
+      "id": "struct-openapi-path",
+      "name": "OpenAPI 3.0 Path Definition JSON",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 0.9143,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 106,
+      "completion_tokens": 1024,
+      "elapsed_ms": 28804,
+      "tok_per_sec": 35.55,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "path": "/users",
+          "gets": {
+            "get.summary": "...",
+            "get.responses.200.description": "...",
+            "get.responses.200.content": "application/json"
+          },
+          "responses": {
+            "200": {
+              "description": "...",
+              "content": "application/json",
+              "schema": "application/json"
+            }
+          }
+        },
+        "schema_errors": [
+          "<root>: 'get' is a required property"
+        ],
+        "schema_score": 0.8571,
+        "content_matches": null,
+        "content_score": null
+      },
+      "judge": null,
+      "raw_response": "Okay, let's tackle this. The user wants me to generate an OpenAPI 3.0 path definition for GET /users. They specified it should return 200 with a JSON array of user objects, and they want the response to include certain properties like get.summary, get.responses.200.description, and get.responses.200.content.type. Also, they want the response only as the path definition object JSON, no extra explanation, just the response.\n\nFirst, I need to recall the structure of an OpenAPI 3.0 path definition. The main components are the path information, responses, etc. Since it's a GET on /users, the path should be \"GET /users\". \n\nThe user mentioned including get.summary, which is typically part of a summary object in OpenAPI. But wait, maybe in the context of just getting the path definition, perhaps the summary isn't necessary unless specified. Wait, the user said to include get.summary and others. Wait, maybe the user wants to structure the response object such that those fields are present. Wait, but the path definition itself doesn't usually have those. Wait, perhaps the user wants to define the path and include those metadata properties. Alternatively, maybe they want the API specification to have those keys. Wait, perhaps the user wants the path definition to include those properties directly. Hmm, maybe they want the path definition to have those attributes. Alternatively, perhaps the user wants the entire OpenAPI JSON structure for /users, but the instruction says \"generate an OpenAPI 3.0 path definition as JSON\", so maybe just the path section. Wait, the key points are: return a path definition object which includes get.summary, get.responses.200.description, and get.responses.200.content. But actually, looking at OpenAPI specs, for paths, you might not need those unless it's part of a specific part. Wait, perhaps the user wants a generic path where those elements are included. Alternatively, maybe they just want the main path object with those properties. Alternatively",
+      "notes": null
+    },
+    {
+      "id": "struct-parse-logfile",
+      "name": "Parse Nginx Access Log to JSON",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": null,
+      "prompt_tokens": 489,
+      "completion_tokens": 1024,
+      "elapsed_ms": 32577,
+      "tok_per_sec": 31.43,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "ip": "192.168.1.10",
+          "method": "-",
+          "path": "/index.html",
+          "status": 200,
+          "bytes": 1234
+        },
+        "schema_errors": [
+          "<root>: {'ip': '192.168.1.10', 'method': '-', 'path': '/index.html', 'status': 200, 'bytes': 1234} is not of type 'array'"
+        ],
+        "schema_score": 0.0,
+        "content_matches": null,
+        "content_score": null,
+        "budget_ms": 30000,
+        "overrun_ms": 2577,
+        "original_score": 0.4,
+        "overrun_reason": "completed but exceeded usability budget"
+      },
+      "judge": null,
+      "raw_response": "[\n  {\"ip\": \"192.168.1.10\", \"method\": \"-\", \"path\": \"/index.html\", \"status\": 200, \"bytes\": 1234},\n  {\"ip\": \"10.0.0.5\", \"method\": \"-\", \"path\": \"/api/login\", \"status\": 200, \"bytes\": 567},\n  {\"ip\": \"172.16.0.1\", \"method\": \"-\", \"path\":",
+      "notes": null
+    },
+    {
+      "id": "struct-tool-array-arg",
+      "name": "Function Call with Array and Boolean Arguments",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 106,
+      "completion_tokens": 539,
+      "elapsed_ms": 14078,
+      "tok_per_sec": 38.29,
+      "details": {
+        "parse_ok": false,
+        "extracted_json": null,
+        "schema_errors": [],
+        "schema_score": 0.0,
+        "content_matches": null,
+        "content_score": null
+      },
+      "judge": null,
+      "raw_response": "{\"function\": \"delete_files\", \"arguments\": {\"paths\": [\"/tmp/a.txt\", \"/tmp/b.txt\", \"/tmp/c.txt\"], \"dry_run\": true}",
+      "notes": null
+    },
+    {
+      "id": "struct-tool-enum-arg",
+      "name": "Function Call with Enum Argument",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 116,
+      "completion_tokens": 588,
+      "elapsed_ms": 17295,
+      "tok_per_sec": 34.0,
+      "details": {
+        "parse_ok": true,
+        "extracted_json": {
+          "function": "create_ticket",
+          "arguments": {
+            "title": "Fix login bug",
+            "priority": "high",
+            "assignee": "alice"
+          }
+        },
+        "schema_errors": [],
+        "schema_score": 1.0,
+        "content_matches": {
+          "function": true,
+          "arguments.priority": true
+        },
+        "content_score": 1.0
+      },
+      "judge": null,
+      "raw_response": "{\"function\": \"create_ticket\", \"arguments\": {\"title\": \"Fix login bug\", \"priority\": \"high\", \"assignee\": \"alice\"}}",
+      "notes": null
+    },
+    {
+      "id": "struct-tool-nested-args",
+      "name": "Function Call with Nested Object Arguments",
+      "category": "structured_output",
+      "grader": "json_schema",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": null,
+      "prompt_tokens": 127,
+      "completion_tokens": 1024,
+      "elapsed_ms": 30360,
+      "tok_per_sec": 33.73,
+      "details": {
+        "parse_ok": false,
+        "extracted_json": null,
+        "schema_errors": [],
+        "schema_score": 0.0,
+        "content_matches": null,
+        "content_score": null,
+        "budget_ms": 30000,
+        "overrun_ms": 360,
+        "original_score": 0.0,
+        "overrun_reason": "completed but exceeded usability budget"
+      },
+      "judge": null,
+      "raw_response": "Okay, let's see what the user needs here. They want me to generate a function call to send_mail with specific parameters. The user provided a structure where the response should be a JSON object exactly in the specified format. The function they mentioned is send_mail, and the parameters are to (which is an object with name and email), subject, and body. \n\nThe user said to use the function send_mail, and the arguments should be formatted as per the JSON structure. The example they provided in the query has the \"to\" parameter as an object with name and email, subject, and body. The task is to create a JSON object where \"function\" is \"send_mail\" and the arguments include to, subject, and body correctly.\n\nLooking at the example given in the user's instruction: they want the output exactly as {\"function\": \"send_mail\", \"arguments\": {\"to\": ..., etc.}, so I need to make sure I structure it precisely. The user specified to return only JSON without any explanation, just the JSON. \n\nSince the user said \"use tools when needed\" but since I need to just output the JSON, maybe the tool isn't necessary here. Wait, the user said to respond directly with the JSON as specified. Since they want it in the format {\"function\": \"send_mail\", \"arguments\": {...}}, I need to map that correctly. \n\nWait, the parameters for the function send_mail have parameters to (which is an object with name and email), subject, and body. The user provided the parameters as \"to: {name, email}\" but in the example, they show to: {name: \"Alice\", email: \"alice@example.com\"}, but the user's instruction says \"to: {name, email}\" so maybe the first curly brace is part of the format? Wait no, looking back at the user's instruction: the function call should have arguments to which is an object with name and email, subject, body. The user provided the example in the query where to is given as {name, email}, but perhaps in the function call, I need to structure it properly. Since the user wants the arguments to be to (wi",
+      "notes": null
+    },
+    {
+      "id": "inst-forbidden-words",
+      "name": "Forbidden words \u2014 sunset",
+      "category": "instruction",
+      "grader": "contains",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 64,
+      "completion_tokens": 1024,
+      "elapsed_ms": 28981,
+      "tok_per_sec": 35.33,
+      "details": {
+        "missing": [],
+        "forbidden": [
+          "red",
+          "orange",
+          "pink"
+        ]
+      },
+      "judge": null,
+      "raw_response": "Okay, let's tackle this. The user wants me to describe a sunset in 2-3 sentences without using \"red\", \"orange\", or \"pink\". Also, need to be concise and short. First, I need to avoid those three colors. Since I can't use \"red\", maybe other colors are okay? Wait, the instruction says not to use those three words. So I have to describe a sunset but avoid those color names.\n\nHmm, possible colors allowed? Maybe use other hues like gold, purple, blue? Wait, but the user didn't restrict other colors. The challenge is just not to say red, orange, pink. Maybe focus on other aspects. Since it's a sunset, common elements are maybe the sky changing colors, maybe stars appearing, warm winds, etc. But need to avoid any mention of forbidden colors.\n\nFirst, think of synonyms or metaphors. Since \"red\" is off-limits, maybe use \"amber\" or \"gold\". Wait, \"gold\" is okay? Let me check the restriction again: the forbidden words are \"red\", \"orange\", \"pink\". So other colors are fine.\n\nThe user wants 2-3 sentences. Let me try: \"The sky blends soft hues. Warm light spills softly across the horizon.\" Wait, but \"amber\" instead of red? Maybe \"amber\" is okay. Alternatively, \"The horizon glows with hues.\" But need to avoid \"red\", but \"gold\" is acceptable. Let me pick a structure. Maybe start with \"The sunset hues blend...\" but can't use \"red\", \"orange\", \"pink\". Another approach: focus on other attributes like warmth, light, maybe shadows. For example: \"The twilight whispers through twilight's embrace.\" Wait, check forbidden words: none there. Alternatively, \"As the day fades, the sky absorbs blending light into silhouettes.\" Hmm, need to ensure no prohibited words. Alternatively: \"The sun dips below, casting gentle shadows.\" That's 2 sentences. Wait, need to make sure it's 2-3 sentences. Let's pick something like: \"The sky transitions into soft blues and gold, reflecting twilight's gentle touch.\" Wait, \"gold\" is okay? Since \"red\", \"orange\", \"pink\" are forbidden. The user didn't restrict other color",
+      "notes": null
+    },
+    {
+      "id": "inst-json-only",
+      "name": "JSON-only output",
+      "category": "instruction",
+      "grader": "regex",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 80,
+      "completion_tokens": 341,
+      "elapsed_ms": 9853,
+      "tok_per_sec": 34.61,
+      "details": {
+        "pattern": "\\{[^{}]*\"name\"\\s*:\\s*\"alice\"[^{}]*\"age\"\\s*:\\s*30[^{}]*\\}",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "{\"name\": \"alice\", \"age\": 30}",
+      "notes": null
+    },
+    {
+      "id": "inst-markdown-structure",
+      "name": "Markdown structure",
+      "category": "instruction",
+      "grader": "regex",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 59,
+      "completion_tokens": 665,
+      "elapsed_ms": 18983,
+      "tok_per_sec": 35.03,
+      "details": {
+        "pattern": "^##\\s.*##\\s.*[-*]\\s",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "## Title 1  \n- Bullet point 1  \n- Bullet point 2  \n\n## Title 2  \n- Additional content here.",
+      "notes": null
+    },
+    {
+      "id": "inst-word-count",
+      "name": "Word count \u2014 20 words",
+      "category": "instruction",
+      "grader": "regex",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 48,
+      "completion_tokens": 1024,
+      "elapsed_ms": 28385,
+      "tok_per_sec": 36.08,
+      "details": {
+        "pattern": "^(\\S+\\s+){19}\\S+$",
+        "matched": false
+      },
+      "judge": null,
+      "raw_response": "Okay, let's see what the user wants here. They said to write exactly 20 words about coffee, count carefully. First, I need to make sure I stick to the constraints. They want exactly 20 words, no more, no less. The key points are: exactly 20 words, concise, count carefully. The user also emphasized responding directly and concisely without extra reasoning.\n\nHmm, so I have to pick a subject around coffee. Maybe start with \"Coffee brews aroma...\" but need to count words. Let me think of a sentence structure that fits 20 words total. Let's brainstorm: possible approach: \"Coffee brews aroma evokes warmth; rich brews comfort.\" Wait, let's check word count here: \"Coffee\" (1), \"brews\" (2), \"aroma\" (3), \"evokes\" (4), \"warmth\" (5), \"rich\" (6), \"brews\" (7), \"comfort\" (8). Wait, that's only 8 words. Not enough. Need 20 words total. Wait, no, each word counts as one, so 20 total words. Wait, the user said exactly 20 words. Wait, the instruction says \"Write exactly 20 words about coffee. Count carefully.\" So I have to make sure the total number of words in my response is exactly 20. Since I have to respond with only 20 words total. Need to structure a sentence or multiple words that sum up to 20. Let me think: perhaps a sentence with 20 words? Wait, that's impossible because a single sentence with 20 words. Alternatively, maybe multiple sentences? Wait, but user says \"respond directly and concisely\", but must be exactly 20 words total. Wait, perhaps a single sentence? Let me try: \"Coffee offers rich aroma, warmth, and comfort, evoking comforting memories.\" Let's count: Coffee (1), offers (2), rich (3), aroma (4), warmth (5), and (6), comfort (7), evoking (8), comforting (9), memories (10). Wait that's 10 words. Not 20. I need 20 words total. Alternatively, maybe structure a sentence with 20 words. For example: \"The rich aroma of coffee brews warmth, offering comfort in every sip, evoking memories and moments cherished.\" Let's count: The (1), rich (2), aroma (3), of (4), coffee (5",
+      "notes": null
+    },
+    {
+      "id": "file-create",
+      "name": "Create haiku file",
+      "category": "file_ops",
+      "grader": "file_check",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 71,
+      "completion_tokens": 1024,
+      "elapsed_ms": 29872,
+      "tok_per_sec": 34.28,
+      "details": {
+        "checks": [
+          {
+            "path": "haiku.txt",
+            "passed": true,
+            "reasons": []
+          }
+        ],
+        "passed": 1,
+        "total": 1
+      },
+      "judge": null,
+      "raw_response": "Okay, let's tackle this. The user wants a haiku about autumn that includes the word \"autumn\" literally. It needs to be three lines, only the poem, no explanations. The constraints say no title, just the poem itself. Also, they specified no explanations, so I have to make sure just the haiku is provided. Wait, but the instruction says \"Only the poem, 3 lines, no explanation...\" so I just need to output just the haiku. But wait, the user said \"response must be just the poem\", so I need to ensure that my response is only the haiku. Since the user said to respond directly and concisely, I should just write the haiku without any other text. Also, the key points: three lines, haiku structure (which is 5 syllables per line? Wait, haiku typically 5-7-5 syllables. Wait no, haiku is 5-7-5 syllables? Wait, no, traditional haiku is 5 syllables in first line, 7 in second, 5 in third. But the user just says 3 lines, no other rules? Wait, the user said \"3 lines, no explanation, no title.\" So just need to make sure that the poem adheres to haiku structure? Wait but the user said \"literally\" include the word \"autumn\"? Wait the instruction says \"The poem must include the word 'autumn' literally.\" Wait wait, the user said \"The poem must include the word 'autumn' literally.\" Hmm, wait the user wrote: \"The poem must include the word 'autumn' literally.\" So \"autumn\" has to be present in the poem somehow. But also, the first line needs to have 5 syllables? Wait maybe I'm overcomplicating. Let me recheck the user's instruction: \"Write a haiku about autumn. The poem must include the word 'autumn' literally. Only the poem, 3 lines, no explanation, no title.\"\n\nWait, perhaps the user just wants a haiku about autumn that contains the word \"autumn\", and it should be three lines. Since haiku is 5-7-5 syllabic structure roughly. Also, since it's a haiku about autumn, maybe something like \"Cool winds crunch leaves, autumn whispers soft...\" but need to include \"autumn\" clearly. Let me think of a sim",
+      "notes": null
+    },
+    {
+      "id": "file-python",
+      "name": "Write Python function file",
+      "category": "file_ops",
+      "grader": "file_check",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 59,
+      "completion_tokens": 141,
+      "elapsed_ms": 3815,
+      "tok_per_sec": 36.96,
+      "details": {
+        "checks": [
+          {
+            "path": "add.py",
+            "passed": true,
+            "reasons": []
+          }
+        ],
+        "passed": 1,
+        "total": 1
+      },
+      "judge": null,
+      "raw_response": "def add(a, b): return a + b",
+      "notes": null
+    },
+    {
+      "id": "file-structured",
+      "name": "Write CSV file",
+      "category": "file_ops",
+      "grader": "file_check",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 57,
+      "completion_tokens": 722,
+      "elapsed_ms": 19241,
+      "tok_per_sec": 37.52,
+      "details": {
+        "checks": [
+          {
+            "path": "data.csv",
+            "passed": true,
+            "reasons": []
+          }
+        ],
+        "passed": 1,
+        "total": 1
+      },
+      "judge": null,
+      "raw_response": "name,age,city\nAlice,28,New York\nBob,30,Los Angeles\n\nWait, the user said exactly 2 data rows. Oh, in my initial thought I had two rows, but the user's instruction was headers and exactly 2 data rows. The example I just wrote has two rows. But actually, looking back, the user specified \"exactly 2 data rows\". So perhaps just two rows. Wait my first thought was Alice and Bob as two rows. But let me confirm. The user said headers and exactly 2 data rows. So I need to ensure that only two rows after headers. So the correct output would be the two rows. Maybe I overcomplicated. Let me just make sure. Let's pick two entries. Since the user just wants two rows after the header. Let me pick just two entries. Let's say:\n\nname,age,city\nJohn,25,Sydney\nEmma,30,Paris\n\nSo that's two rows. But since the user didn't specify the data, any two are okay. The key is two rows total. So either choice is acceptable. To be safe, maybe pick two very simple ones. Let's go with first example I thought of: Alice 28 New York, Bob 35 Chicago. So:\n\nname,age,city\nAlice,28,New York\nBob,35,Chicago\n\nThat definitely has two rows. So the final answer should be that. Let me check again: headers \"name,age,city\", two data rows. Yep. So just output that. I should avoid any extra text. The user said respond directly and concisely. So just the CSV.\n</think>\n\nname,age,city\nAlice,28,New York\nBob,30,Los Angeles",
+      "notes": null
+    },
+    {
+      "id": "coding-bash-log-parser",
+      "name": "Bash parse log for unique IPs",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 146,
+      "completion_tokens": 1024,
+      "elapsed_ms": 29911,
+      "tok_per_sec": 34.23,
+      "details": {
+        "language": "bash",
+        "passed": 0,
+        "total": 3,
+        "per_test": [
+          {
+            "input": [
+              "192.168.1.10 x\n10.0.0.5 x\n192.168.1.10 x\n172.16.0.1 x"
+            ],
+            "ok": false,
+            "got": ""
+          },
+          {
+            "input": [
+              "1.1.1.1 x"
+            ],
+            "ok": false,
+            "got": ""
+          },
+          {
+            "input": [
+              "1.1.1.1 x\n1.1.1.1 x\n1.1.1.1 x"
+            ],
+            "ok": false,
+            "got": ""
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "Okay, let's see what the user wants here. They want a bash script that takes a multi-line string as the first argument, where each line starts with an IP address followed by a space. The task is to output only the count of unique IP addresses. The example given shows input like \"192.168.1.10...\", and the output is 2 because there are two unique IPs: 192.168.1.10 and 10.0.0.5.\n\nHmm, the user specified to use echo -e \"$1\" to expand newlines. Wait, but the user wants the script itself in a code block. They said to respond directly without extra reasoning, just the script.\n\nSo first, the script needs to receive the first argument (which is the multi-line string). Then process each line after expanding newlines with echo -e \"$1\", but actually, maybe the user just wants the script to take that argument and count unique IPs. \n\nWait the instruction says \"Use echo -e \"$1\" to expand the newlines. Wait perhaps the user wants the script to be written such that when the first argument is provided, the script uses echo -e on it, but perhaps the actual script is straightforward. Since the user wants only the script in a code block, the task is probably just writing the bash script.\n\nThe requirement is to print only the count of unique IPs. The input example shows two unique IPs, so output is 2. The script needs to process each line, extract the IP parts. \n\nWait the lines are each starting with an IP followed by a space. So for each line, the first token is the IP. So the script should split each line, take the first part after the IP? Or just take the entire line as the IP? Wait no, maybe each line starts with the IP, and then maybe the rest of the line is the rest of the line. Wait the problem says each line starts with an IP followed by a space. So perhaps each line is like \"192.168.1.10 some line\". So the IP is the first part before the space. Wait but splitting each line into IP and the rest? Or perhaps the entire line after first part is irrelevant except the IP is the first ",
+      "notes": null
+    },
+    {
+      "id": "coding-bash-wc",
+      "name": "Bash line count",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 137,
+      "completion_tokens": 1024,
+      "elapsed_ms": 28934,
+      "tok_per_sec": 35.39,
+      "details": {
+        "language": "bash",
+        "passed": 0,
+        "total": 1,
+        "per_test": [
+          {
+            "input": [
+              "/etc/hostname"
+            ],
+            "ok": false,
+            "got": ""
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "Okay, let's see. The user wants a bash script that counts the number of newline-terminated lines in a file provided as the first argument. The output should just be the count, like 3, and nothing else. Also, they mentioned using wc -l but avoiding any extra text. They specified not to include the filename or any other text, just the script itself.\n\nHmm, the key is to use wc -l but make sure that it's applied correctly. Wait, the user said to use wc -l < \"$1\", but the problem says not to use any other text, just the script. Wait no, wait the user said \"write a bash script that counts... prints only the number. So the script should take the first argument as the filename, then output the count.\n\nWait, the problem says \"only the script, in a code block. Prefer wc -l < \"$1\" but avoid trailing stuff. Wait the user said to respond with just the script, in a code block. Wait the instruction says \"Only the script, in a code block. Prefer wc -l...\" but the user also says not to add any other text, just the script. Also, the output must be exactly the number. Since they said to avoid trailing stuff, perhaps the script should be very simple. So maybe the script is just:\n\nwc -l \"$1\" | ... wait no, but the user said to use wc -l < \"$1\", but the correct way is to run wc -l on the file. Wait the correct command would be wc -l \"$1\" but the user says to avoid any other text. The user says \"Only the script, in a code block. Prefer wc -l < \"$1\"...\" but wait need to comply exactly. Wait the user's instruction says \"use tools when needed. Respond directly and concisely... No, the user wants the script itself. Since the user says to use wc -l < \"$1\", but since I have to present just the script, maybe the script is simply \"wc -l \"$1\" | something?\" Wait but the output needs to be just the number, like if the script outputs 3, the output must be exactly 3. So perhaps the correct way is to have the script be:\n\nwc -l \"$1\" -c  # but wait, maybe just wc -l \"$1\" ?\n\nWait the user says to use only",
+      "notes": null
+    },
+    {
+      "id": "coding-js-debounce",
+      "name": "JavaScript sumArr",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 62,
+      "completion_tokens": 1024,
+      "elapsed_ms": 28426,
+      "tok_per_sec": 36.02,
+      "details": {
+        "language": "javascript",
+        "passed": 0,
+        "total": 3,
+        "per_test": [],
+        "error": "import failed: Unexpected string"
+      },
+      "judge": null,
+      "raw_response": "Okay, let's see. I need to write a JavaScript function called sumArr that takes an array as input and returns the sum of all numbers in it. And the user wants me to use module.exports, which probably means I should return an object or assign it back somehow. But since the user just said to use module.exports, maybe the function should be constructed such that when called, it exports the result. Wait, maybe the function itself is supposed to be the one that returns the sum, and since they want module.exports, perhaps the function should be an export statement? Wait no, the function sumArr is supposed to be the one that returns the sum. Hmm, maybe the user wants the function to be part of an export, but the problem says \"use module.exports\". Wait perhaps the function sumArr should be set up in a way that when used in an export, it's the only thing exported, but maybe the user wants just the function definition? Let me read the question again: \"Write a JavaScript function sumArr(arr) that returns the sum of all numbers in an array. Use module.exports.\" Hmm maybe the instruction is that the function sumArr should be exported. Wait perhaps the user wants the function to be written such that when imported, it exports the result? Alternatively, maybe they just want the function definition, and since they said use module.exports, perhaps wrap it as an export. Wait maybe the correct approach is to write the function sumArr which calculates the sum, and then the user wants it to be exported, but since it's a function, perhaps the answer is just defining sumArr with return sum, and then, since the user said to use module.exports, maybe they expect that the function is exported, perhaps the function is part of a module, but since the question says to use module.exports, perhaps the answer is to define sumArr and then export it. Wait maybe I'm overcomplicating. The user says \"use module.exports\", so perhaps the function should be written as part of an export statement. Alternati",
+      "notes": null
+    },
+    {
+      "id": "coding-py-algorithm",
+      "name": "Merge two sorted lists",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 101,
+      "completion_tokens": 1024,
+      "elapsed_ms": 29095,
+      "tok_per_sec": 35.2,
+      "details": {
+        "language": "python",
+        "passed": 0,
+        "total": 5,
+        "per_test": [],
+        "error": "import failed: unexpected EOF while parsing (candidate.py, line 5)"
+      },
+      "judge": null,
+      "raw_response": "def merge_sorted(a, b):\n    i = j = 0\n    result = []\n    while i < len(a) and j < len(b):\n        if a[i] <= b[j",
+      "notes": null
+    },
+    {
+      "id": "coding-py-fizzbuzz",
+      "name": "Python fizzbuzz",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 84,
+      "completion_tokens": 1024,
+      "elapsed_ms": 29505,
+      "tok_per_sec": 34.71,
+      "details": {
+        "language": "python",
+        "passed": 0,
+        "total": 4,
+        "per_test": [],
+        "error": "import failed: invalid syntax (candidate.py, line 1)"
+      },
+      "judge": null,
+      "raw_response": "Okay, I need to write a Python function called fizzbuzz(n) that returns the classic FizzBuzz sequence as a list of strings for numbers 1 through n. Let me think about how FizzBuzz works. For each number from 1 to n, if the number is divisible by 3, it should be replaced with \"fizz\", if divisible by 5, \"buzz\", if divisible by both 3 and 5, \"fizzbuzz\", else the number itself. \n\nSo the function should loop through each number from 1 to n, check these conditions, and append the appropriate string or the number. Since the user wants just the function definition, no extra explanations. The problem says to reply with only the function definition in a code block. So I need to make sure the function is properly defined. \n\nProbably def fizzbuzz(n): and then maybe a list comprehension inside. Let's see. For each i in 1 to n inclusive, check i mod 3 ==0 and i mod 5 ==0? Then \"fizz\" and \"buzz\". Wait, if divisible by 3 and 5, then \"fizzbuzz\". Else the number. So the list comprehension could be [ ... for i in range(1, n+1) if ...]. \n\nSo putting it all together, the function could be something like:\n\ndef fizzbuzz(n):\n    return [(\"fizz\" if i%3 ==0 else \"\") + \"fizz\" if i%5 ==0 else \"buzz\" if i%5 ==0 else str(i) for i in range(1, n+1)]\n\nWait, wait, maybe better to structure it conditionally. Alternatively, for each number i, check first if divisible by 3: if yes, \"fizz\", else if divisible by 5: \"buzz\", else if both, \"fizzbuzz\", else i. Hmm. Maybe a better way: using a formula like:\n\nfor each i in 1..n:\nif i % 3 == 0 and i%5 ==0: \"fizzbuzz\"\nelif i%3 ==0: \"fizz\"\nelif i%5 ==0: \"buzz\"\nelse: str(i)\n\nSo translating that into a list comprehension: [ 'fizz' if 3 divides i else ... etc. Wait perhaps:\n\nfizzbuzz(n) could be written as [ 'fizz' if n % 3 ==0 else 'buzz' if n%5==0 else ...? Maybe need to structure it as:\n\ndef fizzbuzz(n):\n    return [\n        \"fizz\" if n % 3 == 0 else \"buzz\" if n %5 ==0 else f\"{n}\" \n        # Wait no, that might not capture all cases. Because it needs to check bot",
+      "notes": null
+    },
+    {
+      "id": "coding-py-palindrome",
+      "name": "Python palindrome",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 70,
+      "completion_tokens": 990,
+      "elapsed_ms": 27499,
+      "tok_per_sec": 36.0,
+      "details": {
+        "language": "python",
+        "passed": 0,
+        "total": 3,
+        "per_test": [],
+        "error": "import failed: EOL while scanning string literal (candidate.py, line 2)"
+      },
+      "judge": null,
+      "raw_response": "def is_palindrome(s):  \n    return s.lower().replace(\" \", \"\"\") == s.lower().replace(\" \", \"\"\").replace(\" \"\")[::-1] \n\nWait wait, no wait that would replace spaces twice. Wait no, better way:\n\nWait wait better code:\n\ndef is_palindrome(s):\n    processed = s.lower().replace(\" \", \"\")\n    return processed == processed[::-1]\n\nYes. That's right. So the function is as above. So the final answer is that function. So write that as the solution.\n</think>\n\ndef is_palindrome(s):\n    processed = s.lower().replace(\" \", \"\")\n    return processed == processed[::-1]",
+      "notes": null
+    },
+    {
+      "id": "coding-sql-topn",
+      "name": "SQL top-N recent users",
+      "category": "coding",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 75,
+      "completion_tokens": 464,
+      "elapsed_ms": 12852,
+      "tok_per_sec": 36.1,
+      "details": {
+        "language": "sql",
+        "passed": 1,
+        "total": 1,
+        "per_test": [
+          {
+            "ok": true,
+            "got": [
+              [
+                "d"
+              ],
+              [
+                "b"
+              ],
+              [
+                "c"
+              ]
+            ]
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "SELECT name FROM users ORDER BY signup_date DESC LIMIT 3;",
+      "notes": null
+    },
+    {
+      "id": "debug-js-async",
+      "name": "Fix missing return in JS map callback",
+      "category": "debugging",
+      "grader": "exec_unit_tests",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 227,
+      "completion_tokens": 1024,
+      "elapsed_ms": 27752,
+      "tok_per_sec": 36.9,
+      "details": {
+        "language": "javascript",
+        "passed": 0,
+        "total": 3,
+        "per_test": [],
+        "error": "import failed: Unexpected string"
+      },
+      "judge": null,
+      "raw_response": "Okay, let's see what the user wants here. They have a JavaScript function called doubleAll that has two bugs. The first bug is that there's no return statement, so the function returns undefined instead of the doubled array. The second bug is that arr.map returns a new array but the original array isn't returned, so the result stays as the original, which means the function doesn't modify arr or return a new one. The user wants me to fix these issues by returning only the corrected function using module.exports, and they want only the corrected function in a code block, using module.exports, and just the fixed function.\n\nThe original function is function doubleAll(arr) { arr.map(x=>{x*2}); return arr; } The problem is that the user wrote return arr; which omits the return statement's content? Wait no, actually the code they provided is: the function has arr.map(...) which returns a new array, but the original return is missing. The first bug says there's no return, so it returns undefined. The second bug is returning arr instead of doubling it. Wait the user says to fix so that it returns the doubled array, and the original test is expecting [2,4,6] to equal [2,4,6], which suggests that the function should return the new array. Since the original function returns arr (the original array), which is unmodified. So the user wants to make sure that the function returns the doubled array. \n\nSo the first bug is missing return arr;? Or wait, the function as written returns arr (the original array?) Wait no: when you call arr.map(...) it returns a new array with the elements doubled, but the original arr isn't modified. So if the function does arr.map(...), which returns a new array with x*2, but the function currently ends with return arr; which returns the original array. Wait, maybe the user intended that the original function just returns the original array, but the test expects it to return the doubled array. Wait the problem is that the user wants to fix both bugs: fi",
+      "notes": null
+    },
+    {
+      "id": "debug-py-logic-error",
+      "name": "Fix logic error in is_valid_age",
+      "category": "debugging",
+      "grader": "exec_unit_tests",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 155,
+      "completion_tokens": 1024,
+      "elapsed_ms": 28692,
+      "tok_per_sec": 35.69,
+      "details": {
+        "language": "python",
+        "passed": 0,
+        "total": 5,
+        "per_test": [],
+        "error": "import failed: invalid syntax (candidate.py, line 1)"
+      },
+      "judge": null,
+      "raw_response": "Okay, let's see what the problem is here. The user says there's a logic bug in the given function where it accepts negative ages and ages over 120 because it uses 'or' instead of 'and'. Wait, the function is supposed to check if the age is valid. The original code returns age >=0 or age <=120. Wait, but the user says it's causing an error where when given -1, it's returning True? Wait the assertion error message says AssertionError: assert is_valid_age(-1) == False but the expected False? Wait the user says the bug is that it uses 'or' instead of 'and', but looking at the code: return age >=0 or age <=120. Hmm. Wait, perhaps I need to look closer. The user says the error is that it always returns True when age is -1, which is allowed? Wait the problem states that the function is supposed to accept negative ages and ages over 120? Wait wait no, the user says it's a logic bug where it uses 'or' instead of 'and'. Wait wait, maybe the condition is supposed to require both conditions: maybe the correct logic should be age is between 0 and 120 inclusive? Because perhaps the requirement is that age must be between 0 and 120 inclusive. So if the function is supposed to be valid only for ages 0 to 120, but the original code uses or condition, maybe it was supposed to be age >=0 and age <=120. Since using 'or' would allow any age >=0 (if age is 0 or above), or age <=120 (so up to 120). But then when age is negative, the first part (age >=0) would be false, second part (age <=120) could be true if age is negative? Wait no. Wait the original function returns True when age is >=0 or <=120. Wait if age is -1, then age >=0 is false, age <=120 is -1 <=120 which is true, so the OR would be True. But that's wrong because negative ages aren't allowed. Wait the user says the bug is because when age is -1, it's accepted as True, but the expected is False. Wait the user says the assertion says assert is_valid_age(-1) == False but the code returns True. Wait no, according to the user, the",
+      "notes": null
+    },
+    {
+      "id": "debug-py-mutation",
+      "name": "Fix mutable default argument in append_item",
+      "category": "debugging",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 207,
+      "completion_tokens": 656,
+      "elapsed_ms": 18754,
+      "tok_per_sec": 34.98,
+      "details": {
+        "language": "python",
+        "passed": 3,
+        "total": 3,
+        "per_test": [
+          {
+            "input": [
+              1
+            ],
+            "ok": true,
+            "got": "[1]"
+          },
+          {
+            "input": [
+              2
+            ],
+            "ok": true,
+            "got": "[2]"
+          },
+          {
+            "input": [
+              3,
+              [
+                10,
+                3
+              ]
+            ],
+            "ok": true,
+            "got": "[10, 3]"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "def append_item(item, lst=None):  \n    if lst is None:  \n        lst = []  \n    lst.append(item)  \n    return lst",
+      "notes": null
+    },
+    {
+      "id": "debug-py-off-by-one",
+      "name": "Fix off-by-one in find_max_index",
+      "category": "debugging",
+      "grader": "exec_unit_tests",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 177,
+      "completion_tokens": 1024,
+      "elapsed_ms": 28077,
+      "tok_per_sec": 36.47,
+      "details": {
+        "language": "python",
+        "passed": 0,
+        "total": 3,
+        "per_test": [],
+        "error": "import failed: invalid syntax (candidate.py, line 1)"
+      },
+      "judge": null,
+      "raw_response": "Okay, let's tackle this problem. The user provided a Python function called find_max_index which is supposed to find the maximum index in a list. But there's a bug where it returns max_idx + 1, but the expected output in the test case is 1 for [1,5,3], but the assertion says expected 1 but the code returns 2. Wait, wait, looking at the code: the function's return statement is max_idx +1? Wait, wait. Let's see the code:\n\nThe function initializes max_idx to 0. Then loops through each element. If current element is greater than lst[max_idx], it updates max_idx to i. Finally returns max_idx +1.\n\nWait the problem says that the bug is that the assertion expected 1 but code returns 2. Let's see the example: [1,5,3]. The correct maximum index is 1 (since 5 is at index 1). Then adding 1 would give 2? But the expected answer is 1. Oh wait maybe I'm misunderstanding. Wait the test case says the expected result is 1, but according to the code's logic, if the code returns max_idx +1 where max_idx starts at 0. Wait let's see for [1,5,3], the max_value is at index 1. So max_idx would be 1. Then returning 1 +1 = 2? But the expected is 1. Wait that's conflicting. Wait the user says the bug is that the code returns max_idx +1 but the assertion expects 1. Wait why?\n\nWait, looking at the function: The loop checks each element. The initial max_idx is 0. Then for i=0 (element 1), compare to itself, no change. Then i=1 (5>1), so max_idx becomes 1. i=2 is 3 which is less than 5, so no change. So max_idx is 1. Then returning 1 +1 =2. But the expected answer is supposed to be 1? That seems conflicting. Wait the user says in the failing test, the expected is 1 but the code returns 2? Wait no. Wait the user says the bug was that returning max_idx +1, but the expected result is 1, so maybe the correct answer should be 1. Wait maybe I'm misunderstanding. The user's assertion says the expected result is 1, but code returns 2. How does this match?\n\nWait the question says \"the BUG: off-by-one\". The",
+      "notes": null
+    },
+    {
+      "id": "debug-py-wrong-return",
+      "name": "Fix wrong return type in count_vowels",
+      "category": "debugging",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 171,
+      "completion_tokens": 802,
+      "elapsed_ms": 23738,
+      "tok_per_sec": 33.79,
+      "details": {
+        "language": "python",
+        "passed": 4,
+        "total": 4,
+        "per_test": [
+          {
+            "input": [
+              "hello"
+            ],
+            "ok": true,
+            "got": "2"
+          },
+          {
+            "input": [
+              "xyz"
+            ],
+            "ok": true,
+            "got": "0"
+          },
+          {
+            "input": [
+              "aeiou"
+            ],
+            "ok": true,
+            "got": "5"
+          },
+          {
+            "input": [
+              ""
+            ],
+            "ok": true,
+            "got": "0"
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "def count_vowels(s):\n    count = 0\n    for ch in s.lower():\n        if ch in 'aeiou':\n            count += 1\n    return count",
+      "notes": null
+    },
+    {
+      "id": "debug-sql-join",
+      "name": "Fix INNER JOIN dropping customers with no orders",
+      "category": "debugging",
+      "grader": "exec_unit_tests",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 178,
+      "completion_tokens": 376,
+      "elapsed_ms": 10372,
+      "tok_per_sec": 36.25,
+      "details": {
+        "language": "sql",
+        "passed": 1,
+        "total": 1,
+        "per_test": [
+          {
+            "ok": true,
+            "got": [
+              [
+                "Alice",
+                "2"
+              ],
+              [
+                "Bob",
+                "0"
+              ],
+              [
+                "Carol",
+                "1"
+              ]
+            ]
+          }
+        ],
+        "error": null
+      },
+      "judge": null,
+      "raw_response": "SELECT c.name, COUNT(o.id) as order_count\nFROM customers c\nLEFT JOIN orders o ON c.id = o.customer_id\nGROUP BY c.name",
+      "notes": null
+    },
+    {
+      "id": "needle-16k",
+      "name": "Needle-in-haystack 16K",
+      "category": "long_context",
+      "grader": "needle",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 9026,
+      "completion_tokens": 454,
+      "elapsed_ms": 112207,
+      "tok_per_sec": 4.05,
+      "details": {
+        "haystack_chars": 16005,
+        "depth": 0.5,
+        "needle": "ROOM 16K code is BRAVO-EIGHT-FOUR.",
+        "matched": false
+      },
+      "judge": null,
+      "raw_response": "**My Dearest Neighbor,**  \n\nIn the quiet rhythm of our shared existence lies a profound truth: we are not strangers, yet we often become one when united with care and intention. Your presence in this tapestry brings both light and complexity, yet it is precisely this duality that makes our collective success possible.  \n\nLet us commit to the following stanzas of reciprocity:  \n1. **Seek common ground**\u2014dialogue, listen actively, and embrace differences not as divides but as threads weaving a richer fabric.  \n2. **Offer empathy with humility**\u2014step into others' shoes, even when perspective shifts, to build bridges beyond words.  \n3. **Collaborate with purpose**\u2014together, we can tackle challenges not as isolated efforts, but as shared journeys toward collective growth.  \n4. **Celebrate uniqueness**\u2014diversity is our strength; let it fuel creativity, innovation, and deeper understanding.  \n\nConflict may arise, yes, but so does coexistence. Let it be resolved not through escalation, but through patience and creativity\u2014find compromise that honors everyone\u2019s needs while advancing together.  \n\nRemember, unity is not the absence of discord but the courage to choose peace when it matters. Together, we shall craft a world where mutual respect thrives, conflicts are resolved with grace, and every individual feels valued.  \n\nMay our actions speak our dedication to this vision. Walk forward with kindness, support one another\u2019s journeys, and let us be a testament to what harmony looks like.  \n\nWith warmth and solidarity,  \n[Your Name]  \n\n---  \n*Note: This response mirrors the parable\u2019s call for unity amid diversity, emphasizing empathy, collaboration, and shared responsibility.*",
+      "notes": null
+    },
+    {
+      "id": "needle-4k",
+      "name": "Needle-in-haystack 4K",
+      "category": "long_context",
+      "grader": "needle",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 2311,
+      "completion_tokens": 308,
+      "elapsed_ms": 22551,
+      "tok_per_sec": 13.66,
+      "details": {
+        "haystack_chars": 3999,
+        "depth": 0.5,
+        "needle": "The secret code for room 4K is ALPHA-SEVEN-NINE-TWO.",
+        "matched": true
+      },
+      "judge": null,
+      "raw_response": "ALPHA-SEVEN-NINE-TWO.",
+      "notes": null
+    },
+    {
+      "id": "needle-64k",
+      "name": "Needle-in-haystack 64K",
+      "category": "long_context",
+      "grader": "needle",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": null,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 360007,
+      "tok_per_sec": null,
+      "details": {
+        "haystack_chars": 64001,
+        "depth": 0.5,
+        "needle": "ROOM 64K code is CHARLIE-TWO-ONE.",
+        "matched": false,
+        "budget_ms": 120000,
+        "overrun_ms": 240007,
+        "original_score": 0.0,
+        "overrun_reason": "completed but exceeded usability budget"
+      },
+      "judge": null,
+      "raw_response": "ERROR: TimeoutError: hard kill after 360s",
+      "notes": null
+    },
+    {
+      "id": "mt-context-contradictions",
+      "name": "Context carryover \u2014 follow most recent contradictory claim",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": null,
+      "prompt_tokens": 109,
+      "completion_tokens": 886,
+      "elapsed_ms": 804581,
+      "tok_per_sec": 1.1,
+      "details": {
+        "turns": [
+          {
+            "user": "The capital of France is Paris.\n",
+            "response": "ERROR: TimeoutError: hard kill after 180s",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "Paris",
+                "passed": false
+              }
+            ],
+            "passed": 0,
+            "total": 1
+          },
+          {
+            "user": "Actually, I was wrong. The capital of France is Lyon.\n",
+            "response": "ERROR: timeout: timed out",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "Lyon",
+                "passed": false
+              }
+            ],
+            "passed": 0,
+            "total": 1
+          },
+          {
+            "user": "What did I most recently say is the capital of France?\n",
+            "response": "The capital of France is Paris.",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "Lyon",
+                "passed": false
+              },
+              {
+                "type": "not_contains",
+                "value": "Paris",
+                "passed": false
+              }
+            ],
+            "passed": 0,
+            "total": 2
+          }
+        ],
+        "total_passed": 0,
+        "total_checks": 4,
+        "budget_ms": 60000,
+        "overrun_ms": 744581,
+        "original_score": 0.0,
+        "overrun_reason": "completed but exceeded usability budget"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-context-names",
+      "name": "Context carryover \u2014 job recall after topic shift",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 0.6667,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 92,
+      "completion_tokens": 1016,
+      "elapsed_ms": 54237,
+      "tok_per_sec": 18.73,
+      "details": {
+        "turns": [
+          {
+            "user": "Alice works as a software engineer.\n",
+            "response": "Confirmed. Alice is a software engineer.",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "Alice",
+                "passed": true
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "Bob enjoys painting on weekends.\n",
+            "response": "Bob enjoys painting.",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "Bob",
+                "passed": true
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "What does she do for a living?\n",
+            "response": "She paints.",
+            "checks": [
+              {
+                "type": "any_contains",
+                "value": [
+                  "software",
+                  "engineer",
+                  "programming",
+                  "developer"
+                ],
+                "passed": false,
+                "matched": []
+              }
+            ],
+            "passed": 0,
+            "total": 1
+          }
+        ],
+        "total_passed": 2,
+        "total_checks": 3
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-context-numbers",
+      "name": "Context carryover \u2014 number recall after distraction",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 111,
+      "completion_tokens": 443,
+      "elapsed_ms": 52033,
+      "tok_per_sec": 8.51,
+      "details": {
+        "turns": [
+          {
+            "user": "Remember these numbers: 7, 13, 25.\n",
+            "response": "7, 13, 25.",
+            "checks": [
+              {
+                "type": "any_contains",
+                "value": [
+                  "7",
+                  "13",
+                  "25"
+                ],
+                "passed": true,
+                "matched": [
+                  "7",
+                  "13",
+                  "25"
+                ]
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "Tell me a fun fact about penguins.\n",
+            "response": "Penguins are flightless birds that swim effortlessly.",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "penguin",
+                "passed": true
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "What is the sum of the three numbers I gave you?\n",
+            "response": "45.",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "45",
+                "passed": true
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          }
+        ],
+        "total_passed": 3,
+        "total_checks": 3
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-refine-code",
+      "name": "Iterative code refinement (greet function \u2192 error handling \u2192 docstring)",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 144,
+      "completion_tokens": 602,
+      "elapsed_ms": 42197,
+      "tok_per_sec": 14.27,
+      "details": {
+        "turns": [
+          {
+            "user": "Write a Python function called greet(name) that returns \"Hello, <name>!\".\n",
+            "response": "def greet(name): return f\"Hello, {name}!\"",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "def greet",
+                "passed": true
+              },
+              {
+                "type": "contains",
+                "value": "return",
+                "passed": true
+              }
+            ],
+            "passed": 2,
+            "total": 2
+          },
+          {
+            "user": "Add error handling so it raises a TypeError if name is None.\n",
+            "response": "def greet(name):\n    if name is None:\n        raise TypeError(\"name cannot be None\")\n    return f\"Hello, {name}!\"",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "None",
+                "passed": true
+              },
+              {
+                "type": "any_contains",
+                "value": [
+                  "raise",
+                  "if",
+                  "TypeError"
+                ],
+                "passed": true,
+                "matched": [
+                  "raise",
+                  "if",
+                  "TypeError"
+                ]
+              }
+            ],
+            "passed": 2,
+            "total": 2
+          },
+          {
+            "user": "Add a docstring to the function explaining what it does.\n",
+            "response": "def greet(name):\n    \"\"\"Returns a greeting for a given name. Raises TypeError if name is None.\"\"\"\n    if name is None:\n        raise TypeError(\"name must be provided\")\n    return f\"Hello, {name}!\"",
+            "checks": [
+              {
+                "type": "regex",
+                "value": "\"\"\".*\"\"\"",
+                "passed": true
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          }
+        ],
+        "total_passed": 5,
+        "total_checks": 5
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-refine-email",
+      "name": "Iterative email refinement (apologetic + deadline + shorten)",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "timeout",
+      "agent_framework": null,
+      "prompt_tokens": 185,
+      "completion_tokens": 892,
+      "elapsed_ms": 65195,
+      "tok_per_sec": 13.68,
+      "details": {
+        "turns": [
+          {
+            "user": "Write a short email to Sarah explaining that a project delivery will be delayed.\n",
+            "response": "Subject: Project Delay Update  \nDear Sarah,  \nDue to unforeseen circumstances, the project delivery is delayed. Updates will be provided promptly. Let me know if needed.  \nBest,  \n[Your Name]",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "Sarah",
+                "passed": true
+              },
+              {
+                "type": "contains",
+                "value": "delay",
+                "passed": true
+              },
+              {
+                "type": "length_max",
+                "value": 120,
+                "passed": true,
+                "actual": 28
+              }
+            ],
+            "passed": 3,
+            "total": 3
+          },
+          {
+            "user": "Make it more apologetic and add that the new deadline is April 25.\n",
+            "response": "Dear Sarah, I sincerely apologize for the delay. The project will now be completed by April 25. Thank you for your understanding. Best, [Your Name]",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "April 25",
+                "passed": true
+              },
+              {
+                "type": "any_contains",
+                "value": [
+                  "sorry",
+                  "apologize",
+                  "apolog"
+                ],
+                "passed": true,
+                "matched": [
+                  "apologize",
+                  "apolog"
+                ]
+              }
+            ],
+            "passed": 2,
+            "total": 2
+          },
+          {
+            "user": "Shorten it to under 50 words while keeping the April 25 deadline.\n",
+            "response": "Apology for delay; project completed April 25.",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "April 25",
+                "passed": true
+              },
+              {
+                "type": "length_max",
+                "value": 60,
+                "passed": true,
+                "actual": 7
+              }
+            ],
+            "passed": 2,
+            "total": 2
+          }
+        ],
+        "total_passed": 7,
+        "total_checks": 7,
+        "budget_ms": 60000,
+        "overrun_ms": 5195,
+        "original_score": 1.0,
+        "overrun_reason": "completed but exceeded usability budget"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-refine-summary",
+      "name": "Iterative summary refinement (summarize \u2192 shorten \u2192 bullet points)",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 134,
+      "completion_tokens": 723,
+      "elapsed_ms": 47258,
+      "tok_per_sec": 15.3,
+      "details": {
+        "turns": [
+          {
+            "user": "Summarize this: \"The quick brown fox jumps over the lazy dog near the river bank on a sunny afternoon.\"\n",
+            "response": "A quick brown fox jumps over the lazy dog near the river bank on a sunny afternoon.",
+            "checks": [
+              {
+                "type": "any_contains",
+                "value": [
+                  "fox",
+                  "dog",
+                  "river"
+                ],
+                "passed": true,
+                "matched": [
+                  "fox",
+                  "dog",
+                  "river"
+                ]
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "Make it even shorter \u2014 one sentence only.\n",
+            "response": "A quick brown fox jumps over the lazy dog near the river bank on a sunny afternoon.",
+            "checks": [
+              {
+                "type": "length_max",
+                "value": 25,
+                "passed": true,
+                "actual": 17
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "Convert it to 3 bullet points.\n",
+            "response": "- A quick brown fox jumps over a lazy dog.  \n- Near a river bank under sun.  \n- In a sunny setting.",
+            "checks": [
+              {
+                "type": "any_contains",
+                "value": [
+                  "- ",
+                  "* ",
+                  "\u2022 "
+                ],
+                "passed": true,
+                "matched": [
+                  "- "
+                ]
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          }
+        ],
+        "total_passed": 3,
+        "total_checks": 3
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-tool-chain",
+      "name": "Multi-step tool use \u2014 weather query then umbrella advice",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 0.5,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 1099,
+      "completion_tokens": 170,
+      "elapsed_ms": 38957,
+      "tok_per_sec": 4.36,
+      "details": {
+        "turns": [
+          {
+            "user": "What's the weather in Paris?\n",
+            "response": "Okay, let's see. The user is asking, \"What's the weather in Paris?\" So I need to figure out how to respond. The tools available include the get_weather function, which requires a location parameter. Since the user specified Paris, I should call get_weather with location set to Paris. The function ex",
+            "checks": [
+              {
+                "type": "tool_called",
+                "value": "get_weather",
+                "passed": false,
+                "called": []
+              }
+            ],
+            "passed": 0,
+            "total": 1
+          },
+          {
+            "user": "Should I bring an umbrella?\n",
+            "response": "Yes, bring an umbrella.",
+            "checks": [
+              {
+                "type": "any_contains",
+                "value": [
+                  "umbrella",
+                  "rain",
+                  "yes"
+                ],
+                "passed": true,
+                "matched": [
+                  "umbrella",
+                  "yes"
+                ]
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          }
+        ],
+        "total_passed": 1,
+        "total_checks": 2
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "mt-tool-sequential",
+      "name": "Multi-step tool use \u2014 read file then extract port",
+      "category": "multi_turn",
+      "grader": "multi_turn",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 229,
+      "completion_tokens": 200,
+      "elapsed_ms": 12149,
+      "tok_per_sec": 16.46,
+      "details": {
+        "turns": [
+          {
+            "user": "Read the file config.yaml.\n",
+            "response": "Okay, let's see what the user is asking here. They want me to read the file config.yaml. The instruction says to use the tools provided, and the available tool is read_file, which requires a path parameter. The user mentioned \"config.yaml\" as the file to read. So I need to call read_file with the pa",
+            "checks": [
+              {
+                "type": "tool_called",
+                "value": "read_file",
+                "passed": true,
+                "called": [
+                  "read_file"
+                ]
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          },
+          {
+            "user": "What port is the server running on?\n",
+            "response": "The server is running on port **8080**.",
+            "checks": [
+              {
+                "type": "contains",
+                "value": "8080",
+                "passed": true
+              }
+            ],
+            "passed": 1,
+            "total": 1
+          }
+        ],
+        "total_passed": 2,
+        "total_checks": 2
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "reasoning-cause-effect",
+      "name": "Causal reasoning \u2014 root cause of extended shutdown",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 527,
+      "completion_tokens": 453,
+      "elapsed_ms": 16848,
+      "tok_per_sec": 26.89,
+      "details": {
+        "judge": {
+          "model_response": "The root cause is Chain 3. \n\nAnswer: Chain 3: Insurance Lapse \u2192 Extended Shutdown.",
+          "rubric_scores": {
+            "factual_correctness": 1.0,
+            "completeness": 1.0
+          },
+          "rationale": "The candidate correctly identifies Chain 3 (Insurance Lapse) as the root cause for the extended shutdown duration. The document explicitly states that the failure to reconcile entity name discrepancies led to an insurance lapse, which caused a claim rejection and a freeze on financial reserves, extending the shutdown from 3 to 14 days. The answer accurately reflects this information and fully addresses the specific question asked.",
+          "judge_raw": "{\n\"factual_correctness\": 1.0,\n\"completeness\": 1.0,\n\"rationale\": \"The candidate correctly identifies Chain 3 (Insurance Lapse) as the root cause for the extended shutdown duration. The document explicitly states that the failure to reconcile entity name discrepancies led to an insurance lapse, which caused a claim rejection and a freeze on financial reserves, extending the shutdown from 3 to 14 days. The answer accurately reflects this information and fully addresses the specific question asked.\""
+        }
+      },
+      "judge": {
+        "model_response": "The root cause is Chain 3. \n\nAnswer: Chain 3: Insurance Lapse \u2192 Extended Shutdown.",
+        "rubric_scores": {
+          "factual_correctness": 1.0,
+          "completeness": 1.0
+        },
+        "rationale": "The candidate correctly identifies Chain 3 (Insurance Lapse) as the root cause for the extended shutdown duration. The document explicitly states that the failure to reconcile entity name discrepancies led to an insurance lapse, which caused a claim rejection and a freeze on financial reserves, extending the shutdown from 3 to 14 days. The answer accurately reflects this information and fully addresses the specific question asked.",
+        "judge_raw": "{\n\"factual_correctness\": 1.0,\n\"completeness\": 1.0,\n\"rationale\": \"The candidate correctly identifies Chain 3 (Insurance Lapse) as the root cause for the extended shutdown duration. The document explicitly states that the failure to reconcile entity name discrepancies led to an insurance lapse, which caused a claim rejection and a freeze on financial reserves, extending the shutdown from 3 to 14 days. The answer accurately reflects this information and fully addresses the specific question asked.\""
+      },
+      "raw_response": "The root cause is Chain 3. \n\nAnswer: Chain 3: Insurance Lapse \u2192 Extended Shutdown.",
+      "notes": null
+    },
+    {
+      "id": "reasoning-multihop-1",
+      "name": "Multi-hop reasoning \u2014 biography dates and places",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 579,
+      "completion_tokens": 501,
+      "elapsed_ms": 18213,
+      "tok_per_sec": 27.51,
+      "details": {
+        "judge": {
+          "model_response": "1997 research scientist at Meridian Applied Science.",
+          "rubric_scores": {
+            "factual_correctness": 1.0,
+            "completeness": 1.0
+          },
+          "rationale": "The document states that Mendes relocated to Boston immediately after defending her dissertation in June 1997 and accepted a research scientist position at Meridian Applied Science. The candidate response correctly identifies both the year (1997) and the job title/employer, fully addressing both parts of the question.",
+          "judge_raw": "{\n\"factual_correctness\": 1.0,\n\"completeness\": 1.0,\n\"rationale\": \"The document states that Mendes relocated to Boston immediately after defending her dissertation in June 1997 and accepted a research scientist position at Meridian Applied Science. The candidate response correctly identifies both the year (1997) and the job title/employer, fully addressing both parts of the question.\"\n}"
+        }
+      },
+      "judge": {
+        "model_response": "1997 research scientist at Meridian Applied Science.",
+        "rubric_scores": {
+          "factual_correctness": 1.0,
+          "completeness": 1.0
+        },
+        "rationale": "The document states that Mendes relocated to Boston immediately after defending her dissertation in June 1997 and accepted a research scientist position at Meridian Applied Science. The candidate response correctly identifies both the year (1997) and the job title/employer, fully addressing both parts of the question.",
+        "judge_raw": "{\n\"factual_correctness\": 1.0,\n\"completeness\": 1.0,\n\"rationale\": \"The document states that Mendes relocated to Boston immediately after defending her dissertation in June 1997 and accepted a research scientist position at Meridian Applied Science. The candidate response correctly identifies both the year (1997) and the job title/employer, fully addressing both parts of the question.\"\n}"
+      },
+      "raw_response": "1997 research scientist at Meridian Applied Science.",
+      "notes": null
+    },
+    {
+      "id": "reasoning-multihop-2",
+      "name": "Multi-hop reasoning \u2014 org chart before and after reorganization",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 625,
+      "completion_tokens": 1024,
+      "elapsed_ms": 35847,
+      "tok_per_sec": 28.57,
+      "details": {
+        "judge": {
+          "model_response": "Okay, let's tackle this question. The user wants to know two things: who reported to the CTO before the 2024 reorganization, and what happened to that person's team afterward.\n\nLooking at the document, the key points are in the \"Series B and Expansion\" section. The first part mentions that before 2024, the team structure had four VPs: Dana Kowalski, Reza Shirazi (as CTO), Marcus Webb, Priya Nakamura, Tom Obasi, and Lin Fang. Wait, actually, the CTO is Reza Shirazi. The question is about who repo",
+          "rubric_scores": {
+            "factual_correctness": 0.0,
+            "completeness": 0.0
+          },
+          "rationale": "The candidate response fails to provide a direct answer to the question. Instead, it consists of a stream-of-consciousness internal monologue where the model attempts to parse the document but gets confused about the timeline and roles (e.g., incorrectly suggesting Lin Fang was a VP before 2024 when the text states she left in 2015). The response never explicitly states who reported to the CTO (Webb, Nakamura, and Obasi) nor does it clearly explain what happened to Obasi's team (split between Webb and Nakamura). It ends abruptly without a conclusion.",
+          "judge_raw": "{\n\"factual_correctness\": 0.0,\n\"completeness\": 0.0,\n\"rationale\": \"The candidate response fails to provide a direct answer to the question. Instead, it consists of a stream-of-consciousness internal monologue where the model attempts to parse the document but gets confused about the timeline and roles (e.g., incorrectly suggesting Lin Fang was a VP before 2024 when the text states she left in 2015). The response never explicitly states who reported to the CTO (Webb, Nakamura, and Obasi) nor does i"
+        }
+      },
+      "judge": {
+        "model_response": "Okay, let's tackle this question. The user wants to know two things: who reported to the CTO before the 2024 reorganization, and what happened to that person's team afterward.\n\nLooking at the document, the key points are in the \"Series B and Expansion\" section. The first part mentions that before 2024, the team structure had four VPs: Dana Kowalski, Reza Shirazi (as CTO), Marcus Webb, Priya Nakamura, Tom Obasi, and Lin Fang. Wait, actually, the CTO is Reza Shirazi. The question is about who repo",
+        "rubric_scores": {
+          "factual_correctness": 0.0,
+          "completeness": 0.0
+        },
+        "rationale": "The candidate response fails to provide a direct answer to the question. Instead, it consists of a stream-of-consciousness internal monologue where the model attempts to parse the document but gets confused about the timeline and roles (e.g., incorrectly suggesting Lin Fang was a VP before 2024 when the text states she left in 2015). The response never explicitly states who reported to the CTO (Webb, Nakamura, and Obasi) nor does it clearly explain what happened to Obasi's team (split between Webb and Nakamura). It ends abruptly without a conclusion.",
+        "judge_raw": "{\n\"factual_correctness\": 0.0,\n\"completeness\": 0.0,\n\"rationale\": \"The candidate response fails to provide a direct answer to the question. Instead, it consists of a stream-of-consciousness internal monologue where the model attempts to parse the document but gets confused about the timeline and roles (e.g., incorrectly suggesting Lin Fang was a VP before 2024 when the text states she left in 2015). The response never explicitly states who reported to the CTO (Webb, Nakamura, and Obasi) nor does i"
+      },
+      "raw_response": "Okay, let's tackle this question. The user wants to know two things: who reported to the CTO before the 2024 reorganization, and what happened to that person's team afterward.\n\nLooking at the document, the key points are in the \"Series B and Expansion\" section. The first part mentions that before 2024, the team structure had four VPs: Dana Kowalski, Reza Shirazi (as CTO), Marcus Webb, Priya Nakamura, Tom Obasi, and Lin Fang. Wait, actually, the CTO is Reza Shirazi. The question is about who reported to the CTO before 2024. \n\nIn the founding section, it says CEO Dana Kowalski (not mentioned as CTO) and CTO is Reza Shirazi. The first paragraph under Series B mentions that before 2024, the hierarchy was flat with all engineers reporting directly to Shirazi. Wait no: the Series B section says after 2014, Shirazi formalized engineering hierarchy. The original structure had four VPs: Webb as VP of Platform Engineering, Nakamura VP Data Science, Obasi VP Product Engineering, and Lin Fang left to start a startup. The original report says before the 2024 reorganization, the VPs were Webb, Nakamura, Obasi, and Lin Fang? Wait, no. Wait, the original setup before 2024 had those four VPs, but under Shirazi's management, they formalized hierarchy. The question is about who reported to the CTO (Reza Shirazi) before 2024. Since Reza is the CTO, the ones reporting to him before 2024 would be the other VPs: Marcus Webb (VP?), Priya Nakamura, Tom Obasi, and Lin Fang? Wait the team was: CEO Dana Kowalski, CTO Shirazi. Wait, maybe the original structure before 2024 had the four VPs: Marcus, Priya, Tom, Lin. Because after 2014, Shirazi formalized hierarchy, with Robert's description says \"VP's report directly to Shirazi\". Wait maybe the VPs listed at Series B's first paragraph: After Series B, the next paragraph says 2014-2017: after hiring, they were structured with VPs under the senior engineers.\n\nWait in the Series B section: \"Four senior engineers \u2014 Marcus Webb, Priya Nakamura, Tom O",
+      "notes": null
+    },
+    {
+      "id": "reasoning-timeline",
+      "name": "Timeline ordering \u2014 Project Helios events",
+      "category": "reasoning",
+      "grader": "llm_judge",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 393,
+      "completion_tokens": 1024,
+      "elapsed_ms": 34195,
+      "tok_per_sec": 29.95,
+      "details": {
+        "judge": {
+          "model_response": "Okay, let's see. I need to order these three events chronologically: the security vulnerability discovered, the first engineering prototype demonstration, and the release of Helios v1.0.\n\nFirst, let's list the dates:\n\n1. Security vulnerability discovered on 2020-09-30.\n2. First engineering prototype demonstrated on 2019-07-22.\n3. Helios v1.0 released on 2022-04-28.\n4. The event in question C is the release of v1.0, which is 2022-04-28.\n5. Then B is the first engineering prototype on 2019-07-22.\n",
+          "rubric_scores": {
+            "factual_correctness": 0.0,
+            "completeness": 0.0
+          },
+          "rationale": "The candidate response fails on both axes. First, it contains a critical factual error: it incorrectly identifies the date of the security vulnerability as 2020-09-30 (which is actually the date Axiom Networks withdrew), whereas the document states the vulnerability was discovered on 2021-08-03. Second, the response is incomplete; it devolves into a confused internal monologue, repeatedly questioning the dates and labels without ever providing a final, clear chronological order of the three events as requested.",
+          "judge_raw": "{\n\"factual_correctness\": 0.0,\n\"completeness\": 0.0,\n\"rationale\": \"The candidate response fails on both axes. First, it contains a critical factual error: it incorrectly identifies the date of the security vulnerability as 2020-09-30 (which is actually the date Axiom Networks withdrew), whereas the document states the vulnerability was discovered on 2021-08-03. Second, the response is incomplete; it devolves into a confused internal monologue, repeatedly questioning the dates and labels without ev"
+        }
+      },
+      "judge": {
+        "model_response": "Okay, let's see. I need to order these three events chronologically: the security vulnerability discovered, the first engineering prototype demonstration, and the release of Helios v1.0.\n\nFirst, let's list the dates:\n\n1. Security vulnerability discovered on 2020-09-30.\n2. First engineering prototype demonstrated on 2019-07-22.\n3. Helios v1.0 released on 2022-04-28.\n4. The event in question C is the release of v1.0, which is 2022-04-28.\n5. Then B is the first engineering prototype on 2019-07-22.\n",
+        "rubric_scores": {
+          "factual_correctness": 0.0,
+          "completeness": 0.0
+        },
+        "rationale": "The candidate response fails on both axes. First, it contains a critical factual error: it incorrectly identifies the date of the security vulnerability as 2020-09-30 (which is actually the date Axiom Networks withdrew), whereas the document states the vulnerability was discovered on 2021-08-03. Second, the response is incomplete; it devolves into a confused internal monologue, repeatedly questioning the dates and labels without ever providing a final, clear chronological order of the three events as requested.",
+        "judge_raw": "{\n\"factual_correctness\": 0.0,\n\"completeness\": 0.0,\n\"rationale\": \"The candidate response fails on both axes. First, it contains a critical factual error: it incorrectly identifies the date of the security vulnerability as 2020-09-30 (which is actually the date Axiom Networks withdrew), whereas the document states the vulnerability was discovered on 2021-08-03. Second, the response is incomplete; it devolves into a confused internal monologue, repeatedly questioning the dates and labels without ev"
+      },
+      "raw_response": "Okay, let's see. I need to order these three events chronologically: the security vulnerability discovered, the first engineering prototype demonstration, and the release of Helios v1.0.\n\nFirst, let's list the dates:\n\n1. Security vulnerability discovered on 2020-09-30.\n2. First engineering prototype demonstrated on 2019-07-22.\n3. Helios v1.0 released on 2022-04-28.\n4. The event in question C is the release of v1.0, which is 2022-04-28.\n5. Then B is the first engineering prototype on 2019-07-22.\n6. A is the discovery (security vulnerability) on 2020-09-30.\n7. C is A's date, but the question is about B, C (wait no, the events to order are A (which is the vulnerability on 2020-09-30?), wait wait. Wait the options are (A) the security vulnerability (which is event 2020-09-30), (B) the prototype demo (2019-07-22), and (C) Helios v1.0 release (2022-04-28). Wait but the user says order the three events: the security vulnerability (A), first prototype (B), and v1.0 (C). Wait the question says: order the three events: (A) the security vulnerability, (B) the prototype demo, (C) Helios v1.0 release. Wait the three events to order are A (security), B (prototype), and C (v1.0). Wait but the question says name them as (A): security vulnerability, (B): first prototype, (C): v1.0 release. So the three to order are A, B, C. The dates are: Security vulnerability on 2020-09-30 (A), first prototype 2019-07-22 (B), v1.0 2022-04-28 (C). Wait wait, but need to see their order. \n\nWait the three events are: the security vulnerability (2020-09-30), the prototype demo (2019-07-22), and the v1.0 release (2022-04-28). Wait no, wait the three are A: security (2020-09-30), B: prototype (2019-07-22), C: v1.0 (2022). Wait 2020-09-30 is 2020, which is before 2019? Wait wait, no, 2020-07-22 is July 2020, which is after 2019-07-22? Wait no: 2019-07-22 is July 2020? Wait 2019 before 2020. Wait wait 2019-07-22 is earlier than 2020-09-30? Wait 2019 is earlier than 2020. Wait no: 2019 is 2019, 2020 is nex",
+      "notes": null
+    },
+    {
+      "id": "writing-email-draft",
+      "name": "Writing \u2014 professional meeting reschedule email",
+      "category": "writing",
+      "grader": "llm_judge",
+      "score": 0.7,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 119,
+      "completion_tokens": 1024,
+      "elapsed_ms": 29178,
+      "tok_per_sec": 35.09,
+      "details": {
+        "judge": {
+          "model_response": "Dear Team,  \nThe quarterly planning meeting reschedules to Monday, April 14 at 10 AM in Conference Room B. Apologies for disruption; agenda remains unchanged. Kindly confirm availability by Friday. Your prompt response is appreciated. Thank you. Sincerely, [Your Name]  \n\n(Word count: 45.",
+          "rubric_scores": {
+            "clarity": 0.9,
+            "accuracy": 1.0,
+            "follows_constraints": 0.2
+          },
+          "rationale": "The email is clear and accurate regarding the meeting details. However, it fails significantly on the length constraint, providing only 45 words instead of the requested approximately 120 words. Additionally, the tone is too abrupt to be considered fully professional for a formal notification.",
+          "judge_raw": "{\n\"clarity\": 0.9,\n\"accuracy\": 1.0,\n\"follows_constraints\": 0.2,\n\"rationale\": \"The email is clear and accurate regarding the meeting details. However, it fails significantly on the length constraint, providing only 45 words instead of the requested approximately 120 words. Additionally, the tone is too abrupt to be considered fully professional for a formal notification.\"\n}"
+        }
+      },
+      "judge": {
+        "model_response": "Dear Team,  \nThe quarterly planning meeting reschedules to Monday, April 14 at 10 AM in Conference Room B. Apologies for disruption; agenda remains unchanged. Kindly confirm availability by Friday. Your prompt response is appreciated. Thank you. Sincerely, [Your Name]  \n\n(Word count: 45.",
+        "rubric_scores": {
+          "clarity": 0.9,
+          "accuracy": 1.0,
+          "follows_constraints": 0.2
+        },
+        "rationale": "The email is clear and accurate regarding the meeting details. However, it fails significantly on the length constraint, providing only 45 words instead of the requested approximately 120 words. Additionally, the tone is too abrupt to be considered fully professional for a formal notification.",
+        "judge_raw": "{\n\"clarity\": 0.9,\n\"accuracy\": 1.0,\n\"follows_constraints\": 0.2,\n\"rationale\": \"The email is clear and accurate regarding the meeting details. However, it fails significantly on the length constraint, providing only 45 words instead of the requested approximately 120 words. Additionally, the tone is too abrupt to be considered fully professional for a formal notification.\"\n}"
+      },
+      "raw_response": "Dear Team,  \nThe quarterly planning meeting reschedules to Monday, April 14 at 10 AM in Conference Room B. Apologies for disruption; agenda remains unchanged. Kindly confirm availability by Friday. Your prompt response is appreciated. Thank you. Sincerely, [Your Name]  \n\n(Word count: 45.",
+      "notes": null
+    },
+    {
+      "id": "writing-summary-news",
+      "name": "Writing \u2014 summarize news article in 3 sentences",
+      "category": "writing",
+      "grader": "llm_judge",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 731,
+      "completion_tokens": 1024,
+      "elapsed_ms": 34625,
+      "tok_per_sec": 29.57,
+      "details": {
+        "judge": {
+          "model_response": "The city council approved the",
+          "rubric_scores": {
+            "clarity": 0.0,
+            "accuracy": 0.0,
+            "follows_constraints": 0.0
+          },
+          "rationale": "The response is an incomplete sentence fragment ('The city council approved the') that fails to convey any information. It does not summarize the article, contains no complete claims to verify for accuracy, and fails to meet the constraint of providing a summary in 3 sentences or fewer because it is not a sentence at all.",
+          "judge_raw": "{\n\"clarity\": 0.0,\n\"accuracy\": 0.0,\n\"follows_constraints\": 0.0,\n\"rationale\": \"The response is an incomplete sentence fragment ('The city council approved the') that fails to convey any information. It does not summarize the article, contains no complete claims to verify for accuracy, and fails to meet the constraint of providing a summary in 3 sentences or fewer because it is not a sentence at all.\"\n}"
+        }
+      },
+      "judge": {
+        "model_response": "The city council approved the",
+        "rubric_scores": {
+          "clarity": 0.0,
+          "accuracy": 0.0,
+          "follows_constraints": 0.0
+        },
+        "rationale": "The response is an incomplete sentence fragment ('The city council approved the') that fails to convey any information. It does not summarize the article, contains no complete claims to verify for accuracy, and fails to meet the constraint of providing a summary in 3 sentences or fewer because it is not a sentence at all.",
+        "judge_raw": "{\n\"clarity\": 0.0,\n\"accuracy\": 0.0,\n\"follows_constraints\": 0.0,\n\"rationale\": \"The response is an incomplete sentence fragment ('The city council approved the') that fails to convey any information. It does not summarize the article, contains no complete claims to verify for accuracy, and fails to meet the constraint of providing a summary in 3 sentences or fewer because it is not a sentence at all.\"\n}"
+      },
+      "raw_response": "The city council approved the",
+      "notes": null
+    },
+    {
+      "id": "writing-tech-explainer",
+      "name": "Writing \u2014 explain HTTP caching for non-technical readers",
+      "category": "writing",
+      "grader": "llm_judge",
+      "score": 0.0333,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 77,
+      "completion_tokens": 1024,
+      "elapsed_ms": 31596,
+      "tok_per_sec": 32.41,
+      "details": {
+        "judge": {
+          "model_response": "Okay, let's see what the user wants here. They need a 200-word explanation of HTTP caching for a non-technical reader. Avoid jargon, use an analogy, keep it under 250 words. Also, response should be concise, direct, no extensions.\n\nFirst, I should pick a simple analogy. Maybe something like a coffee shop where you remember past orders. Wait, maybe a library? Or perhaps something like a vending machine? Hmm. Wait, maybe a TV remote control? No, maybe a vending machine. Alternatively, think of cac",
+          "rubric_scores": {
+            "clarity": 0.1,
+            "accuracy": 0.0,
+            "follows_constraints": 0.0
+          },
+          "rationale": "The candidate response fails completely. Instead of providing the requested explanation, it outputs a stream-of-consciousness internal monologue where the model debates how to write the response. It does not contain a coherent explanation of HTTP caching, does not successfully present a single clear analogy, and includes excessive jargon (e.g., 'HTTP caching', 'server', 'browser') within the thought process. Furthermore, the word count is far below the required 200 words, and the content is not a finished product suitable for a non-technical reader.",
+          "judge_raw": "{\n\"clarity\": 0.1,\n\"accuracy\": 0.0,\n\"follows_constraints\": 0.0,\n\"rationale\": \"The candidate response fails completely. Instead of providing the requested explanation, it outputs a stream-of-consciousness internal monologue where the model debates how to write the response. It does not contain a coherent explanation of HTTP caching, does not successfully present a single clear analogy, and includes excessive jargon (e.g., 'HTTP caching', 'server', 'browser') within the thought process. Furthermore"
+        }
+      },
+      "judge": {
+        "model_response": "Okay, let's see what the user wants here. They need a 200-word explanation of HTTP caching for a non-technical reader. Avoid jargon, use an analogy, keep it under 250 words. Also, response should be concise, direct, no extensions.\n\nFirst, I should pick a simple analogy. Maybe something like a coffee shop where you remember past orders. Wait, maybe a library? Or perhaps something like a vending machine? Hmm. Wait, maybe a TV remote control? No, maybe a vending machine. Alternatively, think of cac",
+        "rubric_scores": {
+          "clarity": 0.1,
+          "accuracy": 0.0,
+          "follows_constraints": 0.0
+        },
+        "rationale": "The candidate response fails completely. Instead of providing the requested explanation, it outputs a stream-of-consciousness internal monologue where the model debates how to write the response. It does not contain a coherent explanation of HTTP caching, does not successfully present a single clear analogy, and includes excessive jargon (e.g., 'HTTP caching', 'server', 'browser') within the thought process. Furthermore, the word count is far below the required 200 words, and the content is not a finished product suitable for a non-technical reader.",
+        "judge_raw": "{\n\"clarity\": 0.1,\n\"accuracy\": 0.0,\n\"follows_constraints\": 0.0,\n\"rationale\": \"The candidate response fails completely. Instead of providing the requested explanation, it outputs a stream-of-consciousness internal monologue where the model debates how to write the response. It does not contain a coherent explanation of HTTP caching, does not successfully present a single clear analogy, and includes excessive jargon (e.g., 'HTTP caching', 'server', 'browser') within the thought process. Furthermore"
+      },
+      "raw_response": "Okay, let's see what the user wants here. They need a 200-word explanation of HTTP caching for a non-technical reader. Avoid jargon, use an analogy, keep it under 250 words. Also, response should be concise, direct, no extensions.\n\nFirst, I should pick a simple analogy. Maybe something like a coffee shop where you remember past orders. Wait, maybe a library? Or perhaps something like a vending machine? Hmm. Wait, maybe a TV remote control? No, maybe a vending machine. Alternatively, think of caching as remembering things. Wait, the user wants non-technical, so maybe a recipe? Or maybe a movie? Wait, perhaps an analogy where you cache what you already know. Or maybe a vending machine that remembers you like chocolate chips. Hmm. Let's think: HTTP caching reminds servers of past requests. Non-technical person: maybe compare it to when you fill a bottle caddy with items you already know you need. So caching is like keeping something in your pocket you often need. \n\nWait, the user said avoid jargon, so terms like HTTP, caching need to be replaced. Just say \"keeping track of past visits\" or something. Wait, better: \"keeping something in your mind so you don't have to repeat it\". \n\nThe explanation needs to be 200 words max, under 250. Let me structure: start with what caching is, analogy, how it helps. Keep it simple. \n\nWait, the user wants an analogy. Let's pick \"a library where you know the answers you need before coming, so you just look them up again instead of going back\". Maybe better: Imagine you're watching TV and every time you watch a show, you pause until the next one starts. Caching is like saving what you already watched so you don't replay it. \n\nSo structure: Start with explanation that caching is remembering past info. Use analogy: like a fridge where you keep last snacks for quick access. Wait, maybe a better analogy: like a librarian who remembers items after you ask for them, so you don't have to ask again. \n\nThen explain how this saves time: if you ofte",
+      "notes": null
+    },
+    {
+      "id": "research-cited-answer",
+      "name": "Cited answer \u2014 source trust for policy decision",
+      "category": "research",
+      "grader": "llm_judge",
+      "score": 0.6667,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 1398,
+      "completion_tokens": 1006,
+      "elapsed_ms": 44145,
+      "tok_per_sec": 22.79,
+      "details": {
+        "judge": {
+          "model_response": "[C] Source C highlights hybrid models as optimal, balancing productivity and cohesion. It asserts that structured in-office days foster collaboration, while remote flexibility aids individual tasks, yielding higher collaboration scores and satisfaction. By prioritizing overlap, it prevents isolation, ensuring sustained cultural alignment. Thus, the evidence supports tailored policies maximizing collective and individual performance.  \n\n(Approx. 150 words.)",
+          "rubric_scores": {
+            "faithful": 1.0,
+            "cited": 0.0,
+            "non_contradictory": 1.0
+          },
+          "rationale": "The response is faithful to Source C and non-contradictory. However, it fails the 'cited' criterion because the instructions explicitly require citing sources as [A], [B], [C] (implying all three must be referenced or at least the markers used for the sources discussed), and the rubric requires using [A] [B] [C] markers at least once each. The candidate response only cites [C] and completely omits [A] and [B], despite the prompt asking to answer based on the three sources and the rubric demanding all three markers be present.",
+          "judge_raw": "{\n\"faithful\": 1.0,\n\"cited\": 0.0,\n\"non_contradictory\": 1.0,\n\"rationale\": \"The response is faithful to Source C and non-contradictory. However, it fails the 'cited' criterion because the instructions explicitly require citing sources as [A], [B], [C] (implying all three must be referenced or at least the markers used for the sources discussed), and the rubric requires using [A] [B] [C] markers at least once each. The candidate response only cites [C] and completely omits [A] and [B], despite the p"
+        }
+      },
+      "judge": {
+        "model_response": "[C] Source C highlights hybrid models as optimal, balancing productivity and cohesion. It asserts that structured in-office days foster collaboration, while remote flexibility aids individual tasks, yielding higher collaboration scores and satisfaction. By prioritizing overlap, it prevents isolation, ensuring sustained cultural alignment. Thus, the evidence supports tailored policies maximizing collective and individual performance.  \n\n(Approx. 150 words.)",
+        "rubric_scores": {
+          "faithful": 1.0,
+          "cited": 0.0,
+          "non_contradictory": 1.0
+        },
+        "rationale": "The response is faithful to Source C and non-contradictory. However, it fails the 'cited' criterion because the instructions explicitly require citing sources as [A], [B], [C] (implying all three must be referenced or at least the markers used for the sources discussed), and the rubric requires using [A] [B] [C] markers at least once each. The candidate response only cites [C] and completely omits [A] and [B], despite the prompt asking to answer based on the three sources and the rubric demanding all three markers be present.",
+        "judge_raw": "{\n\"faithful\": 1.0,\n\"cited\": 0.0,\n\"non_contradictory\": 1.0,\n\"rationale\": \"The response is faithful to Source C and non-contradictory. However, it fails the 'cited' criterion because the instructions explicitly require citing sources as [A], [B], [C] (implying all three must be referenced or at least the markers used for the sources discussed), and the rubric requires using [A] [B] [C] markers at least once each. The candidate response only cites [C] and completely omits [A] and [B], despite the p"
+      },
+      "raw_response": "[C] Source C highlights hybrid models as optimal, balancing productivity and cohesion. It asserts that structured in-office days foster collaboration, while remote flexibility aids individual tasks, yielding higher collaboration scores and satisfaction. By prioritizing overlap, it prevents isolation, ensuring sustained cultural alignment. Thus, the evidence supports tailored policies maximizing collective and individual performance.  \n\n(Approx. 150 words.)",
+      "notes": null
+    },
+    {
+      "id": "research-synthesis-remote",
+      "name": "Synthesis with citations \u2014 remote work productivity",
+      "category": "research",
+      "grader": "llm_judge",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": null,
+      "prompt_tokens": 1369,
+      "completion_tokens": 1024,
+      "elapsed_ms": 41842,
+      "tok_per_sec": 24.47,
+      "details": {
+        "judge": {
+          "model_response": "Okay, let me tackle this. The user wants a 150-word synthesis based on the three sources, citing [A], [B], [C], but without adding any claims not in the sources. The response should be concise, directly answer the question, and avoid extensions beyond that. \n\nFirst, I need to parse what each source is saying. \n\nSource A talks about remote work being a net productivity gain with studies showing gains, especially in certain demographics like mid-career professionals. It mentions talent acquisition",
+          "rubric_scores": {
+            "faithful": 0.0,
+            "cited": 0.0,
+            "non_contradictory": 0.0
+          },
+          "rationale": "The candidate response fails completely. It does not provide the requested 150-word synthesis; instead, it outputs a stream-of-consciousness thought process including internal monologue ('Okay, let me tackle this'), self-correction, and incomplete drafts. The final text is cut off mid-sentence ('While [B] warns against'). Consequently, it does not answer the prompt, does not cite all sources effectively in a finished product, and violates the instruction to return only the synthesis.",
+          "judge_raw": "{\n\"faithful\": 0.0,\n\"cited\": 0.0,\n\"non_contradictory\": 0.0,\n\"rationale\": \"The candidate response fails completely. It does not provide the requested 150-word synthesis; instead, it outputs a stream-of-consciousness thought process including internal monologue ('Okay, let me tackle this'), self-correction, and incomplete drafts. The final text is cut off mid-sentence ('While [B] warns against'). Consequently, it does not answer the prompt, does not cite all sources effectively in a finished produc"
+        }
+      },
+      "judge": {
+        "model_response": "Okay, let me tackle this. The user wants a 150-word synthesis based on the three sources, citing [A], [B], [C], but without adding any claims not in the sources. The response should be concise, directly answer the question, and avoid extensions beyond that. \n\nFirst, I need to parse what each source is saying. \n\nSource A talks about remote work being a net productivity gain with studies showing gains, especially in certain demographics like mid-career professionals. It mentions talent acquisition",
+        "rubric_scores": {
+          "faithful": 0.0,
+          "cited": 0.0,
+          "non_contradictory": 0.0
+        },
+        "rationale": "The candidate response fails completely. It does not provide the requested 150-word synthesis; instead, it outputs a stream-of-consciousness thought process including internal monologue ('Okay, let me tackle this'), self-correction, and incomplete drafts. The final text is cut off mid-sentence ('While [B] warns against'). Consequently, it does not answer the prompt, does not cite all sources effectively in a finished product, and violates the instruction to return only the synthesis.",
+        "judge_raw": "{\n\"faithful\": 0.0,\n\"cited\": 0.0,\n\"non_contradictory\": 0.0,\n\"rationale\": \"The candidate response fails completely. It does not provide the requested 150-word synthesis; instead, it outputs a stream-of-consciousness thought process including internal monologue ('Okay, let me tackle this'), self-correction, and incomplete drafts. The final text is cut off mid-sentence ('While [B] warns against'). Consequently, it does not answer the prompt, does not cite all sources effectively in a finished produc"
+      },
+      "raw_response": "Okay, let me tackle this. The user wants a 150-word synthesis based on the three sources, citing [A], [B], [C], but without adding any claims not in the sources. The response should be concise, directly answer the question, and avoid extensions beyond that. \n\nFirst, I need to parse what each source is saying. \n\nSource A talks about remote work being a net productivity gain with studies showing gains, especially in certain demographics like mid-career professionals. It mentions talent acquisition benefits and reduced attrition. \n\nSource B argues that in-office collaboration has merits like organic communication and mentorship, pointing out issues with remote work metrics. It also highlights problems like fragmentation and mentorship gaps. \n\nSource C suggests hybrid models are better than full remote or fully in-office, citing studies showing mixed results depending on context, like task types and team size. \n\nThe synthesis needs to balance these points: acknowledge that remote work has benefits but hybrid might be optimal. Need to mention the sources without adding new info. The challenge is keeping it under 150 words. \n\nStart by stating that evidence supports hybrid as optimal, integrating insights from A, B, and C. Need to stay concise: mention productive aspects from A and C, challenges from B and some points from A. Also note that hybrid combines strengths of both. Make sure to cite the sources briefly. Check word count. Let me draft:\n\n\"Evidence suggests hybrid models optimize productivity, balancing remote efficiency with collaborative strengths, as noted in [A] and [C], while [B] highlights challenges like collaboration loss. [B] underscores metrics that miss collective effort, contrasting [A]'s focus on individual gains, yet [C] advocates for tailored approaches. Thus, balancing flexibility and interaction remains key.\"\n\nWait, that might be too wordy. Let me count words: need to ensure 150 words? Wait, user said 150-word response? Wait no, wait: \"Write a 150-w",
+      "notes": null
+    },
+    {
+      "id": "agentic-add-failing-test.opencode",
+      "name": "Add failing test then fix",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 269933,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "scored",
+        "elapsed_sec": 269.93316888809204,
+        "turns_completed": 2,
+        "last_tool_call": null,
+        "stdout_excerpt": "\"All tests passed.\",\"time\":{\"start\":1775965277590,\"end\":1775965277590}}}\n{\"type\":\"step_finish\",\"timestamp\":1775965277632,\"sessionID\":\"ses_2803c8d8fffeCqWWifapnTGMjF\",\"part\":{\"id\":\"prt_d7fc78d98001eKfYySw7B728rw\",\"sessionID\":\"ses_2803c8d8fffeCqWWifapnTGMjF\",\"messageID\":\"msg_d7fc3729a0016nBsAjAAyrEBuE\",\"type\":\"step-finish\",\"reason\":\"stop\",\"snapshot\":\"a3767ce5f78c4404a67bae150ca1a58081841653\",\"cost\":0,\"tokens\":{\"total\":13756,\"input\":12083,\"output\":1673,\"reasoning\":0,\"cache\":{\"read\":0,\"write\":0}}}}\n",
+        "stderr_excerpt": "",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-add-failing-test.aider",
+      "name": "Add failing test then fix",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 38999,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 38.99994611740112,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "output limit!\nTotal tokens: ~805 of 0 -- possibly exhausted context window!\n\nTo reduce output tokens:\n- Ask for smaller changes in each request.\n- Break your code into smaller source files.\n- Use a stronger model that can return diffs.\n\nTo reduce input tokens:\n- Use /tokens to see token usage.\n- Use /drop to remove unneeded files from the chat session.\n- Use /clear to clear the chat history.\n- Break your code into smaller source files.\n\n\nhttps://aider.chat/docs/troubleshooting/token-limits.html\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-add-failing-test.custom",
+      "name": "Add failing test then fix",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 27937,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 27.93744206428528,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "Okay, let's tackle this user's request. First, they want to add a function sub(a, b) to src/calc.py that returns a - b. Then they want to create a test file tests/test_calc.py with at least two test cases covering two cases. Then run pytest on tests/ and ensure all tests pass.\n\nHmm, but wait, the tools available are read_file, write_file, list_dir, run_bash, done. The user says to use the provided tools. Wait, the user wants me to use these tools. However, adding a function isn't directly possib",
+        "stderr_excerpt": "",
+        "error": null,
+        "success_check": "passed"
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-add-feature-with-tests.opencode",
+      "name": "Add pagination to get_items",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 226825,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "scored",
+        "elapsed_sec": 226.82593512535095,
+        "turns_completed": 2,
+        "last_tool_call": null,
+        "stdout_excerpt": " `per_page`, etc.}\",\"time\":{\"start\":1775965574243,\"end\":1775965574243}}}\n{\"type\":\"step_finish\",\"timestamp\":1775965574283,\"sessionID\":\"ses_280375ecbffeF4fCMWgezRiF0s\",\"part\":{\"id\":\"prt_d7fcc1465001IYgpuBp561JZHF\",\"sessionID\":\"ses_280375ecbffeF4fCMWgezRiF0s\",\"messageID\":\"msg_d7fc8a15e001EkCta7mutNFMD1\",\"type\":\"step-finish\",\"reason\":\"stop\",\"snapshot\":\"b40007ed504078e5268fce9552aed74f015a9e68\",\"cost\":0,\"tokens\":{\"total\":13851,\"input\":12133,\"output\":1718,\"reasoning\":0,\"cache\":{\"read\":0,\"write\":0}}}}\n",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.0
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-add-feature-with-tests.aider",
+      "name": "Add pagination to get_items",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 35222,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 35.22207522392273,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "tput limit!\nTotal tokens: ~1,123 of 0 -- possibly exhausted context window!\n\nTo reduce output tokens:\n- Ask for smaller changes in each request.\n- Break your code into smaller source files.\n- Use a stronger model that can return diffs.\n\nTo reduce input tokens:\n- Use /tokens to see token usage.\n- Use /drop to remove unneeded files from the chat session.\n- Use /clear to clear the chat history.\n- Break your code into smaller source files.\n\n\nhttps://aider.chat/docs/troubleshooting/token-limits.html\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "partial_credit_score": 0.0
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-add-feature-with-tests.custom",
+      "name": "Add pagination to get_items",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 27596,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 27.59641981124878,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "Okay, let me tackle this problem. The user wants to add page and per_page parameters to get_items() in their Python code so that a test can work correctly. \n\nFirst, looking at the tools available, there's no direct function to modify the implementation of get_items(), but maybe the idea is to adjust the function's parameters through the provided tools. Wait, the user says to use the tools given. The available functions are read_file, write_file, list_dir, run_bash, done. Hmm, none of these direc",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.0
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-cli-integration.opencode",
+      "name": "Write CLI passing integration tests",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.4,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 184671,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "scored",
+        "elapsed_sec": 184.67133402824402,
+        "turns_completed": 2,
+        "last_tool_call": null,
+        "stdout_excerpt": "\"\\\"\\\"\\n</tool_call>\",\"time\":{\"start\":1775965824783,\"end\":1775965824783}}}\n{\"type\":\"step_finish\",\"timestamp\":1775965824817,\"sessionID\":\"ses_28032e78affeOjRJ1ZKsVxFIQ7\",\"part\":{\"id\":\"prt_d7fcfe711001r5zzHByQYoq7XR\",\"sessionID\":\"ses_28032e78affeOjRJ1ZKsVxFIQ7\",\"messageID\":\"msg_d7fcd189e001g6qJ2GSsUa0os1\",\"type\":\"step-finish\",\"reason\":\"stop\",\"snapshot\":\"932648ced548ab89a3ab87bfa075b29d198b83f7\",\"cost\":0,\"tokens\":{\"total\":12814,\"input\":12061,\"output\":753,\"reasoning\":0,\"cache\":{\"read\":0,\"write\":0}}}}\n",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.4
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-cli-integration.aider",
+      "name": "Write CLI passing integration tests",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.4,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 32607,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 32.607126235961914,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "output limit!\nTotal tokens: ~770 of 0 -- possibly exhausted context window!\n\nTo reduce output tokens:\n- Ask for smaller changes in each request.\n- Break your code into smaller source files.\n- Use a stronger model that can return diffs.\n\nTo reduce input tokens:\n- Use /tokens to see token usage.\n- Use /drop to remove unneeded files from the chat session.\n- Use /clear to clear the chat history.\n- Break your code into smaller source files.\n\n\nhttps://aider.chat/docs/troubleshooting/token-limits.html\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "partial_credit_score": 0.4
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-cli-integration.custom",
+      "name": "Write CLI passing integration tests",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.4,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 27741,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 27.74138903617859,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "Okay, let's see what the user needs here. They want me to read the README.md and tests/test_cli.py files, then create a cli.py file that makes tests pass. But the user specified only to create cli.py, not modify tests/test_cli.py, and not to modify README.md. \n\nFirst, I need to figure out how to write cli.py. Since the user said not to modify the tests directory, perhaps cli.py should check tests and ensure tests pass. But the instruction says to write tests pass, but only in cli.py? Wait, maybe",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.4
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-debug-import-chain.opencode",
+      "name": "Debug bug buried in import chain",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.5,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 211370,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "scored",
+        "elapsed_sec": 211.37055015563965,
+        "turns_completed": 2,
+        "last_tool_call": null,
+        "stdout_excerpt": " and adjust types.\",\"time\":{\"start\":1775966100114,\"end\":1775966100114}}}\n{\"type\":\"step_finish\",\"timestamp\":1775966100162,\"sessionID\":\"ses_2802f1c29ffeUFMlRGA2KRtSSA\",\"part\":{\"id\":\"prt_d7fd41a940011dA0n8d6Lhwasu\",\"sessionID\":\"ses_2802f1c29ffeUFMlRGA2KRtSSA\",\"messageID\":\"msg_d7fd0e3ff0015MypGdyVv5IOVA\",\"type\":\"step-finish\",\"reason\":\"stop\",\"snapshot\":\"c81f2c23c98254475d6d6e9dfc9f938af2347d4d\",\"cost\":0,\"tokens\":{\"total\":13497,\"input\":12104,\"output\":1393,\"reasoning\":0,\"cache\":{\"read\":0,\"write\":0}}}}\n",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.5
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-debug-import-chain.aider",
+      "name": "Debug bug buried in import chain",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.5,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 32741,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 32.74194097518921,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "output limit!\nTotal tokens: ~802 of 0 -- possibly exhausted context window!\n\nTo reduce output tokens:\n- Ask for smaller changes in each request.\n- Break your code into smaller source files.\n- Use a stronger model that can return diffs.\n\nTo reduce input tokens:\n- Use /tokens to see token usage.\n- Use /drop to remove unneeded files from the chat session.\n- Use /clear to clear the chat history.\n- Break your code into smaller source files.\n\n\nhttps://aider.chat/docs/troubleshooting/token-limits.html\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "partial_credit_score": 0.5
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-debug-import-chain.custom",
+      "name": "Debug bug buried in import chain",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.5,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 27366,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 27.366405248641968,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "Okay, let's tackle this problem. The user says that running tests fails with a TypeError related to a function returning the wrong type when importing from pkg, specifically pointing at pkg/__init__.py, but the actual bug is elsewhere. The goal is to trace the import chain and fix the root cause so that all tests in tests/ pass.\n\nFirst, I need to figure out what's wrong here. Since the error points to a function in pkg returning the wrong type, maybe there's an issue in how packages are structur",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.5
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-null-deref.opencode",
+      "name": "Fix null deref bug",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.3,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 178878,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "scored",
+        "elapsed_sec": 178.87870287895203,
+        "turns_completed": 2,
+        "last_tool_call": null,
+        "stdout_excerpt": " this fix applied.\",\"time\":{\"start\":1775966342199,\"end\":1775966342199}}}\n{\"type\":\"step_finish\",\"timestamp\":1775966342243,\"sessionID\":\"ses_2802aeba9ffeQC96IoteOV3yQP\",\"part\":{\"id\":\"prt_d7fd7cc39001JoJbNa8jcKyTk8\",\"sessionID\":\"ses_2802aeba9ffeQC96IoteOV3yQP\",\"messageID\":\"msg_d7fd51481001UyZhWBo08ZHQRz\",\"type\":\"step-finish\",\"reason\":\"stop\",\"snapshot\":\"855305dce79f6c9efc9d736a568902139a9a64fb\",\"cost\":0,\"tokens\":{\"total\":13175,\"input\":12074,\"output\":1101,\"reasoning\":0,\"cache\":{\"read\":0,\"write\":0}}}}\n",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.3
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-null-deref.aider",
+      "name": "Fix null deref bug",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.3,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 32665,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 32.6657509803772,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "output limit!\nTotal tokens: ~819 of 0 -- possibly exhausted context window!\n\nTo reduce output tokens:\n- Ask for smaller changes in each request.\n- Break your code into smaller source files.\n- Use a stronger model that can return diffs.\n\nTo reduce input tokens:\n- Use /tokens to see token usage.\n- Use /drop to remove unneeded files from the chat session.\n- Use /clear to clear the chat history.\n- Break your code into smaller source files.\n\n\nhttps://aider.chat/docs/troubleshooting/token-limits.html\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "partial_credit_score": 0.3
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-null-deref.custom",
+      "name": "Fix null deref bug",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.3,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 27731,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 27.731935024261475,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "Okay, let's tackle this problem. The user says there's a bug in app/handlers.py where the 'user' field is missing, causing a crash. They want the bug fixed so that all tests in tests/ pass. Also, after fixing, all tests in tests/ must pass.\n\nFirst, I need to figure out how to fix the bug. Since I can only use the provided tools, I have to see which tool applies here. The available tools are read_file, write_file, list_dir, run_bash, done.\n\nHmm, maybe the bug is in handlers.py causing the user fi",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.3
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-test-not-code.opencode",
+      "name": "Fix the broken test, not the correct implementation",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.6,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 161584,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "scored",
+        "elapsed_sec": 161.58466815948486,
+        "turns_completed": 2,
+        "last_tool_call": null,
+        "stdout_excerpt": "th this adjustment.\",\"time\":{\"start\":1775966567439,\"end\":1775966567439}}}\n{\"type\":\"step_finish\",\"timestamp\":1775966567483,\"sessionID\":\"ses_280273839ffeZXQ7L4GiFpJ4AJ\",\"part\":{\"id\":\"prt_d7fdb3c12001UBCk2yFKW1U45m\",\"sessionID\":\"ses_280273839ffeZXQ7L4GiFpJ4AJ\",\"messageID\":\"msg_d7fd8c7f0001F6CatEZRrIHSXG\",\"type\":\"step-finish\",\"reason\":\"stop\",\"snapshot\":\"bfd3a1606a620a5d1d84e35dd0f56a94c7bd942c\",\"cost\":0,\"tokens\":{\"total\":12765,\"input\":12083,\"output\":682,\"reasoning\":0,\"cache\":{\"read\":0,\"write\":0}}}}\n",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.6
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-test-not-code.aider",
+      "name": "Fix the broken test, not the correct implementation",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.6,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 32869,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 32.86903977394104,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "output limit!\nTotal tokens: ~885 of 0 -- possibly exhausted context window!\n\nTo reduce output tokens:\n- Ask for smaller changes in each request.\n- Break your code into smaller source files.\n- Use a stronger model that can return diffs.\n\nTo reduce input tokens:\n- Use /tokens to see token usage.\n- Use /drop to remove unneeded files from the chat session.\n- Use /clear to clear the chat history.\n- Break your code into smaller source files.\n\n\nhttps://aider.chat/docs/troubleshooting/token-limits.html\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "partial_credit_score": 0.6
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-fix-test-not-code.custom",
+      "name": "Fix the broken test, not the correct implementation",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.6,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 27759,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 27.759459972381592,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "Okay, let's tackle this problem. The user says the test suite failed because one assertion in the test file has a wrong expected value. They want the test to pass without changing calculator.py, and all tests in tests/ must pass.\n\nHmm, the user mentioned not to modify calculator.py, so I need to fix the test itself. Since I can't see the tests directly, maybe the fix involves adjusting the assertion's expected value. But how? Wait, the tools available are read_file, write_file, list_dir, run_bas",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.6
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-multi-language.opencode",
+      "name": "Align Python response key with JS frontend expectation",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.5,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 195641,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "scored",
+        "elapsed_sec": 195.64129090309143,
+        "turns_completed": 2,
+        "last_tool_call": null,
+        "stdout_excerpt": "\": 42}.\\n</ reply>\",\"time\":{\"start\":1775966826560,\"end\":1775966826560}}}\n{\"type\":\"step_finish\",\"timestamp\":1775966826594,\"sessionID\":\"ses_28023c93fffehRW6xZ2j9z0MZx\",\"part\":{\"id\":\"prt_d7fdf3042001O52WFhX5wRsKNH\",\"sessionID\":\"ses_28023c93fffehRW6xZ2j9z0MZx\",\"messageID\":\"msg_d7fdc36ea001eCPbWVTbu6Hjjs\",\"type\":\"step-finish\",\"reason\":\"stop\",\"snapshot\":\"fddf5e88d0e4ce66199c01b954c52a8e02d39356\",\"cost\":0,\"tokens\":{\"total\":13256,\"input\":12106,\"output\":1150,\"reasoning\":0,\"cache\":{\"read\":0,\"write\":0}}}}\n",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.5
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-multi-language.aider",
+      "name": "Align Python response key with JS frontend expectation",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.5,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 33097,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 33.097861766815186,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "output limit!\nTotal tokens: ~849 of 0 -- possibly exhausted context window!\n\nTo reduce output tokens:\n- Ask for smaller changes in each request.\n- Break your code into smaller source files.\n- Use a stronger model that can return diffs.\n\nTo reduce input tokens:\n- Use /tokens to see token usage.\n- Use /drop to remove unneeded files from the chat session.\n- Use /clear to clear the chat history.\n- Break your code into smaller source files.\n\n\nhttps://aider.chat/docs/troubleshooting/token-limits.html\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "partial_credit_score": 0.5
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-multi-language.custom",
+      "name": "Align Python response key with JS frontend expectation",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.5,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 27500,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 27.500553131103516,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "Okay, let me try to figure out how to fix this. The user says that the Python backend app.py returns {\"result\": 42}, but the JavaScript frontend expects \"data\" instead of \"result\" under that key. Also, the test in tests/test_app.py is failing. The task is to modify app.py so that get_response() returns {\"data\": 42}, and all tests must pass. \n\nFirst, I need to look at the tools provided. The available tools are read_file, write_file, list_dir, run_bash, done, and others. Since the user wants to m",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.5
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-rename-function.opencode",
+      "name": "Rename function everywhere",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "opencode",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 197858,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "opencode",
+        "status": "scored",
+        "elapsed_sec": 197.8580973148346,
+        "turns_completed": 2,
+        "last_tool_call": null,
+        "stdout_excerpt": "d_one  \\n</change>\",\"time\":{\"start\":1775967087811,\"end\":1775967087811}}}\n{\"type\":\"step_finish\",\"timestamp\":1775967087852,\"sessionID\":\"ses_2801fd562ffeT367viFGTy4s3m\",\"part\":{\"id\":\"prt_d7fe32cc6001raK60g2KpC1SeE\",\"sessionID\":\"ses_2801fd562ffeT367viFGTy4s3m\",\"messageID\":\"msg_d7fe02ac9001kYmM5dm0ck2AYU\",\"type\":\"step-finish\",\"reason\":\"stop\",\"snapshot\":\"a777f21546d78c285a8c07f3ca0828aad3b07078\",\"cost\":0,\"tokens\":{\"total\":13244,\"input\":12092,\"output\":1152,\"reasoning\":0,\"cache\":{\"read\":0,\"write\":0}}}}\n",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.0
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-rename-function.aider",
+      "name": "Rename function everywhere",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "aider",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 32317,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "aider",
+        "status": "scored",
+        "elapsed_sec": 32.31701707839966,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "output limit!\nTotal tokens: ~794 of 0 -- possibly exhausted context window!\n\nTo reduce output tokens:\n- Ask for smaller changes in each request.\n- Break your code into smaller source files.\n- Use a stronger model that can return diffs.\n\nTo reduce input tokens:\n- Use /tokens to see token usage.\n- Use /drop to remove unneeded files from the chat session.\n- Use /clear to clear the chat history.\n- Break your code into smaller source files.\n\n\nhttps://aider.chat/docs/troubleshooting/token-limits.html\n",
+        "stderr_excerpt": "/Users/nkuhn/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020\n  warnings.warn(\nWarning: Input is not a terminal (fd=0).\n",
+        "error": null,
+        "partial_credit_score": 0.0
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    },
+    {
+      "id": "agentic-rename-function.custom",
+      "name": "Rename function everywhere",
+      "category": "agentic",
+      "grader": "agentic",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "scored",
+      "agent_framework": "custom",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "elapsed_ms": 27429,
+      "tok_per_sec": null,
+      "details": {
+        "framework": "custom",
+        "status": "scored",
+        "elapsed_sec": 27.429843187332153,
+        "turns_completed": 0,
+        "last_tool_call": null,
+        "stdout_excerpt": "Okay, let's tackle this problem. The user wants to rename the functions in tests/test_utils.py from `do_thing` and `double_plus_one` to align with the tests, ensuring the tests pass without changing the tests themselves. \n\nFirst, I need to understand the context. The tests are in tests/test_utils.py, and the current functions are named do_thing and double_plus_one. The goal is to rename these functions but keep the tests unchanged. \n\nThe user mentioned using the provided tools. Let me check the ",
+        "stderr_excerpt": "",
+        "error": null,
+        "partial_credit_score": 0.0
+      },
+      "judge": null,
+      "raw_response": null,
+      "notes": null
+    }
+  ],
+  "summary": {
+    "headline_metric": "composite_score",
+    "headline_value": 0.5557,
+    "headline_unit": null,
+    "composite_score": 0.5557,
+    "composite_max": 1.0,
+    "composite_over": 13,
+    "total_tokens": 39842,
+    "total_time_ms": 4765578,
+    "category_scores": [
+      {
+        "category": "basic",
+        "score": 1.0,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored",
+        "avg_tok_per_sec": 37.75,
+        "avg_elapsed_ms": 4220.3
+      },
+      {
+        "category": "tool_use",
+        "score": 1.0,
+        "max": 1.0,
+        "tasks": 6,
+        "status": "scored",
+        "avg_tok_per_sec": 29.86,
+        "avg_elapsed_ms": 11138.3
+      },
+      {
+        "category": "structured_output",
+        "score": 0.6114,
+        "max": 1.0,
+        "tasks": 10,
+        "status": "scored",
+        "avg_tok_per_sec": 34.3,
+        "avg_elapsed_ms": 20715.3
+      },
+      {
+        "category": "instruction",
+        "score": 0.5,
+        "max": 1.0,
+        "tasks": 4,
+        "status": "scored",
+        "avg_tok_per_sec": 35.26,
+        "avg_elapsed_ms": 21550.5
+      },
+      {
+        "category": "file_ops",
+        "score": 1.0,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored",
+        "avg_tok_per_sec": 36.25,
+        "avg_elapsed_ms": 17642.7
+      },
+      {
+        "category": "coding",
+        "score": 0.1429,
+        "max": 1.0,
+        "tasks": 7,
+        "status": "scored",
+        "avg_tok_per_sec": 35.38,
+        "avg_elapsed_ms": 26603.1
+      },
+      {
+        "category": "debugging",
+        "score": 0.5,
+        "max": 1.0,
+        "tasks": 6,
+        "status": "scored",
+        "avg_tok_per_sec": 35.68,
+        "avg_elapsed_ms": 22897.5
+      },
+      {
+        "category": "long_context",
+        "score": 0.3333,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored",
+        "avg_tok_per_sec": 8.85,
+        "avg_elapsed_ms": 67379.0
+      },
+      {
+        "category": "multi_turn",
+        "score": 0.6458,
+        "max": 1.0,
+        "tasks": 8,
+        "status": "scored",
+        "avg_tok_per_sec": 11.55,
+        "avg_elapsed_ms": 139575.9
+      },
+      {
+        "category": "reasoning",
+        "score": 0.5,
+        "max": 1.0,
+        "tasks": 4,
+        "status": "scored",
+        "avg_tok_per_sec": 28.23,
+        "avg_elapsed_ms": 26275.8
+      },
+      {
+        "category": "writing",
+        "score": 0.2444,
+        "max": 1.0,
+        "tasks": 3,
+        "status": "scored",
+        "avg_tok_per_sec": 32.36,
+        "avg_elapsed_ms": 31799.7
+      },
+      {
+        "category": "research",
+        "score": 0.3333,
+        "max": 1.0,
+        "tasks": 2,
+        "status": "scored",
+        "avg_tok_per_sec": 23.63,
+        "avg_elapsed_ms": 42993.5
+      },
+      {
+        "category": "agentic",
+        "score": 0.4125,
+        "max": 1.0,
+        "tasks": 24,
+        "status": "scored",
+        "avg_tok_per_sec": null,
+        "avg_elapsed_ms": null
+      }
+    ],
+    "agent_framework_scores": [
+      {
+        "framework": "opencode",
+        "score": 0.4125,
+        "tasks": 8
+      },
+      {
+        "framework": "aider",
+        "score": 0.4125,
+        "tasks": 8
+      },
+      {
+        "framework": "custom",
+        "score": 0.4125,
+        "tasks": 8
+      }
+    ]
+  }
+}
