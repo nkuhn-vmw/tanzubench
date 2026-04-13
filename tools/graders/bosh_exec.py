@@ -153,15 +153,15 @@ def grade(test_def: Dict[str, Any], model_client: Any, ctx: GraderContext) -> Gr
         from tools.graders.container_exec import grade as docker_grade
         return docker_grade.__wrapped__(test_def, model_client, ctx) if hasattr(docker_grade, '__wrapped__') else docker_grade(test_def, model_client, ctx)
 
-    if not _has_bosh():
-        # Fallback: run directly on the local VM (safe for ephemeral errand VMs)
-        return _grade_local(test_def, model_client, ctx, response, script, cfg)
-
     cfg = test_def.get("grader_config") or {}
     prompt = test_def.get("prompt") or ""
     content, _, _, _ = model_client.chat([{"role": "user", "content": prompt}])
     response = content or ""
     script = _extract_script(response)
+
+    if not _has_bosh():
+        # Fallback: run directly on the local VM (safe for ephemeral errand VMs)
+        return _grade_local(test_def, model_client, ctx, response, script, cfg)
 
     deployment = f"tanzubench-sysadmin-{uuid.uuid4().hex[:6]}"
     instance = "test-vm/0"
