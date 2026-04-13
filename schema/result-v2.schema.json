@@ -321,7 +321,8 @@
               "multi_turn",
               "agentic",
               "exec_build",
-              "container_exec"
+              "container_exec",
+              "bosh_exec"
             ]
           },
           "score": {

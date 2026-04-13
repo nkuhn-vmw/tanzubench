@@ -1,7 +1,7 @@
 id: sys-nginx-reverse-proxy
 name: Configure nginx reverse proxy for /api
 category: sysadmin
-grader: container_exec
+grader: bosh_exec
 timeout_sec: 120
 prompt: |
   Write a shell script that configures nginx as a reverse proxy so that

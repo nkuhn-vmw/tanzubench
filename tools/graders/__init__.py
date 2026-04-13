@@ -16,6 +16,7 @@ from tools.graders import (  # noqa: E402,F401
     multi_turn,
     exec_build,
     container_exec,
+    bosh_exec,
     agentic,
 )
 

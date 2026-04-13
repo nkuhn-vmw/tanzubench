@@ -1,7 +1,7 @@
 id: sys-docker-compose
 name: Write a valid docker-compose.yml with postgres, redis, and volumes
 category: sysadmin
-grader: container_exec
+grader: bosh_exec
 timeout_sec: 120
 prompt: |
   Write a shell script that creates a valid docker-compose.yml file at

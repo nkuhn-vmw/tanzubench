@@ -1,7 +1,7 @@
 id: sys-user-permissions
 name: Create deploy user with www-data group
 category: sysadmin
-grader: container_exec
+grader: bosh_exec
 timeout_sec: 120
 prompt: |
   Write a shell script that creates a user named 'deploy' with the following

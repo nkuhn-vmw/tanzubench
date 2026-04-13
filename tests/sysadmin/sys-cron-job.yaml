@@ -1,7 +1,7 @@
 id: sys-cron-job
 name: Set up cron job for backup
 category: sysadmin
-grader: container_exec
+grader: bosh_exec
 timeout_sec: 120
 prompt: |
   Write a shell script that sets up a cron job to run /usr/local/bin/backup.sh

@@ -1,7 +1,7 @@
 id: sys-systemd-service
 name: Create systemd unit file for a Python app
 category: sysadmin
-grader: container_exec
+grader: bosh_exec
 timeout_sec: 120
 prompt: |
   Write a shell script that creates a systemd unit file at

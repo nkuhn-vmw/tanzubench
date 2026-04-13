@@ -1,7 +1,7 @@
 id: sys-firewall-rules
 name: Set iptables rules to allow 22/80/443 and drop rest
 category: sysadmin
-grader: container_exec
+grader: bosh_exec
 timeout_sec: 120
 prompt: |
   Write a shell script that configures iptables to allow inbound traffic on
