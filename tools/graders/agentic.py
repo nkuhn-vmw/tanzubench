@@ -50,8 +50,17 @@ def _copy_fixture(fixtures_dir: Path, fixture_name: str, dest: Path) -> None:
 
 
 def _run_setup(commands: List[str], work: Path) -> bool:
+    """Run setup commands with vendored Python packages on PYTHONPATH.
+    This allows 'python3 -m pytest' to work on air-gapped BOSH VMs
+    where pip isn't available but pytest is vendored."""
+    import os
+    env = os.environ.copy()
+    # Add vendored python-lib to PYTHONPATH so pytest/jsonschema/etc are importable
+    python_lib = '/var/vcap/packages/tanzubench/python-lib'
+    if os.path.isdir(python_lib):
+        env['PYTHONPATH'] = python_lib + ':' + env.get('PYTHONPATH', '')
     for cmd in commands:
-        r = subprocess.run(["bash", "-c", cmd], cwd=work,
+        r = subprocess.run(["bash", "-c", cmd], cwd=work, env=env,
                            capture_output=True, text=True, timeout=120)
         if r.returncode != 0:
             return False
