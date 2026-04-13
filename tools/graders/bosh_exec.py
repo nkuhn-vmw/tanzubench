@@ -36,6 +36,64 @@ def _extract_script(response: str) -> str:
     return response
 
 
+
+
+def _run_checks_local(checks: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Run state checks directly on the local machine."""
+    import subprocess
+    results = []
+    for chk in checks:
+        if "file_exists" in chk:
+            path = chk["file_exists"]
+            import os
+            passed = os.path.exists(path)
+            results.append({"type": "file_exists", "path": path, "passed": passed})
+        elif "command" in chk:
+            cmd = chk["command"]
+            expected_exit = chk.get("exit_code", 0)
+            stdout_contains = chk.get("stdout_contains")
+            try:
+                r = subprocess.run(["bash", "-c", cmd],
+                                   capture_output=True, text=True, timeout=30)
+                stdout = r.stdout + r.stderr
+                if stdout_contains:
+                    passed = stdout_contains.lower() in stdout.lower()
+                else:
+                    passed = r.returncode == expected_exit
+            except Exception:
+                passed = False
+                stdout = ""
+            results.append({"type": "command", "command": cmd, "passed": passed,
+                            "stdout": stdout[:200] if stdout else ""})
+        else:
+            results.append({"type": "unknown", "passed": False})
+    return results
+
+
+def _grade_local(test_def, model_client, ctx, response, script, cfg):
+    """Run sysadmin test directly on the local machine.
+    Used on BOSH errand VMs which are ephemeral Ubuntu VMs with root."""
+    import subprocess
+    # Run setup commands
+    for cmd in cfg.get("setup_commands", []):
+        subprocess.run(["bash", "-c", cmd],
+                       capture_output=True, text=True, timeout=120)
+    # Execute model script
+    subprocess.run(["bash", "-c", script],
+                   capture_output=True, text=True, timeout=ctx.timeout_sec)
+    # Check state
+    checks = cfg.get("state_checks", [])
+    check_results = _run_checks_local(checks)
+    passed = sum(1 for c in check_results if c["passed"])
+    total = len(check_results)
+    score = passed / total if total > 0 else 0.0
+    return GraderResult(
+        score=round(score, 4), status="scored",
+        details={"checks": check_results, "passed": passed, "total": total,
+                  "method": "local_vm"},
+        raw_response=response,
+    )
+
 def _has_bosh() -> bool:
     """Check if BOSH CLI + director credentials are available."""
     return (shutil.which("bosh") is not None and
@@ -96,8 +154,8 @@ def grade(test_def: Dict[str, Any], model_client: Any, ctx: GraderContext) -> Gr
         return docker_grade.__wrapped__(test_def, model_client, ctx) if hasattr(docker_grade, '__wrapped__') else docker_grade(test_def, model_client, ctx)
 
     if not _has_bosh():
-        return GraderResult(score=0.0, status="skipped",
-                            details={"error": "neither docker nor bosh available"})
+        # Fallback: run directly on the local VM (safe for ephemeral errand VMs)
+        return _grade_local(test_def, model_client, ctx, response, script, cfg)
 
     cfg = test_def.get("grader_config") or {}
     prompt = test_def.get("prompt") or ""
