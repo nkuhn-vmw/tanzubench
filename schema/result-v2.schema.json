@@ -352,6 +352,7 @@
               "opencode",
               "aider",
               "custom",
+              "goose",
               null
             ]
           },
@@ -540,7 +541,8 @@
                 "enum": [
                   "opencode",
                   "aider",
-                  "custom"
+                  "custom",
+                  "goose"
                 ]
               },
               "score": {
