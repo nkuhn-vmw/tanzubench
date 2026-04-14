@@ -2,8 +2,8 @@ import type { Result } from '../lib/schema';
 import { agenticByTask } from '../lib/category-scoring';
 
 const FRAMEWORK_COLORS: Record<string, string> = {
+  goose: 'bg-purple-500',
   aider: 'bg-blue-500',
-  opencode: 'bg-purple-500',
   custom: 'bg-green-500',
 };
 

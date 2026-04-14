@@ -4,10 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repo shape
 
-Two coupled subsystems joined by a JSON schema:
+Three subsystems joined by a JSON schema:
 
 1. **Benchmark runner** (`tools/bench_suite.py`, `tools/graders/`, `tools/agents/`) — runs YAML-defined tests against an OpenAI-compatible endpoint, produces timestamped result JSON under `results/<foundation>/<hw>/`.
 2. **Leaderboard webapp** (`web/`, Next.js 14 App Router, static export) — loads every file under `results/` at build time, validates with Zod against `schema/result-v2.schema.json`, and renders faceted views.
+3. **OpsManager tile** (`tile/`) — BOSH release + tile-generator config for deploying TanzuBench on Tanzu Application Service. Contains BOSH jobs (web, run-benchmarks, export-results, smoke-tests), a Go HTTP server (`tile/src/tanzubench-server/`), and air-gap blob specs. The benchmark suite is vendored from the repo root into `tile/src/tanzubench/` at build time via `tile/scripts/vendor-tanzubench.sh`.
 
 The two schemas are the contract:
 - `schema/result-v2.schema.json` — shape of every result file. CI gates via `tools/validate.py`.
@@ -61,15 +62,21 @@ python3 tools/bench_suite.py \
 python3 tools/validate.py --tests tests/
 ```
 
+Tile (run from repo root):
+```bash
+tile/scripts/build-tile.sh 0.6.3            # vendor + BOSH release + tile build
+tile/scripts/vendor-tanzubench.sh           # vendor benchmark suite only
+# Blobs must be in tile/blobs/ (gitignored, ~247MB total)
+```
+
 ## Architecture notes
 
 - **Foundations are first-class facets**: results are organized by `foundation` (cdc/dev210/tdc) and `hardware` (cpu/gpu) because the same model behaves very differently across infra. Filters in the leaderboard mirror this — don't collapse them.
-- **10 test categories**: basic, tool_use, coding, long_context, instruction, file_ops, reasoning, writing, research, agentic. The first six run without a judge; the last four require `--judge-url`. Agentic additionally fans each task out across 3 agent frameworks (opencode/aider/custom).
+- **18 test categories**: basic, tool_use, structured_output, coding, debugging, long_context, instruction, file_ops, multi_turn, reasoning, writing, research, monitoring, iac, ci_repair, repo_patch, sysadmin, agentic. The first ten run without a judge; reasoning/writing/research require `--judge-url`. Agentic additionally fans each task out across 3 agent frameworks (goose/aider/custom).
 - **Judge fingerprint**: when `--judge-url` is set, the runner records a fingerprint of the judge endpoint. Results graded by different judges should not be compared directly — the leaderboard UI surfaces this.
-- **3-framework agentic model**: each agentic task runs independently against opencode, aider, and a custom single-turn loop. The spread lets you distinguish model limitations from framework integration issues. See `docs/agentic-harness.md`.
+- **3-framework agentic model**: each agentic task runs independently against goose, aider, and a custom single-turn loop. The spread lets you distinguish model limitations from framework integration issues. See `docs/agentic-harness.md`.
 - **Static export**: `web/` is built with `next build` to a fully static site (no server runtime on the deploy target). All result loading happens at build time in `web/lib/`. There is no API route layer; if you need new data, it has to flow through the schema → loader path.
 - **Pages**: `/` faceted leaderboard, `/foundations` + `/foundations/[slug]`, `/result/[id]` (Tests/Config/Raw tabs), `/compare?ids=a,b,c`, `/about`.
-- **3 sortable views on the leaderboard** (TTFT / Tok-per-sec / Accuracy) with speed↔accuracy companion pairing so every row shows all three metrics — see recent commits in `web/components/` before changing leaderboard rendering.
 - **Thinking-token suppression**: modern models (Gemma 4, Qwen3) emit reasoning tokens that dominate CPU latency. The tile's `model_modelfile` SYSTEM directive is **not** forwarded through the GenAI tile proxy, so clients must inject the suppression system message themselves. See README for the exact message; relevant when touching the accuracy harness or interpreting CPU results.
 
 ## CI / deploy
