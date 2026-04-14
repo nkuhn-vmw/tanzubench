@@ -8,7 +8,7 @@ task_prompt: |
   Add a function sub(a, b) to src/calc.py that returns a - b. Then add a
   test for it to tests/test_calc.py covering at least two cases. Finally,
   run python3 -m pytest tests/ and make sure all tests pass.
-frameworks: [opencode, aider, custom]
+frameworks: [goose, aider, custom]
 grader_config:
   setup_commands:
     - "python3 -m pip install -q pytest"

@@ -15,7 +15,7 @@ task_prompt: |
   3. Update cli/cmd_import.py to import validate_input from cli.validators
   4. Make all tests in tests/ pass, including tests/test_shared.py which
      currently fails because cli.validators.validate_input does not exist.
-frameworks: [opencode, aider, custom]
+frameworks: [goose, aider, custom]
 grader_config:
   setup_commands:
     - "python3 -m pip install -q pytest"

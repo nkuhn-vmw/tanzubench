@@ -7,7 +7,7 @@ fixture: cli-integration
 task_prompt: |
   Read README.md and tests/test_cli.py. Write cli.py so that the tests
   pass. Only create the cli.py file — do not modify the tests.
-frameworks: [opencode, aider, custom]
+frameworks: [goose, aider, custom]
 grader_config:
   setup_commands:
     - "python3 -m pip install -q pytest"

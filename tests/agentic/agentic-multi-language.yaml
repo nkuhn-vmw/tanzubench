@@ -11,7 +11,7 @@ task_prompt: |
 
   Fix app.py so get_response() returns {"data": 42}. All tests in tests/
   must pass when you are done. See README.md for context.
-frameworks: [opencode, aider, custom]
+frameworks: [goose, aider, custom]
 grader_config:
   setup_commands:
     - "python3 -m pip install -q pytest"
