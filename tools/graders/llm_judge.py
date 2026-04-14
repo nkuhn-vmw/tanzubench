@@ -90,7 +90,8 @@ def grade(test_def: Dict[str, Any], model_client: Any, ctx: GraderContext) -> Gr
             jc_content, _, _, _ = ctx.judge_client.chat(
                 [{"role": "user", "content": judge_prompt}],
                 temperature=temperature,
-                response_format={"type": "json_object"},
+                # response_format omitted — many endpoints (ollama, some proxies)
+                # return 422. The rubric prompt already requests JSON output.
             )
             judge_raw = jc_content or ""
             parsed = _parse_json(judge_raw)
