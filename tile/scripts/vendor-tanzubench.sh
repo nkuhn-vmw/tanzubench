@@ -25,10 +25,4 @@ echo "Building web leaderboard..."
 mkdir -p "$TARGET/web"
 cp -r "$REPO_ROOT/web/out" "$TARGET/web/out"
 
-# Replace pip install pytest with PYTHONPATH setup (pytest is vendored)
-find "$TARGET/tests/agentic" -name "*.yaml" -exec sed -i.bak \
-  "s|python3 -m pip install -q pytest|export PYTHONPATH=/var/vcap/packages/tanzubench/python-lib:\$PYTHONPATH 2>/dev/null || true|" {} \;
-find "$TARGET/tests/agentic" -name "*.bak" -delete
-echo "Replaced pip install with PYTHONPATH setup in agentic tests"
-
 echo "Vendored to $TARGET ($(du -sh "$TARGET" | cut -f1))"
