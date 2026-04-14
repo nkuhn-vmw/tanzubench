@@ -63,6 +63,16 @@ def _run_setup(commands: List[str], work: Path) -> bool:
         r = subprocess.run(["bash", "-c", cmd], cwd=work, env=env,
                            capture_output=True, text=True, timeout=120)
         if r.returncode != 0:
+            # Tolerate pip install failures if the package is already available
+            # (vendored via PYTHONPATH on air-gapped BOSH VMs)
+            if 'pip install' in cmd:
+                # Check if the target package is importable despite pip failure
+                pkg = cmd.split()[-1]  # last word is usually the package name
+                check = subprocess.run(
+                    ['python3', '-c', f'import {pkg}'], env=env,
+                    capture_output=True, timeout=10)
+                if check.returncode == 0:
+                    continue  # Package available via PYTHONPATH, skip pip error
             return False
     return True
 
