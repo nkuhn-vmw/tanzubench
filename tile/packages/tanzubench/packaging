@@ -1,0 +1,83 @@
+#!/bin/bash
+set -euo pipefail
+
+# Install git at compile time (needed for aider + agentic fixtures)
+# Compile VM has internet; deploy VMs are air-gapped
+apt-get update -qq && apt-get install -y -qq git > /dev/null 2>&1 || true
+GIT_PATH=$(which git 2>/dev/null || echo "")
+if [ -n "$GIT_PATH" ]; then
+  mkdir -p "${BOSH_INSTALL_TARGET}/bin"
+  cp "$GIT_PATH" "${BOSH_INSTALL_TARGET}/bin/git"
+  # Also copy git-core helpers
+  GIT_CORE=$(git --exec-path 2>/dev/null || echo "/usr/lib/git-core")
+  if [ -d "$GIT_CORE" ]; then
+    cp -r "$GIT_CORE" "${BOSH_INSTALL_TARGET}/git-core"
+  fi
+  echo "Git installed: $(${BOSH_INSTALL_TARGET}/bin/git --version)"
+else
+  echo "WARNING: git not available at compile time"
+fi
+
+# Build the Go server
+export GOROOT="/var/vcap/packages/golang-1.22"
+export PATH="${GOROOT}/bin:${PATH}"
+export GOPATH="${BOSH_COMPILE_TARGET}/gopath"
+export GOCACHE="${BOSH_COMPILE_TARGET}/gocache"
+export HOME="${BOSH_COMPILE_TARGET}"
+mkdir -p "${BOSH_INSTALL_TARGET}/bin" "${GOCACHE}"
+
+cd tanzubench-server
+go build -o "${BOSH_INSTALL_TARGET}/bin/tanzubench-server" .
+cd ..
+
+# Copy the benchmark suite
+for dir in tools tests schema web; do
+  if [ -d "tanzubench/$dir" ]; then
+    cp -r "tanzubench/$dir" "${BOSH_INSTALL_TARGET}/$dir"
+  fi
+done
+
+# Install Python deps from vendored wheels (air-gap safe)
+mkdir -p "${BOSH_INSTALL_TARGET}/python-lib"
+
+# Core deps (jsonschema, pyyaml)
+pip3 install --target="${BOSH_INSTALL_TARGET}/python-lib" \
+  --no-index --find-links="${BOSH_COMPILE_TARGET}/python-deps" \
+  jsonschema pyyaml 2>&1 || {
+  echo "pip from wheels failed, trying direct unzip..."
+  for whl in python-deps/*.whl; do
+    unzip -qo "$whl" -d "${BOSH_INSTALL_TARGET}/python-lib/" 2>/dev/null || true
+  done
+}
+
+# aider + all dependencies
+mkdir -p /tmp/aider-wheels
+tar xzf aider/aider-wheels.tar.gz -C /tmp/aider-wheels/
+pip3 install --target="${BOSH_INSTALL_TARGET}/python-lib" \
+  --no-index --find-links="/tmp/aider-wheels" \
+  aider-chat 2>&1 || {
+  echo "aider pip install from wheels failed, trying direct unzip..."
+  for whl in /tmp/aider-wheels/*.whl; do
+    unzip -qo "$whl" -d "${BOSH_INSTALL_TARGET}/python-lib/" 2>/dev/null || true
+  done
+}
+
+# Create aider wrapper script that uses the vendored install
+cat > "${BOSH_INSTALL_TARGET}/bin/aider" <<'AIDER'
+#!/bin/bash
+export PYTHONPATH="/var/vcap/packages/tanzubench/python-lib:${PYTHONPATH:-}"
+exec python3 -m aider.main "$@"
+AIDER
+chmod +x "${BOSH_INSTALL_TARGET}/bin/aider"
+
+# Install goose binary (Rust, single static binary)
+tar xzf goose/goose-linux.tar.gz -C /tmp/
+cp /tmp/goose "${BOSH_INSTALL_TARGET}/bin/goose"
+chmod +x "${BOSH_INSTALL_TARGET}/bin/goose"
+echo "Goose installed: $(${BOSH_INSTALL_TARGET}/bin/goose --version 2>&1 || echo 'version check skipped on compile VM')"
+
+echo "=== Python lib contents (sample) ==="
+ls "${BOSH_INSTALL_TARGET}/python-lib/" | head -20
+echo "=== aider wrapper ==="
+cat "${BOSH_INSTALL_TARGET}/bin/aider"
+echo "=== Package complete ==="

@@ -68,7 +68,7 @@ const TestSchema = z.object({
   score: z.number().min(0).max(1),
   max_score: z.number().nonnegative(),
   status: z.enum(['scored', 'skipped', 'timeout', 'error']),
-  agent_framework: z.enum(['opencode', 'aider', 'custom']).nullable(),
+  agent_framework: z.enum(['goose', 'opencode', 'aider', 'custom']).nullable(),
   prompt_tokens: z.number().int().nonnegative().nullable().optional(),
   completion_tokens: z.number().int().nonnegative().nullable().optional(),
   elapsed_ms: z.number().nonnegative().nullable().optional(),
@@ -90,7 +90,7 @@ const CategoryScoreSchema = z.object({
 }).strict();
 
 const AgentFrameworkScoreSchema = z.object({
-  framework: z.enum(['opencode', 'aider', 'custom']),
+  framework: z.enum(['goose', 'opencode', 'aider', 'custom']),
   score: z.number().min(0).max(1),
   tasks: z.number().int().nonnegative(),
 }).strict();
