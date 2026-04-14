@@ -2,7 +2,7 @@ id: iac-github-actions
 name: Write GitHub Actions workflow for test and deploy
 category: iac
 grader: contains
-timeout_sec: 30
+timeout_sec: 60
 prompt: |
   Write a GitHub Actions workflow file that:
   1. On pull_request to any branch: runs the test suite (assume a Node.js project,

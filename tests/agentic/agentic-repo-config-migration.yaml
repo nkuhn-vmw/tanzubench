@@ -1,6 +1,6 @@
 id: agentic-repo-config-migration
 name: Migrate app config from env vars to YAML with env fallback
-category: agentic
+category: repo_patch
 grader: agentic
 timeout_sec: 600
 fixture: repo-config-migration

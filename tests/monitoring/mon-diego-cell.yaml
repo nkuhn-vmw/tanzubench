@@ -2,7 +2,7 @@ id: mon-diego-cell
 name: Diagnose Diego cell resource exhaustion
 category: monitoring
 grader: contains
-timeout_sec: 30
+timeout_sec: 120
 prompt: |
   New application staging is failing with "insufficient resources". The following
   are Diego cell rep metrics collected via the Loggregator Firehose. Why can't

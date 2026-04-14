@@ -2,7 +2,7 @@ id: mon-top-cpu-spike
 name: Diagnose CPU spike from top output
 category: monitoring
 grader: contains
-timeout_sec: 30
+timeout_sec: 120
 prompt: |
   The following is output from the `top` command on a production server.
   Identify the problem process and recommend a remediation.

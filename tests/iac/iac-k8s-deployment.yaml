@@ -2,7 +2,7 @@ id: iac-k8s-deployment
 name: Generate K8s Deployment JSON for nginx
 category: iac
 grader: json_schema
-timeout_sec: 30
+timeout_sec: 60
 prompt: |
   Generate a Kubernetes Deployment JSON manifest for an nginx workload with:
   - 3 replicas

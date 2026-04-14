@@ -2,7 +2,7 @@ id: iac-cf-manifest
 name: Generate CF app manifest JSON for Spring Boot
 category: iac
 grader: json_schema
-timeout_sec: 30
+timeout_sec: 60
 prompt: |
   Generate a Cloud Foundry application manifest as JSON (not YAML) for a Spring Boot app
   named 'spring-api' with the following requirements:

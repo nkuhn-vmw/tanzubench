@@ -1,6 +1,6 @@
 id: agentic-repo-flask-bug
 name: Fix partial-match search bug in Flask-like app
-category: agentic
+category: repo_patch
 grader: agentic
 timeout_sec: 600
 fixture: repo-flask-bug

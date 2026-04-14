@@ -2,7 +2,7 @@ id: mon-cf-crash-loop
 name: Diagnose CF app crash loop from events
 category: monitoring
 grader: contains
-timeout_sec: 30
+timeout_sec: 120
 prompt: |
   The following is output from `cf events my-spring-app` on a Cloud Foundry
   foundation. Why is this app crashing, and what should be done to fix it?

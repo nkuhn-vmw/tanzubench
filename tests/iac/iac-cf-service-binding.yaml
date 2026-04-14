@@ -2,7 +2,7 @@ id: iac-cf-service-binding
 name: Generate CF manifest with service bindings
 category: iac
 grader: json_schema
-timeout_sec: 30
+timeout_sec: 60
 prompt: |
   Generate a Cloud Foundry application manifest as JSON for an app named 'data-processor'
   that binds to the following services:

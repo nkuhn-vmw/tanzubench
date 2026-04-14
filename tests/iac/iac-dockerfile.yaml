@@ -2,7 +2,7 @@ id: iac-dockerfile
 name: Write multi-stage Dockerfile for Go app
 category: iac
 grader: contains
-timeout_sec: 30
+timeout_sec: 60
 prompt: |
   Write a multi-stage Dockerfile for a Go application with the following requirements:
   - Build stage: use golang:1.22-alpine as the builder, copy source from ./cmd/server,

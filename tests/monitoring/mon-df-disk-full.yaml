@@ -2,7 +2,7 @@ id: mon-df-disk-full
 name: Diagnose full disk from df output
 category: monitoring
 grader: contains
-timeout_sec: 30
+timeout_sec: 120
 prompt: |
   The following is output from `df -h` on a production server.
   Identify which filesystem is critical and recommend a remediation.

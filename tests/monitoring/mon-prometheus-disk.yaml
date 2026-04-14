@@ -2,7 +2,7 @@ id: mon-prometheus-disk
 name: Identify critical disk from Prometheus metrics
 category: monitoring
 grader: contains
-timeout_sec: 30
+timeout_sec: 120
 prompt: |
   The following JSON is a Prometheus instant query result for
   node_filesystem_avail_bytes across a three-node cluster. Which node and

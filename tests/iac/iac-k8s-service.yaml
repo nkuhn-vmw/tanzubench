@@ -2,7 +2,7 @@ id: iac-k8s-service
 name: Generate K8s Service and Ingress for nginx on 443
 category: iac
 grader: contains
-timeout_sec: 30
+timeout_sec: 60
 prompt: |
   Write Kubernetes YAML (or JSON) manifests to expose an nginx Deployment externally
   on port 443 with TLS termination at the Ingress. Requirements:

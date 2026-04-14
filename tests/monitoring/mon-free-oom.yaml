@@ -2,7 +2,7 @@ id: mon-free-oom
 name: Diagnose OOM risk from free output
 category: monitoring
 grader: contains
-timeout_sec: 30
+timeout_sec: 120
 prompt: |
   The following is output from `free -h` on a production server, collected
   every 5 minutes for the last 30 minutes. Identify the problem and recommend

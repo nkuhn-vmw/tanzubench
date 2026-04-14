@@ -2,7 +2,7 @@ id: mon-healthwatch-latency
 name: Identify latency anomaly in Healthwatch metrics
 category: monitoring
 grader: contains
-timeout_sec: 30
+timeout_sec: 120
 prompt: |
   The following JSON payload is a Healthwatch metric snapshot from a Cloud Foundry
   production foundation. Identify the anomaly and explain what it indicates.

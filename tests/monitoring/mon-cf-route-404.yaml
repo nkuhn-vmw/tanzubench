@@ -2,7 +2,7 @@ id: mon-cf-route-404
 name: Diagnose CF 404s from routes and app state
 category: monitoring
 grader: contains
-timeout_sec: 30
+timeout_sec: 120
 prompt: |
   Users are reporting 404 errors when hitting https://api.acme.example.com.
   The following is output from `cf routes` and `cf apps` in the production space.

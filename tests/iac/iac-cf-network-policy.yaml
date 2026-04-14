@@ -2,7 +2,7 @@ id: iac-cf-network-policy
 name: Write CF network policy CLI commands
 category: iac
 grader: contains
-timeout_sec: 30
+timeout_sec: 60
 prompt: |
   Write the CF CLI commands to create a network policy that allows the app 'frontend'
   to reach the app 'backend' on port 8080 over TCP in the same org and space.
