@@ -60,14 +60,30 @@ def _run_setup(commands: List[str], work: Path) -> bool:
                            capture_output=True, text=True, timeout=120,
                            env=env)
         if r.returncode != 0:
-            # Tolerate pip install failures if the package is importable
+            # Tolerate pip install failures if all packages are importable
             # (happens on air-gapped BOSH VMs where deps are vendored)
             if "pip install" in cmd:
-                pkg = cmd.split()[-1]  # last arg is package name
-                chk = subprocess.run(
-                    ["python3", "-c", f"import {pkg}"],
-                    capture_output=True, env=env)
-                if chk.returncode == 0:
+                # Extract package names: everything after "install" that
+                # doesn't start with "-" is a package name
+                parts = cmd.split()
+                try:
+                    idx = parts.index("install") + 1
+                except ValueError:
+                    return False
+                # pip name → import name for common mismatches
+                _IMPORT_MAP = {"pyyaml": "yaml", "pillow": "PIL",
+                               "scikit-learn": "sklearn", "aider-chat": "aider"}
+                pkgs = [p for p in parts[idx:] if not p.startswith("-")]
+                all_ok = True
+                for pkg in pkgs:
+                    imp = _IMPORT_MAP.get(pkg.lower(), pkg)
+                    chk = subprocess.run(
+                        ["python3", "-c", f"import {imp}"],
+                        capture_output=True, env=env)
+                    if chk.returncode != 0:
+                        all_ok = False
+                        break
+                if all_ok and pkgs:
                     continue
             return False
     return True
