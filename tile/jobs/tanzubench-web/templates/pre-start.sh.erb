@@ -112,7 +112,10 @@ if [[ -d "$STATIC_DIR" ]] && command -v cf &>/dev/null; then
   
   ROUTE_PREFIX="<%= p('tanzubench.leaderboard_route_prefix') %>"
   
-  # Create a minimal manifest
+  # cf_system_domain is "sys.X.kuhn-labs.com"; apps domain is "apps.X.kuhn-labs.com"
+  APPS_DOMAIN="<%= p('tanzubench.cf_system_domain').sub(/^sys\./, 'apps.') %>"
+
+  # Create a minimal manifest with explicit route
   cat > /tmp/tanzubench-manifest.yml <<MANIFEST
 ---
 applications:
@@ -123,13 +126,15 @@ applications:
     buildpacks:
       - staticfile_buildpack
     path: ${STATIC_DIR}
+    routes:
+      - route: ${ROUTE_PREFIX}.${APPS_DOMAIN}
     env:
       FORCE_HTTPS: "true"
 MANIFEST
-  
+
   cf push -f /tmp/tanzubench-manifest.yml 2>&1 | tail -5 || {
     echo "pre-start: WARNING — CF push failed (leaderboard accessible via VM IP:8080 instead)"
   }
-  
-  echo "pre-start: leaderboard pushed to https://${ROUTE_PREFIX}.<%= p('tanzubench.cf_system_domain') %>/"
+
+  echo "pre-start: leaderboard pushed to https://${ROUTE_PREFIX}.${APPS_DOMAIN}/"
 fi
