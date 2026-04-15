@@ -103,9 +103,13 @@ class ModelClient:
             },
             method="POST",
         )
+        import ssl
+        _ssl_ctx = ssl.create_default_context()
+        _ssl_ctx.check_hostname = False
+        _ssl_ctx.verify_mode = ssl.CERT_NONE
         start = time.time()
         try:
-            with urllib.request.urlopen(req, timeout=600) as resp:
+            with urllib.request.urlopen(req, timeout=600, context=_ssl_ctx) as resp:
                 body = json.loads(resp.read())
         except Exception as e:
             return (f"ERROR: {type(e).__name__}: {e}", [], 0, time.time() - start)
