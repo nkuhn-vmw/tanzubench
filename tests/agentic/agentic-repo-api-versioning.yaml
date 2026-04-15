@@ -1,6 +1,6 @@
 id: agentic-repo-api-versioning
 name: Add /v2/users endpoint without breaking /v1
-category: agentic
+category: repo_patch
 grader: agentic
 timeout_sec: 600
 fixture: repo-api-versioning

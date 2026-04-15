@@ -1,6 +1,6 @@
 id: agentic-repo-refactor-extract
 name: Extract shared validation logic into cli/validators.py
-category: agentic
+category: repo_patch
 grader: agentic
 timeout_sec: 600
 fixture: repo-refactor-extract

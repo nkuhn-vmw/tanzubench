@@ -51,10 +51,24 @@ def _copy_fixture(fixtures_dir: Path, fixture_name: str, dest: Path) -> None:
 
 
 def _run_setup(commands: List[str], work: Path) -> bool:
+    env = os.environ.copy()
+    env["PYTHONPATH"] = "/var/vcap/packages/tanzubench/python-lib:" + \
+                        "/var/vcap/packages/tanzubench:" + \
+                        env.get("PYTHONPATH", "")
     for cmd in commands:
         r = subprocess.run(["bash", "-c", cmd], cwd=work,
-                           capture_output=True, text=True, timeout=120)
+                           capture_output=True, text=True, timeout=120,
+                           env=env)
         if r.returncode != 0:
+            # Tolerate pip install failures if the package is importable
+            # (happens on air-gapped BOSH VMs where deps are vendored)
+            if "pip install" in cmd:
+                pkg = cmd.split()[-1]  # last arg is package name
+                chk = subprocess.run(
+                    ["python3", "-c", f"import {pkg}"],
+                    capture_output=True, env=env)
+                if chk.returncode == 0:
+                    continue
             return False
     return True
 
