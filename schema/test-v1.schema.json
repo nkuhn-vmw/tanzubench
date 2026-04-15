@@ -87,7 +87,7 @@
       "items": {
         "type": "string",
         "enum": [
-          "opencode",
+          "goose",
           "aider",
           "custom"
         ]
