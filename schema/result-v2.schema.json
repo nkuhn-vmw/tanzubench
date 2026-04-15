@@ -348,6 +348,7 @@
               "null"
             ],
             "enum": [
+              "goose",
               "opencode",
               "aider",
               "custom",
@@ -537,6 +538,7 @@
               "framework": {
                 "type": "string",
                 "enum": [
+                  "goose",
                   "opencode",
                   "aider",
                   "custom"
