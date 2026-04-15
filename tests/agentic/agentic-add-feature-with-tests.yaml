@@ -12,7 +12,7 @@ task_prompt: |
 
   Add page and per_page parameters to get_items() so the pagination test
   passes while keeping existing tests green. See README.md for details.
-frameworks: [opencode, aider, custom]
+frameworks: [goose, aider, custom]
 grader_config:
   setup_commands:
     - "python3 -m pip install -q pytest"

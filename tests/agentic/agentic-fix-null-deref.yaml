@@ -8,7 +8,7 @@ task_prompt: |
   There is a bug in app/handlers.py that causes a crash when the 'user'
   field is missing from the request. Fix the bug. When done, all tests
   in tests/ must pass.
-frameworks: [opencode, aider, custom]
+frameworks: [goose, aider, custom]
 grader_config:
   setup_commands:
     - "python3 -m pip install -q pytest"

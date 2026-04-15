@@ -12,7 +12,7 @@ task_prompt: |
   Find the bug in app/models.py and fix find_users() so that searching for
   "ali" returns users named "Alice" or "Alicia". When done, all tests in
   tests/ must pass (including those in test_basic.py which should already pass).
-frameworks: [opencode, aider, custom]
+frameworks: [goose, aider, custom]
 grader_config:
   setup_commands:
     - "python3 -m pip install -q pytest"

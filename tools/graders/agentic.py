@@ -6,7 +6,7 @@ test_def:
   fixture: str               # directory name under tests/agentic/fixtures/
   task_prompt: str           # what to tell the agent
   timeout_sec: int           # wall-clock per framework run
-  frameworks: [str]          # subset of ["opencode", "aider", "custom"]
+  frameworks: [str]          # subset of ["goose", "aider", "custom"]
   grader_config:
     setup_commands: [str]    # run in tempdir before agent (120s timeout)
     success_check:
@@ -28,6 +28,7 @@ from typing import Any, Dict, List
 from tools.agents import AgentRunResult
 from tools.agents.aider_runner import run as aider_run
 from tools.agents.custom_loop import run as custom_run
+from tools.agents.goose_runner import run as goose_run
 from tools.agents.opencode_runner import run as opencode_run
 from tools.graders.base import GraderContext, GraderResult, register
 
@@ -140,7 +141,7 @@ def grade_multi(test_def: Dict[str, Any], model_client: Any,
                 model_url: str, model_name: str, api_key: str) -> List[GraderResult]:
     """Returns one GraderResult per framework. The runner fans these out."""
     cfg = test_def.get("grader_config") or {}
-    frameworks = test_def.get("frameworks") or ["opencode", "aider", "custom"]
+    frameworks = test_def.get("frameworks") or ["goose", "aider", "custom"]
     timeout = int(test_def.get("timeout_sec", 600))
 
     results: List[GraderResult] = []
@@ -175,6 +176,9 @@ def grade_multi(test_def: Dict[str, Any], model_client: Any,
                 run_result = custom_run(task_prompt, fw_work, model_client, timeout)
             elif fw == "aider":
                 run_result = aider_run(task_prompt, fw_work, model_url, model_name,
+                                       api_key, timeout)
+            elif fw == "goose":
+                run_result = goose_run(task_prompt, fw_work, model_url, model_name,
                                        api_key, timeout)
             elif fw == "opencode":
                 run_result = opencode_run(task_prompt, fw_work, model_url, model_name,

@@ -16,7 +16,7 @@ task_prompt: |
   3. Update api/router.py to dispatch /v2/users to the v2 handler
   4. Make all tests pass — tests/test_v1.py must keep passing and
      tests/test_v2.py must now pass
-frameworks: [opencode, aider, custom]
+frameworks: [goose, aider, custom]
 grader_config:
   setup_commands:
     - "python3 -m pip install -q pytest"

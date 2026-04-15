@@ -17,7 +17,7 @@ task_prompt: |
      merges with env var fallbacks
   3. Make all tests in tests/ pass — tests/test_server.py must keep passing and
      tests/test_config.py must now pass too
-frameworks: [opencode, aider, custom]
+frameworks: [goose, aider, custom]
 grader_config:
   setup_commands:
     - "python3 -m pip install -q pytest pyyaml"

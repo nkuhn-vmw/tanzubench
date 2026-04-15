@@ -10,7 +10,7 @@ task_prompt: |
   `do_thing` and `do_thing_plus_one`. Rename the functions in the source
   (and any internal call sites) so that the tests pass without modifying
   the tests themselves.
-frameworks: [opencode, aider, custom]
+frameworks: [goose, aider, custom]
 grader_config:
   setup_commands:
     - "python3 -m pip install -q pytest"

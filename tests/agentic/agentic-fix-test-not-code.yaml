@@ -10,7 +10,7 @@ task_prompt: |
 
   Fix the test so it passes without modifying calculator.py. When done, all
   tests in tests/ must pass.
-frameworks: [opencode, aider, custom]
+frameworks: [goose, aider, custom]
 grader_config:
   setup_commands:
     - "python3 -m pip install -q pytest"
