@@ -37,6 +37,9 @@ for dir in tools tests schema web; do
   fi
 done
 
+# Remove __pycache__ to prevent stale bytecode across tile upgrades
+find "${BOSH_INSTALL_TARGET}" -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+
 # Install Python deps from vendored wheels (air-gap safe)
 mkdir -p "${BOSH_INSTALL_TARGET}/python-lib"
 
